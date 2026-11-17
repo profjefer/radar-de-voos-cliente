@@ -2,7 +2,7 @@
  "versao": 1,
  "moeda": "BRL",
  "fonte": "extra",
- "atualizado": "2026-11-17T00:53:05+00:00",
+ "atualizado": "2026-11-17T00:59:23+00:00",
  "rotas": [
   {
    "id": "jpa",
@@ -21,7 +21,7 @@
    "teto": 1800,
    "cobertura": {
     "pares": 9,
-    "com_preco_recente": 3
+    "com_preco_recente": 5
    }
   },
   {
@@ -41,7 +41,7 @@
    "teto": 1500,
    "cobertura": {
     "pares": 26,
-    "com_preco_recente": 0
+    "com_preco_recente": 1
    }
   },
   {
@@ -108,6 +108,17 @@
  "ofertas": [
   {
    "origem": "CAC",
+   "destino": "REC",
+   "tarifa": 1624.0,
+   "ida": "2027-02-01",
+   "volta": "2027-02-08",
+   "consultado": "2026-11-17T00:59:23+00:00",
+   "rota": "pdg",
+   "cia": "LATAM",
+   "paradas": 1
+  },
+  {
+   "origem": "CAC",
    "destino": "JPA",
    "tarifa": 1706.0,
    "ida": "2027-01-21",
@@ -129,6 +140,28 @@
    "paradas": 1
   },
   {
+   "origem": "CAC",
+   "destino": "JPA",
+   "tarifa": 1741.0,
+   "ida": "2027-01-23",
+   "volta": "2027-01-29",
+   "consultado": "2026-11-17T00:59:23+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 1
+  },
+  {
+   "origem": "IGU",
+   "destino": "REC",
+   "tarifa": 1784.0,
+   "ida": "2027-02-01",
+   "volta": "2027-02-08",
+   "consultado": "2026-11-17T00:59:23+00:00",
+   "rota": "pdg",
+   "cia": "LATAM",
+   "paradas": 1
+  },
+  {
    "origem": "IGU",
    "destino": "JPA",
    "tarifa": 1878.0,
@@ -140,6 +173,17 @@
    "paradas": 2
   },
   {
+   "origem": "IGU",
+   "destino": "JPA",
+   "tarifa": 1963.0,
+   "ida": "2027-01-23",
+   "volta": "2027-01-29",
+   "consultado": "2026-11-17T00:59:23+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 1
+  },
+  {
    "origem": "CAC",
    "destino": "JPA",
    "tarifa": 2016.0,
@@ -148,6 +192,28 @@
    "consultado": "2026-11-17T00:53:05+00:00",
    "rota": "jpa",
    "cia": "LATAM",
+   "paradas": 1
+  },
+  {
+   "origem": "CAC",
+   "destino": "JPA",
+   "tarifa": 2052.0,
+   "ida": "2027-01-19",
+   "volta": "2027-01-25",
+   "consultado": "2026-11-17T00:59:23+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 1
+  },
+  {
+   "origem": "IGU",
+   "destino": "JPA",
+   "tarifa": 2202.0,
+   "ida": "2027-01-19",
+   "volta": "2027-01-25",
+   "consultado": "2026-11-17T00:59:23+00:00",
+   "rota": "jpa",
+   "cia": "Gol",
    "paradas": 1
   },
   {
@@ -174,13 +240,21 @@
   }
  ],
  "falhas": 0,
- "anteriorMinimo": {},
- "saldo": 187,
+ "anteriorMinimo": {
+  "jpa": 1706.0
+ },
+ "saldo": 184,
  "serie": {
   "jpa": [
    [
     "2026-11-17",
     1706.0
+   ]
+  ],
+  "pdg": [
+   [
+    "2026-11-17",
+    1624.0
    ]
   ]
  }
