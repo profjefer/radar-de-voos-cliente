@@ -1,0 +1,187 @@
+{
+ "versao": 1,
+ "moeda": "BRL",
+ "fonte": "extra",
+ "atualizado": "2026-11-17T00:53:05+00:00",
+ "rotas": [
+  {
+   "id": "jpa",
+   "nome": "João Pessoa",
+   "origens": [
+    "CAC",
+    "IGU"
+   ],
+   "destinos": [
+    "JPA"
+   ],
+   "inicio": "2027-01-17",
+   "fim": "2027-01-25",
+   "min": 6,
+   "max": 6,
+   "teto": 1800,
+   "cobertura": {
+    "pares": 9,
+    "com_preco_recente": 3
+   }
+  },
+  {
+   "id": "pdg",
+   "nome": "Porto de Galinhas (Recife)",
+   "origens": [
+    "CAC",
+    "IGU"
+   ],
+   "destinos": [
+    "REC"
+   ],
+   "inicio": "2027-02-01",
+   "fim": "2027-07-31",
+   "min": 7,
+   "max": 7,
+   "teto": 1500,
+   "cobertura": {
+    "pares": 26,
+    "com_preco_recente": 0
+   }
+  },
+  {
+   "id": "cun",
+   "nome": "Playa Mujeres (Cancún)",
+   "origens": [
+    "IGU",
+    "CAC"
+   ],
+   "destinos": [
+    "CUN"
+   ],
+   "inicio": "2027-02-01",
+   "fim": "2027-07-31",
+   "min": 7,
+   "max": 7,
+   "teto": 4000,
+   "cobertura": {
+    "pares": 26,
+    "com_preco_recente": 0
+   }
+  },
+  {
+   "id": "bog",
+   "nome": "Bogotá",
+   "origens": [
+    "IGU",
+    "CAC"
+   ],
+   "destinos": [
+    "BOG"
+   ],
+   "inicio": "2027-02-01",
+   "fim": "2027-07-31",
+   "min": 7,
+   "max": 7,
+   "teto": 3000,
+   "cobertura": {
+    "pares": 26,
+    "com_preco_recente": 0
+   }
+  },
+  {
+   "id": "adz",
+   "nome": "San Andrés (Colômbia)",
+   "origens": [
+    "IGU",
+    "CAC"
+   ],
+   "destinos": [
+    "ADZ"
+   ],
+   "inicio": "2027-02-01",
+   "fim": "2027-07-31",
+   "min": 7,
+   "max": 7,
+   "teto": 3800,
+   "cobertura": {
+    "pares": 26,
+    "com_preco_recente": 0
+   }
+  }
+ ],
+ "ofertas": [
+  {
+   "origem": "CAC",
+   "destino": "JPA",
+   "tarifa": 1706.0,
+   "ida": "2027-01-21",
+   "volta": "2027-01-27",
+   "consultado": "2026-11-17T00:53:05+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 1
+  },
+  {
+   "origem": "CAC",
+   "destino": "JPA",
+   "tarifa": 1741.0,
+   "ida": "2027-01-20",
+   "volta": "2027-01-26",
+   "consultado": "2026-11-17T00:53:05+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 1
+  },
+  {
+   "origem": "IGU",
+   "destino": "JPA",
+   "tarifa": 1878.0,
+   "ida": "2027-01-21",
+   "volta": "2027-01-27",
+   "consultado": "2026-11-17T00:53:05+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 2
+  },
+  {
+   "origem": "CAC",
+   "destino": "JPA",
+   "tarifa": 2016.0,
+   "ida": "2027-01-22",
+   "volta": "2027-01-28",
+   "consultado": "2026-11-17T00:53:05+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 1
+  },
+  {
+   "origem": "IGU",
+   "destino": "JPA",
+   "tarifa": 2237.0,
+   "ida": "2027-01-22",
+   "volta": "2027-01-28",
+   "consultado": "2026-11-17T00:53:05+00:00",
+   "rota": "jpa",
+   "cia": "Gol",
+   "paradas": 1
+  },
+  {
+   "origem": "IGU",
+   "destino": "JPA",
+   "tarifa": 2297.0,
+   "ida": "2027-01-20",
+   "volta": "2027-01-26",
+   "consultado": "2026-11-17T00:53:05+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 2
+  }
+ ],
+ "falhas": 0,
+ "anteriorMinimo": {},
+ "saldo": 187,
+ "serie": {
+  "jpa": [
+   [
+    "2026-11-17",
+    1706.0
+   ]
+  ]
+ }
+}
