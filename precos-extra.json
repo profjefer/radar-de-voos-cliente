@@ -2,7 +2,7 @@
  "versao": 1,
  "moeda": "BRL",
  "fonte": "extra",
- "atualizado": "2026-11-17T10:08:51+00:00",
+ "atualizado": "2026-11-17T10:09:16+00:00",
  "rotas": [
   {
    "id": "jpa",
@@ -20,7 +20,7 @@
    "max": 6,
    "cobertura": {
     "pares": 9,
-    "com_preco_recente": 5
+    "com_preco_recente": 2
    }
   },
   {
@@ -100,13 +100,83 @@
    }
   }
  ],
- "ofertas": [],
+ "ofertas": [
+  {
+   "origem": "CAC",
+   "destino": "REC",
+   "tarifa": 1624.0,
+   "ida": "2027-02-01",
+   "volta": "2027-02-08",
+   "consultado": "2026-11-17T10:09:16+00:00",
+   "rota": "pdg",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 235
+  },
+  {
+   "origem": "IGU",
+   "destino": "REC",
+   "tarifa": 1784.0,
+   "ida": "2027-02-01",
+   "volta": "2027-02-08",
+   "consultado": "2026-11-17T10:09:16+00:00",
+   "rota": "pdg",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 60
+  },
+  {
+   "origem": "CAC",
+   "destino": "JPA",
+   "tarifa": 2016.0,
+   "ida": "2027-01-21",
+   "volta": "2027-01-27",
+   "consultado": "2026-11-17T10:09:16+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 90
+  },
+  {
+   "origem": "IGU",
+   "destino": "JPA",
+   "tarifa": 2088.0,
+   "ida": "2027-01-21",
+   "volta": "2027-01-27",
+   "consultado": "2026-11-17T10:09:16+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 235
+  },
+  {
+   "origem": "IGU",
+   "destino": "JPA",
+   "tarifa": 2160.0,
+   "ida": "2027-01-20",
+   "volta": "2027-01-26",
+   "consultado": "2026-11-17T10:09:16+00:00",
+   "rota": "jpa",
+   "cia": "Gol",
+   "paradas": 2,
+   "conexao_max_min": 210
+  },
+  {
+   "origem": "CAC",
+   "destino": "JPA",
+   "tarifa": 2327.0,
+   "ida": "2027-01-20",
+   "volta": "2027-01-26",
+   "consultado": "2026-11-17T10:09:16+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 90
+  }
+ ],
  "falhas": 0,
- "anteriorMinimo": {
-  "jpa": 1706.0,
-  "pdg": 1624.0
- },
- "saldo": 184,
+ "anteriorMinimo": {},
+ "saldo": 181,
  "serie": {
   "bue": [
    {
@@ -281,6 +351,26 @@
     "ida": "2027-03-11",
     "volta": "2027-03-25"
    }
+  ],
+  "jpa": [
+   {
+    "dia": "2026-11-17",
+    "preco": 2016.0,
+    "origem": "CAC",
+    "destino": "JPA",
+    "ida": "2027-01-21",
+    "volta": "2027-01-27"
+   }
+  ],
+  "pdg": [
+   {
+    "dia": "2026-11-17",
+    "preco": 1624.0,
+    "origem": "CAC",
+    "destino": "REC",
+    "ida": "2027-02-01",
+    "volta": "2027-02-08"
+   }
   ]
  },
  "alertas": [
@@ -331,6 +421,12 @@
    "bom": 4934,
    "minimo": 5194,
    "maximo": 6356
+  },
+  "jpa": {
+   "dias": 1
+  },
+  "pdg": {
+   "dias": 1
   }
  },
  "conexao_max_min": 240
