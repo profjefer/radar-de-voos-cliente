@@ -357,7 +357,9 @@ def publicar(rotas, estado, agora, falhas, saldo_final, uni=None):
         tetos.setdefault(r['id'], r.get('teto'))
         nomes.setdefault(r['id'], r.get('nome', r['id']))
     alertas = gerar_alertas(serie, tetos, nomes, agora)
-    proxima = (agora + dt.timedelta(days=1)).replace(hour=12, minute=15, second=0)
+    proxima = agora.replace(hour=12, minute=15, second=0)
+    if proxima <= agora:
+        proxima += dt.timedelta(days=1)
     gravar_json('precos-extra.json', {
         'versao': 1, 'moeda': 'BRL', 'fonte': 'extra', 'atualizado': agora.isoformat(),
         'rotas': rotas_pub, 'ofertas': ofertas, 'falhas': falhas, 'anteriorMinimo': min_ant, 'saldo': saldo_final,

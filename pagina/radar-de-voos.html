@@ -400,6 +400,7 @@ function renderGrafico(r) {
 
 $('mais-datas').addEventListener('click', () => { nDatas += 10; renderDetalhe(); });
 $('mais-avisos').addEventListener('click', () => { nAvisos += 10; renderAvisos(); });
+window.addEventListener('hashchange', () => { if (D) escolher(location.hash.slice(1), true); });
 carregar();
 </script>
 </body>

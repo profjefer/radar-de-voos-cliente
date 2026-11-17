@@ -64,8 +64,8 @@
 </section>
 <div class="layout">
 <section class="panel">
-<h2>Registrar uma tarifa</h2>
-<p>Confira o preço da ida e volta no buscador. Informe valores por pessoa em reais.</p>
+<h2>Anotar um preço que você encontrou</h2>
+<p>Viu uma promoção em outro site, app ou agência? Anote aqui o preço da <strong>ida e volta, por pessoa</strong>, para comparar com os outros. Fica salvo só neste navegador (use Exportar para guardar uma cópia).</p>
 <form id="registrar">
 <div class="grid">
 <label>Aeroporto<select name="origem" id="registro-origem"></select></label>
@@ -75,7 +75,7 @@
 <label>Deslocamento total por pessoa (R$)<input name="deslocamento" type="number" min="0" step="0.01" placeholder="Opcional"></label>
 <label>Link da oferta<input name="link" type="url" maxlength="2500" placeholder="Opcional"></label>
 </div>
-<div class="actions"><button class="primary" id="salvar-tarifa">Salvar tarifa</button><button type="button" id="cancelar-edicao" hidden>Cancelar edição</button></div>
+<div class="actions"><button class="primary" id="salvar-tarifa">Anotar preço</button><button type="button" id="cancelar-edicao" hidden>Cancelar edição</button></div>
 <p id="registro-status" class="status" role="status" aria-live="polite"></p>
 </form>
 <details><summary>Estimar deslocamento de carro</summary>
@@ -96,7 +96,7 @@
 </section>
 </div>
 <section class="panel">
-<h2>Histórico de tarifas</h2>
+<h2>Preços que você anotou</h2>
 <p>O histórico fica neste navegador. Exporte em JSON para guardar uma cópia ou importar em outro navegador.</p>
 <div class="actions">
 <button type="button" id="exportar">Exportar JSON</button>
