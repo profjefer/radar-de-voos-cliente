@@ -137,7 +137,46 @@ def consultar(chave, rota, ida, volta):
 
 
 CAMPOS = ['consultado', 'rota', 'origem', 'destino', 'ida', 'volta', 'tarifa', 'cia', 'paradas',
-          'duracao_min', 'nivel_preco', 'tipico_min', 'tipico_max']
+          'duracao_min', 'nivel_preco', 'tipico_min', 'tipico_max', 'fonte']
+UNI_URL = 'https://docs.ufpr.br/~jefer/precos-automaticos.json'
+
+
+def migrar_csv():
+    """Acrescenta a coluna 'fonte' em historicos antigos."""
+    if not os.path.exists(P('historico.csv')):
+        return
+    with open(P('historico.csv'), encoding='utf-8') as f:
+        leitor = csv.DictReader(f)
+        linhas = list(leitor)
+        cab = leitor.fieldnames or []
+    if cab and 'fonte' not in cab:
+        with open(P('historico.csv'), 'w', newline='', encoding='utf-8') as f:
+            w = csv.DictWriter(f, fieldnames=CAMPOS)
+            w.writeheader()
+            for l in linhas:
+                w.writerow({**{c: l.get(c) for c in CAMPOS}, 'fonte': 'extra'})
+
+
+def importar_universidade(w, vistos):
+    """Copia para o historico os precos publicados pelo cliente da universidade (sem gastar cota)."""
+    try:
+        req = urllib.request.Request(UNI_URL, headers={'User-Agent': 'radar-de-voos/1.0'})
+        with urllib.request.urlopen(req, timeout=60) as r:
+            uni = json.load(r)
+    except Exception as e:
+        print('Aviso: nao consegui ler o JSON da universidade:', e)
+        return None
+    novos = 0
+    for o in uni.get('ofertas', []):
+        k = (o.get('consultado', ''), o.get('rota', ''), o.get('origem'), o.get('destino'), o.get('ida'), o.get('volta'))
+        if k in vistos or not o.get('consultado'):
+            continue
+        vistos.add(k)
+        w.writerow({'consultado': o['consultado'], 'rota': o.get('rota', ''), 'origem': o['origem'], 'destino': o['destino'],
+                    'ida': o['ida'], 'volta': o['volta'], 'tarifa': o['tarifa'], 'fonte': 'universidade'})
+        novos += 1
+    print(f'Universidade: {novos} precos novos copiados para o historico.')
+    return uni
 
 
 def main():
@@ -147,6 +186,7 @@ def main():
         raise SystemExit('Coloque a chave da SerpApi no arquivo .env (SERPAPI_KEY=...).')
     rotas = ler_json('rotas.json', {})['rotas']
     estado = ler_json('estado.json', {})
+    estado.setdefault('ultimo', {})
     agora = dt.datetime.now(UTC).replace(microsecond=0)
     hoje = agora.date()
     mes = agora.strftime('%Y-%m')
@@ -167,12 +207,19 @@ def main():
             print(f"consultaria {r['id']}: {','.join(r['origens'])} -> {','.join(r['destinos'])} {ida} a {volta}")
         return
 
+    migrar_csv()
+    vistos = set()
+    if os.path.exists(P('historico.csv')):
+        with open(P('historico.csv'), encoding='utf-8') as f:
+            for l in csv.DictReader(f):
+                vistos.add((l['consultado'], l['rota'], l['origem'], l['destino'], l['ida'], l['volta']))
     novo_csv = not os.path.exists(P('historico.csv'))
     falhas = 0
     with open(P('historico.csv'), 'a', newline='', encoding='utf-8') as f:
         w = csv.DictWriter(f, fieldnames=CAMPOS)
         if novo_csv:
             w.writeheader()
+        uni = importar_universidade(w, vistos)
         for _, r, ida, volta, k in escolhidas:
             try:
                 ofertas, pi, link = consultar(chave, r, ida, volta)
@@ -185,34 +232,97 @@ def main():
             faixa = pi.get('typical_price_range') or [None, None]
             for o in ofertas:
                 w.writerow({'consultado': agora.isoformat(), 'rota': r['id'], **{c: o.get(c) for c in CAMPOS[2:10]},
-                            'nivel_preco': pi.get('price_level'), 'tipico_min': faixa[0], 'tipico_max': faixa[-1]})
+                            'nivel_preco': pi.get('price_level'), 'tipico_min': faixa[0], 'tipico_max': faixa[-1],
+                            'fonte': 'extra'})
             if not ofertas:
-                w.writerow({'consultado': agora.isoformat(), 'rota': r['id'], 'ida': ida, 'volta': volta})
+                w.writerow({'consultado': agora.isoformat(), 'rota': r['id'], 'ida': ida, 'volta': volta, 'fonte': 'extra'})
             resumo = ', '.join(f"{o['origem']} R$ {o['tarifa']:.0f}" for o in sorted(ofertas, key=lambda o: o['tarifa'])) or 'sem voos'
             print(f"{r['id']} {ida} a {volta}: {resumo}")
 
     gastas = len(escolhidas) - falhas
-    publicar(rotas, estado, agora, falhas, (restante or 0) - gastas)
+    publicar(rotas, estado, agora, falhas, (restante or 0) - gastas, uni)
     gravar_json('estado.json', estado)
 
 
-def publicar(rotas, estado, agora, falhas, saldo_final):
-    """Monta precos-extra.json com a observacao mais recente de cada (rota, origem, destino, ida, volta)."""
-    hoje = agora.date().isoformat()
-    ultimas = {}
-    serie = {}
+def ler_historico():
     try:
         with open(P('historico.csv'), encoding='utf-8') as f:
-            for l in csv.DictReader(f):
-                if not l.get('tarifa'):
-                    continue
-                k = (l['rota'], l['origem'], l['destino'], l['ida'], l['volta'])
-                ultimas[k] = l  # o CSV esta em ordem cronologica
-                dia = l['consultado'][:10]
-                s = serie.setdefault(l['rota'], {})
-                s[dia] = min(s.get(dia, 1e12), float(l['tarifa']))
+            linhas = [l for l in csv.DictReader(f) if l.get('tarifa')]
     except FileNotFoundError:
-        pass
+        return []
+    linhas.sort(key=lambda l: l['consultado'])
+    return linhas
+
+
+def melhor_por_dia(linhas, validade=10):
+    """Para cada rota e cada dia: o menor preco conhecido naquele dia, usando a observacao mais
+    recente de cada combinacao de datas (vista nos ultimos `validade` dias e com ida ainda futura)."""
+    por_rota = {}
+    for l in linhas:
+        por_rota.setdefault(l['rota'], []).append(l)
+    serie = {}
+    for rid, ls in por_rota.items():
+        atual, pos, s = {}, 0, []
+        for d in sorted({l['consultado'][:10] for l in ls}):
+            while pos < len(ls) and ls[pos]['consultado'][:10] <= d:
+                l = ls[pos]
+                atual[(l['origem'], l['destino'], l['ida'], l['volta'])] = l
+                pos += 1
+            lim = (dt.date.fromisoformat(d) - dt.timedelta(days=validade)).isoformat()
+            vivos = [l for l in atual.values() if l['ida'] > d and l['consultado'][:10] >= lim]
+            if vivos:
+                b = min(vivos, key=lambda l: float(l['tarifa']))
+                s.append({'dia': d, 'preco': float(b['tarifa']), 'origem': b['origem'], 'destino': b['destino'],
+                          'ida': b['ida'], 'volta': b['volta']})
+        serie[rid] = s
+    return serie
+
+
+def brl(v):
+    return 'R$ ' + f'{v:,.0f}'.replace(',', '.')
+
+
+def gerar_alertas(serie, tetos, nomes, agora):
+    """Registra (sem repetir) alertas do dia: entrou no orcamento, queda de preco e menor preco ja visto."""
+    alertas = ler_json('alertas.json', [])
+    ja = {(a['dia'], a['rota'], a['tipo']) for a in alertas}
+    for rid, serie_rota in serie.items():
+      for i in range(len(serie_rota)):  # percorre todos os dias: alertas antigos tambem entram (sem repetir)
+        s = serie_rota[:i + 1]
+        b = s[-1]
+        hoje = b['dia']
+        ant = s[-2] if len(s) > 1 else None
+        nome = nomes.get(rid, rid)
+        onde = f"saindo de {b['origem']}, {b['ida'][8:10]}/{b['ida'][5:7]} a {b['volta'][8:10]}/{b['volta'][5:7]}"
+        novos = []
+        teto = tetos.get(rid)
+        if teto and b['preco'] <= teto and (not ant or ant['preco'] > teto):
+            novos.append(('orcamento', f"{nome}: {brl(b['preco'])}, dentro do seu limite de {brl(teto)} ({onde})."))
+        if ant and b['preco'] <= ant['preco'] * 0.97:
+            pct = (1 - b['preco'] / ant['preco']) * 100
+            novos.append(('queda', f"{nome}: caiu {brl(ant['preco'] - b['preco'])} ({pct:.0f}%), agora {brl(b['preco'])} ({onde})."))
+        anteriores = [x['preco'] for x in s[:-1]]
+        if len(anteriores) >= 3 and b['preco'] < min(anteriores):
+            novos.append(('recorde', f"{nome}: {brl(b['preco'])} é o menor preço já registrado ({onde})."))
+        for tipo, msg in novos:
+            if (hoje, rid, tipo) not in ja:
+                ja.add((hoje, rid, tipo))
+                alertas.append({'quando': agora.isoformat() if hoje == agora.date().isoformat() else hoje + 'T12:00:00+00:00', 'dia': hoje, 'rota': rid, 'tipo': tipo,
+                                'mensagem': msg, 'preco': b['preco']})
+                print('ALERTA', msg)
+    alertas = sorted(alertas, key=lambda a: a['dia'])[-300:]
+    gravar_json('alertas.json', alertas)
+    return alertas
+
+
+def publicar(rotas, estado, agora, falhas, saldo_final, uni=None):
+    """Monta precos-extra.json: ofertas atuais deste cliente + historico diario e alertas de TODOS os destinos."""
+    hoje = agora.date().isoformat()
+    linhas = ler_historico()
+    ultimas = {}
+    for l in linhas:
+        if (l.get('fonte') or 'extra') == 'extra':
+            ultimas[(l['rota'], l['origem'], l['destino'], l['ida'], l['volta'])] = l
     validas_rotas = {r['id'] for r in rotas}
     ofertas = []
     for (rid, org, dst, ida, volta), l in ultimas.items():
@@ -239,12 +349,21 @@ def publicar(rotas, estado, agora, falhas, saldo_final):
                        and (agora - dt.datetime.fromisoformat(v)).days < 15)
         rotas_pub.append({k: r[k] for k in ('id', 'nome', 'origens', 'destinos', 'inicio', 'fim', 'min', 'max', 'teto')}
                          | {'cobertura': {'pares': pares, 'com_preco_recente': min(recentes, pares)}})
+
+    serie = melhor_por_dia(linhas)
+    tetos = {r['id']: r.get('teto') for r in rotas}
+    nomes = {r['id']: r['nome'] for r in rotas}
+    for r in (uni or {}).get('rotas', []):
+        tetos.setdefault(r['id'], r.get('teto'))
+        nomes.setdefault(r['id'], r.get('nome', r['id']))
+    alertas = gerar_alertas(serie, tetos, nomes, agora)
+    proxima = (agora + dt.timedelta(days=1)).replace(hour=12, minute=15, second=0)
     gravar_json('precos-extra.json', {
         'versao': 1, 'moeda': 'BRL', 'fonte': 'extra', 'atualizado': agora.isoformat(),
         'rotas': rotas_pub, 'ofertas': ofertas, 'falhas': falhas, 'anteriorMinimo': min_ant, 'saldo': saldo_final,
-        'serie': {rid: sorted(d.items()) for rid, d in serie.items()},
+        'serie': serie, 'alertas': alertas[-60:], 'proxima': proxima.isoformat(),
     })
-    print(f'precos-extra.json: {len(ofertas)} ofertas em {len(rotas_pub)} rotas.')
+    print(f'precos-extra.json: {len(ofertas)} ofertas, historico de {len(serie)} destinos, {len(alertas)} alertas.')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,50 @@
+[
+ {
+  "quando": "2026-11-10T12:00:00+00:00",
+  "dia": "2026-11-10",
+  "rota": "bue",
+  "tipo": "orcamento",
+  "mensagem": "Buenos Aires: R$ 505, dentro do seu limite de R$ 1.200 (saindo de IGR, 15/12 a 24/12).",
+  "preco": 505.0
+ },
+ {
+  "quando": "2026-11-10T12:00:00+00:00",
+  "dia": "2026-11-10",
+  "rota": "nordeste",
+  "tipo": "orcamento",
+  "mensagem": "Nordeste: R$ 1.219, dentro do seu limite de R$ 1.500 (saindo de IGU, 04/03 a 12/03).",
+  "preco": 1219.0
+ },
+ {
+  "quando": "2026-11-11T12:00:00+00:00",
+  "dia": "2026-11-11",
+  "rota": "gua",
+  "tipo": "queda",
+  "mensagem": "Guatemala: caiu R$ 1.162 (18%), agora R$ 5.194 (saindo de IGU, 11/03 a 25/03).",
+  "preco": 5194.0
+ },
+ {
+  "quando": "2026-11-14T12:00:00+00:00",
+  "dia": "2026-11-14",
+  "rota": "bue",
+  "tipo": "queda",
+  "mensagem": "Buenos Aires: caiu R$ 66 (13%), agora R$ 439 (saindo de IGR, 19/01 a 27/01).",
+  "preco": 439.0
+ },
+ {
+  "quando": "2026-11-14T12:00:00+00:00",
+  "dia": "2026-11-14",
+  "rota": "bue",
+  "tipo": "recorde",
+  "mensagem": "Buenos Aires: R$ 439 é o menor preço já registrado (saindo de IGR, 19/01 a 27/01).",
+  "preco": 439.0
+ },
+ {
+  "quando": "2026-11-17T01:07:26+00:00",
+  "dia": "2026-11-17",
+  "rota": "jpa",
+  "tipo": "orcamento",
+  "mensagem": "João Pessoa: R$ 1.706, dentro do seu limite de R$ 1.800 (saindo de CAC, 21/01 a 27/01).",
+  "preco": 1706.0
+ }
+]
