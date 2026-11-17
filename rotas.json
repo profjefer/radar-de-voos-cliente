@@ -1,5 +1,5 @@
 {
-  "_ajuda": "inicio/fim = janela da IDA; min/max = noites; passo = de quantos em quantos dias testar a ida; peso = prioridade (maior = consulta mais vezes); preferida = ida desejada (consultada primeiro); teto = alerta 'No orçamento' (R$ por adulto, ida e volta).",
+  "_ajuda": "inicio/fim = janela da IDA; min/max = noites; passo = de quantos em quantos dias testar a ida; peso = prioridade (maior = consulta mais vezes); preferida = ida desejada (consultada primeiro). O 'preco normal' e o 'bom preco' sao aprendidos do historico. Opcional: limite = R$ maximo que voce aceita pagar (gera o aviso 'dentro do limite'). Conexoes acima de 4 h sao descartadas.",
   "rotas": [
     {
       "id": "jpa",
@@ -12,8 +12,7 @@
       "max": 6,
       "passo": 1,
       "preferida": "2027-01-21",
-      "peso": 3,
-      "teto": 1800
+      "peso": 3
     },
     {
       "id": "pdg",
@@ -25,8 +24,7 @@
       "min": 7,
       "max": 7,
       "passo": 7,
-      "peso": 1,
-      "teto": 1500
+      "peso": 1
     },
     {
       "id": "cun",
@@ -38,8 +36,7 @@
       "min": 7,
       "max": 7,
       "passo": 7,
-      "peso": 1,
-      "teto": 4000
+      "peso": 1
     },
     {
       "id": "bog",
@@ -51,8 +48,7 @@
       "min": 7,
       "max": 7,
       "passo": 7,
-      "peso": 1,
-      "teto": 3000
+      "peso": 1
     },
     {
       "id": "adz",
@@ -64,8 +60,7 @@
       "min": 7,
       "max": 7,
       "passo": 7,
-      "peso": 1,
-      "teto": 3800
+      "peso": 1
     }
   ]
 }

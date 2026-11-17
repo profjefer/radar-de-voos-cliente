@@ -10,11 +10,13 @@ Uso:  python radar_extra.py            (uma rodada normal)
       python radar_extra.py --saldo    (so mostra o saldo da conta, nao gasta cota)
 Somente biblioteca padrao do Python 3.9+.
 """
-import csv, datetime as dt, json, os, sys, urllib.parse, urllib.request
+import csv, datetime as dt, json, os, statistics, sys, urllib.parse, urllib.request
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 P = lambda nome: os.path.join(AQUI, nome)
 UTC = dt.timezone.utc
+MAX_CONEXAO = 240   # minutos: nenhuma conexao (escala) pode passar de 4 horas
+JANELA_REF, MIN_DIAS_REF = 45, 5  # 'preco normal' = mediana dos ultimos 45 dias (precisa de 5 dias de historico)
 
 
 def ler_env():
@@ -139,6 +141,7 @@ def consultar(chave, rota, ida, volta):
         'departure_id': ','.join(rota['origens']), 'arrival_id': ','.join(rota['destinos']),
         'outbound_date': ida, 'return_date': volta,
         'currency': 'BRL', 'hl': 'pt', 'gl': 'br', 'adults': 1, 'travel_class': 1,
+        'layover_duration': f'30,{MAX_CONEXAO}',  # o Google ja filtra conexoes longas (ida e volta)
     })
     if 'error' in d:
         if 'no results' in d['error'].lower():
@@ -150,12 +153,15 @@ def consultar(chave, rota, ida, volta):
             trechos = it.get('flights') or []
             if not trechos or not isinstance(it.get('price'), (int, float)):
                 continue
+            esperas = [l.get('duration') or 0 for l in it.get('layovers') or []]
+            if any(e > MAX_CONEXAO for e in esperas):  # confere de novo do nosso lado
+                continue
             org = trechos[0]['departure_airport']['id']
             dst = trechos[-1]['arrival_airport']['id']
             cias = sorted({t.get('airline', '') for t in trechos if t.get('airline')})
             oferta = {'origem': org, 'destino': dst, 'tarifa': float(it['price']), 'ida': ida, 'volta': volta,
                       'cia': ' + '.join(cias), 'paradas': len(trechos) - 1,
-                      'duracao_min': it.get('total_duration')}
+                      'duracao_min': it.get('total_duration'), 'conexao_max_min': max(esperas, default=0)}
             k = (org, dst)
             if k not in melhores or oferta['tarifa'] < melhores[k]['tarifa']:
                 melhores[k] = oferta
@@ -164,24 +170,24 @@ def consultar(chave, rota, ida, volta):
 
 
 CAMPOS = ['consultado', 'rota', 'origem', 'destino', 'ida', 'volta', 'tarifa', 'cia', 'paradas',
-          'duracao_min', 'nivel_preco', 'tipico_min', 'tipico_max', 'fonte']
+          'duracao_min', 'nivel_preco', 'tipico_min', 'tipico_max', 'fonte', 'conexao_max_min', 'filtro_conexao']
 UNI_URL = 'https://docs.ufpr.br/~jefer/precos-automaticos.json'
 
 
 def migrar_csv():
-    """Acrescenta a coluna 'fonte' em historicos antigos."""
+    """Atualiza o cabecalho de historicos antigos (colunas novas ficam vazias)."""
     if not os.path.exists(P('historico.csv')):
         return
     with open(P('historico.csv'), encoding='utf-8') as f:
         leitor = csv.DictReader(f)
         linhas = list(leitor)
         cab = leitor.fieldnames or []
-    if cab and 'fonte' not in cab:
+    if cab and cab != CAMPOS:
         with open(P('historico.csv'), 'w', newline='', encoding='utf-8') as f:
             w = csv.DictWriter(f, fieldnames=CAMPOS)
             w.writeheader()
             for l in linhas:
-                w.writerow({**{c: l.get(c) for c in CAMPOS}, 'fonte': 'extra'})
+                w.writerow({**{c: l.get(c) for c in CAMPOS}, 'fonte': l.get('fonte') or 'extra'})
 
 
 def importar_universidade(w, vistos):
@@ -219,6 +225,8 @@ def main():
     mes = agora.strftime('%Y-%m')
     if estado.get('mes') != mes:
         estado['mes'], estado['gastas_mes'] = mes, 0
+    if estado.get('filtro_conexao') != MAX_CONEXAO:  # filtro novo/alterado: todas as datas voltam a ser 'nunca vistas'
+        estado['ultimo'], estado['consultas'], estado['filtro_conexao'] = {}, {}, MAX_CONEXAO
 
     restante = saldo(chave)
     print(f'Saldo da conta SerpApi: {restante} consultas.')
@@ -261,9 +269,10 @@ def main():
             for o in ofertas:
                 w.writerow({'consultado': agora.isoformat(), 'rota': r['id'], **{c: o.get(c) for c in CAMPOS[2:10]},
                             'nivel_preco': pi.get('price_level'), 'tipico_min': faixa[0], 'tipico_max': faixa[-1],
-                            'fonte': 'extra'})
+                            'fonte': 'extra', 'conexao_max_min': o.get('conexao_max_min'), 'filtro_conexao': MAX_CONEXAO})
             if not ofertas:
-                w.writerow({'consultado': agora.isoformat(), 'rota': r['id'], 'ida': ida, 'volta': volta, 'fonte': 'extra'})
+                w.writerow({'consultado': agora.isoformat(), 'rota': r['id'], 'ida': ida, 'volta': volta, 'fonte': 'extra',
+                            'filtro_conexao': MAX_CONEXAO})
             resumo = ', '.join(f"{o['origem']} R$ {o['tarifa']:.0f}" for o in sorted(ofertas, key=lambda o: o['tarifa'])) or 'sem voos'
             print(f"{r['id']} {ida} a {volta}: {resumo}")
 
@@ -272,10 +281,20 @@ def main():
     gravar_json('estado.json', estado)
 
 
+def valida(l):
+    """Precos deste cliente so valem se foram coletados com o filtro de conexao atual (ou mais rigoroso)."""
+    if (l.get('fonte') or 'extra') != 'extra':
+        return True  # universidade: ainda nao informa as conexoes
+    try:
+        return 0 < int(l.get('filtro_conexao') or 0) <= MAX_CONEXAO and int(float(l.get('conexao_max_min') or 0)) <= MAX_CONEXAO
+    except ValueError:
+        return False
+
+
 def ler_historico():
     try:
         with open(P('historico.csv'), encoding='utf-8') as f:
-            linhas = [l for l in csv.DictReader(f) if l.get('tarifa')]
+            linhas = [l for l in csv.DictReader(f) if l.get('tarifa') and valida(l)]
     except FileNotFoundError:
         return []
     linhas.sort(key=lambda l: l['consultado'])
@@ -310,10 +329,23 @@ def brl(v):
     return 'R$ ' + f'{v:,.0f}'.replace(',', '.')
 
 
+def referencia(pontos, dia):
+    """Preco normal da rota ate 'dia' (exclusive), a partir dos melhores precos diarios dos ultimos JANELA_REF dias."""
+    lim = (dt.date.fromisoformat(dia) - dt.timedelta(days=JANELA_REF)).isoformat()
+    precos = [p['preco'] for p in pontos if lim <= p['dia'] < dia]
+    if len(precos) < MIN_DIAS_REF:
+        return {'dias': len(precos)}
+    normal = statistics.median(precos)
+    p25 = statistics.quantiles(precos, n=4, method='inclusive')[0]
+    return {'dias': len(precos), 'normal': round(normal), 'bom': round(min(p25, normal * 0.95)),
+            'minimo': round(min(precos)), 'maximo': round(max(precos))}
+
+
 def gerar_alertas(serie, tetos, nomes, agora):
-    """Registra (sem repetir) alertas do dia: entrou no orcamento, queda de preco e menor preco ja visto."""
-    alertas = ler_json('alertas.json', [])
-    ja = {(a['dia'], a['rota'], a['tipo']) for a in alertas}
+    """Recalcula os alertas de todos os dias: bom preco (abaixo do normal aprendido), queda, menor preco ja
+    visto e, se a rota tiver 'limite' manual, entrou no limite. Mantem o horario dos alertas ja conhecidos."""
+    antigos = {(a['dia'], a['rota'], a['tipo']): a.get('quando') for a in ler_json('alertas.json', [])}
+    alertas, ja = [], set()
     for rid, serie_rota in serie.items():
       for i in range(len(serie_rota)):  # percorre todos os dias: alertas antigos tambem entram (sem repetir)
         s = serie_rota[:i + 1]
@@ -325,7 +357,11 @@ def gerar_alertas(serie, tetos, nomes, agora):
         novos = []
         teto = tetos.get(rid)
         if teto and b['preco'] <= teto and (not ant or ant['preco'] > teto):
-            novos.append(('orcamento', f"{nome}: {brl(b['preco'])}, dentro do seu limite de {brl(teto)} ({onde})."))
+            novos.append(('orcamento', f"{nome}: {brl(b['preco'])}, dentro do limite de {brl(teto)} ({onde})."))
+        ref = referencia(serie_rota, hoje)
+        if ref.get('bom') and b['preco'] <= ref['bom'] and (not ant or ant['preco'] > ref['bom']):
+            pct = (1 - b['preco'] / ref['normal']) * 100
+            novos.append(('bom', f"{nome}: {brl(b['preco'])} é um bom preço, {pct:.0f}% abaixo do normal de {brl(ref['normal'])} ({onde})."))
         if ant and b['preco'] <= ant['preco'] * 0.97:
             pct = (1 - b['preco'] / ant['preco']) * 100
             novos.append(('queda', f"{nome}: caiu {brl(ant['preco'] - b['preco'])} ({pct:.0f}%), agora {brl(b['preco'])} ({onde})."))
@@ -333,11 +369,13 @@ def gerar_alertas(serie, tetos, nomes, agora):
         if len(anteriores) >= 3 and b['preco'] < min(anteriores):
             novos.append(('recorde', f"{nome}: {brl(b['preco'])} é o menor preço já registrado ({onde})."))
         for tipo, msg in novos:
-            if (hoje, rid, tipo) not in ja:
-                ja.add((hoje, rid, tipo))
-                alertas.append({'quando': agora.isoformat() if hoje == agora.date().isoformat() else hoje + 'T12:00:00+00:00', 'dia': hoje, 'rota': rid, 'tipo': tipo,
-                                'mensagem': msg, 'preco': b['preco']})
-                print('ALERTA', msg)
+            k = (hoje, rid, tipo)
+            if k not in ja:
+                ja.add(k)
+                quando = antigos.get(k) or (agora.isoformat() if hoje == agora.date().isoformat() else hoje + 'T12:00:00+00:00')
+                alertas.append({'quando': quando, 'dia': hoje, 'rota': rid, 'tipo': tipo, 'mensagem': msg, 'preco': b['preco']})
+                if k not in antigos:
+                    print('ALERTA', msg)
     alertas = sorted(alertas, key=lambda a: a['dia'])[-300:]
     gravar_json('alertas.json', alertas)
     return alertas
@@ -359,6 +397,8 @@ def publicar(rotas, estado, agora, falhas, saldo_final, uni=None):
         o = {'origem': org, 'destino': dst, 'tarifa': float(l['tarifa']), 'ida': ida, 'volta': volta,
              'consultado': l['consultado'], 'rota': rid, 'cia': l.get('cia') or '',
              'paradas': int(l['paradas']) if (l.get('paradas') or '').isdigit() else None}
+        if (l.get('conexao_max_min') or '').replace('.', '', 1).isdigit():
+            o['conexao_max_min'] = int(float(l['conexao_max_min']))
         if l.get('nivel_preco'):
             o['nivel'] = l['nivel_preco']
         ofertas.append(o)
@@ -375,15 +415,17 @@ def publicar(rotas, estado, agora, falhas, saldo_final, uni=None):
         pares = sum(1 for _ in candidatos(r, agora.date()))
         recentes = sum(1 for k, v in estado.get('ultimo', {}).items() if k.startswith(r['id'] + '|')
                        and (agora - dt.datetime.fromisoformat(v)).days < 15)
-        rotas_pub.append({k: r[k] for k in ('id', 'nome', 'origens', 'destinos', 'inicio', 'fim', 'min', 'max', 'teto')}
+        rotas_pub.append({k: r[k] for k in ('id', 'nome', 'origens', 'destinos', 'inicio', 'fim', 'min', 'max') if k in r}
+                         | ({'limite': r['limite']} if r.get('limite') else {})
                          | {'cobertura': {'pares': pares, 'com_preco_recente': min(recentes, pares)}})
 
     serie = melhor_por_dia(linhas)
-    tetos = {r['id']: r.get('teto') for r in rotas}
+    tetos = {r['id']: r.get('limite') for r in rotas}  # so existe se voce definir um 'limite' em rotas.json
     nomes = {r['id']: r['nome'] for r in rotas}
     for r in (uni or {}).get('rotas', []):
-        tetos.setdefault(r['id'], r.get('teto'))
         nomes.setdefault(r['id'], r.get('nome', r['id']))
+    amanha = (agora.date() + dt.timedelta(days=1)).isoformat()
+    referencias = {rid: referencia(s, amanha) for rid, s in serie.items()}
     alertas = gerar_alertas(serie, tetos, nomes, agora)
     proxima = agora.replace(hour=12, minute=15, second=0)
     if proxima <= agora:
@@ -392,6 +434,7 @@ def publicar(rotas, estado, agora, falhas, saldo_final, uni=None):
         'versao': 1, 'moeda': 'BRL', 'fonte': 'extra', 'atualizado': agora.isoformat(),
         'rotas': rotas_pub, 'ofertas': ofertas, 'falhas': falhas, 'anteriorMinimo': min_ant, 'saldo': saldo_final,
         'serie': serie, 'alertas': alertas[-60:], 'proxima': proxima.isoformat(),
+        'referencias': referencias, 'conexao_max_min': MAX_CONEXAO,
     })
     print(f'precos-extra.json: {len(ofertas)} ofertas, historico de {len(serie)} destinos, {len(alertas)} alertas.')
 

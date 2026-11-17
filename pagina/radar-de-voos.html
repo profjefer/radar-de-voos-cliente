@@ -28,7 +28,7 @@ abbr[title]{text-decoration:underline dotted #7f9eab;text-underline-offset:4px;c
 .aviso{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;background:var(--field);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer}
 .aviso:hover{border-color:#4a6b7a}
 .aviso .icone{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:1.25rem;font-weight:800}
-.aviso.orcamento .icone{background:#173f33;color:var(--mint)}
+.aviso.orcamento .icone,.aviso.bom .icone{background:#173f33;color:var(--mint)}
 .aviso.queda .icone{background:#173a4a;color:var(--blue)}
 .aviso.recorde .icone{background:#4a3c17;color:var(--amber)}
 .aviso .quando{display:block;font-size:.85rem;color:var(--muted)}
@@ -43,6 +43,8 @@ abbr[title]{text-decoration:underline dotted #7f9eab;text-underline-offset:4px;c
 .selo{justify-self:start;margin-top:6px;padding:3px 12px;border-radius:999px;font-size:.82rem;font-weight:800}
 .selo.ok{background:#173f33;color:var(--mint)}
 .selo.acima{background:#45351a;color:var(--amber)}
+.selo.normal{background:#1b3a49;color:var(--blue)}
+.selo.aprendendo{background:#22313a;color:var(--muted)}
 .velho{font-size:.85rem;font-weight:700;color:var(--amber)}
 .tend{font-size:.88rem;font-weight:700}.tend.desce{color:var(--mint)}.tend.sobe{color:var(--red)}
 .resumo{font-size:1.15rem;line-height:1.75;color:var(--text);margin:10px 0 16px}
@@ -75,14 +77,14 @@ details{margin-top:14px}summary{cursor:pointer;color:var(--blue);font-weight:700
 
 <section class="panel" aria-labelledby="t-avisos">
 <h2 id="t-avisos">Avisos</h2>
-<p>Aparecem aqui quando um preço fica dentro do seu limite, cai em relação ao dia anterior ou bate o menor valor já visto. Toque num aviso para ver o destino.</p>
+<p>Aparecem aqui quando um preço fica <strong>abaixo do normal</strong> para aquele destino, cai em relação ao dia anterior ou bate o menor valor já visto. Toque num aviso para ver o destino.</p>
 <ul class="avisos" id="avisos"></ul>
 <div class="acoes"><button type="button" id="mais-avisos" hidden>Ver avisos mais antigos</button></div>
 </section>
 
 <section class="panel" aria-labelledby="t-destinos">
 <h2 id="t-destinos">Seus destinos</h2>
-<p>Toque em um destino para ver as melhores datas e como o preço mudou. Preços <strong>por pessoa, ida e volta</strong>, classe econômica.</p>
+<p>Toque em um destino para ver as melhores datas e como o preço mudou. Preços <strong>por pessoa, ida e volta</strong>, classe econômica, só com conexões de <strong>até 4 horas</strong>. O “preço normal” de cada destino é aprendido com o histórico.</p>
 <div class="cartoes" id="cartoes" role="group" aria-label="Destinos monitorados"></div>
 </section>
 
@@ -116,7 +118,7 @@ details{margin-top:14px}summary{cursor:pointer;color:var(--blue);font-weight:700
 </div>
 <details>
 <summary>Como funciona</summary>
-<p style="margin-top:10px">Dois robôs consultam o Google Voos: um no computador da UFPR (Buenos Aires, Nordeste e Guatemala) e outro no GitHub, todo dia às 9h15 (João Pessoa, Porto de Galinhas, Playa Mujeres, Bogotá e San Andrés). A conta gratuita permite 250 consultas por mês para os dois juntos, por isso cada destino é verificado algumas datas por vez. O histórico e os avisos de todos os destinos ficam guardados no GitHub. Os preços mudam a qualquer momento: confira no Google Voos antes de comprar.</p>
+<p style="margin-top:10px">Dois robôs consultam o Google Voos: um no computador da UFPR (Buenos Aires, Nordeste e Guatemala) e outro no GitHub, todo dia às 9h15 (João Pessoa, Porto de Galinhas, Playa Mujeres, Bogotá e San Andrés). A conta gratuita permite 250 consultas por mês para os dois juntos, por isso cada destino é verificado algumas datas por vez. O histórico e os avisos de todos os destinos ficam guardados no GitHub. Voos com alguma conexão de mais de 4 horas são descartados. O “preço normal” é a mediana dos menores preços diários dos últimos 45 dias (precisa de pelo menos 5 dias de coleta); “bom preço” é ficar entre os 25% mais baratos desse período e pelo menos 5% abaixo do normal. Os preços mudam a qualquer momento: confira no Google Voos antes de comprar.</p>
 </details>
 </footer>
 </main>
@@ -150,6 +152,7 @@ const semanaCurta = iso => dt(iso).toLocaleDateString('pt-BR', {weekday:'short'}
 const noites = (a, b) => Math.round((dt(b) - dt(a)) / DIA);
 const idade = iso => iso ? Math.floor((Date.now() - Date.parse(iso)) / DIA) : 0;
 const haDias = n => n <= 0 ? 'hoje' : n === 1 ? 'ontem' : `há ${n} dias`;
+const espera = o => o.paradas > 0 && Number.isFinite(o.conexao_max_min) ? ` (espera de até ${Math.floor(o.conexao_max_min / 60)}h${String(o.conexao_max_min % 60).padStart(2, '0')})` : '';
 const conexoes = p => p === 0 ? 'direto' : `${p} ${p === 1 ? 'conexão' : 'conexões'}`;
 
 function el(tag, texto, classe) {
@@ -211,7 +214,7 @@ async function carregar() {
     $('estado').replaceChildren(el('span', 'Não foi possível carregar os preços agora. Tente de novo mais tarde.', 'erro'));
     return;
   }
-  const J = {rotas:[], ofertas:[], serie:{}, alertas:[], atualizado:null, saldo:null, proxima:null};
+  const J = {rotas:[], ofertas:[], serie:{}, alertas:[], referencias:{}, atualizado:null, saldo:null, proxima:null};
   const ids = new Set();
   for (const d of ok.sort((a, b) => Date.parse(a.atualizado) - Date.parse(b.atualizado))) {
     for (const r of d.rotas || []) if (!ids.has(r.id)) { ids.add(r.id); J.rotas.push(r); }
@@ -219,6 +222,7 @@ async function carregar() {
       Number.isFinite(o.tarifa) && o.tarifa > 0 && o.ida > hojeISO()));
     if (d.serie && !Array.isArray(d.serie)) for (const [k, v] of Object.entries(d.serie)) if (Array.isArray(v) && v[0]?.dia) J.serie[k] = v;
     J.alertas.push(...(Array.isArray(d.alertas) ? d.alertas : []));
+    if (d.referencias && typeof d.referencias === 'object') Object.assign(J.referencias, d.referencias);
     J.atualizado = d.atualizado;
     if (Number.isInteger(d.saldo)) J.saldo = d.saldo;
     if (d.proxima) J.proxima = d.proxima;
@@ -247,7 +251,7 @@ function render() {
 }
 
 function renderAvisos() {
-  const icones = {orcamento:'✓', queda:'▼', recorde:'★'};
+  const icones = {orcamento:'✓', bom:'✓', queda:'▼', recorde:'★'};
   const lista = D.alertas.slice(0, nAvisos);
   if (!lista.length) {
     $('avisos').replaceChildren(el('li', 'Nenhum aviso ainda. Eles aparecem quando os preços mudarem.', 'vazio-msg'));
@@ -270,6 +274,16 @@ function renderAvisos() {
 }
 
 const melhorDe = r => D.ofertas.find(o => o.rota === r.id);
+const refDe = r => D.referencias[r.id] || {};
+const limiteDe = r => Number.isFinite(r.limite) ? r.limite : null;  // so se voce definir em rotas.json
+function selo(r, preco) {  // compara com o preco normal aprendido do historico
+  const ref = refDe(r);
+  if (!Number.isFinite(ref.normal)) return el('span', `Aprendendo o preço normal (${ref.dias || 0} de 5 dias)`, 'selo aprendendo');
+  const pct = Math.round((preco / ref.normal - 1) * 100);
+  if (preco <= ref.bom) return el('span', `Bom preço: ${-pct}% abaixo do normal`, 'selo ok');
+  if (pct <= 5) return el('span', 'Preço normal', 'selo normal');
+  return el('span', `${pct}% acima do normal`, 'selo acima');
+}
 function referencia(r) {  // preco de uns 7 dias atras, para mostrar a tendencia
   const s = D.serie[r.id] || [];
   const alvo = new Date(Date.now() - 7 * DIA).toISOString().slice(0, 10);
@@ -293,8 +307,7 @@ function renderCartoes() {
         const caiu = m.tarifa < ref.preco;
         b.append(el('span', `${caiu ? '▼' : '▲'} ${reais.format(Math.abs(ref.preco - m.tarifa))} desde ${dataBR(ref.dia)}`, 'tend ' + (caiu ? 'desce' : 'sobe')));
       }
-      if (Number.isFinite(r.teto)) b.append(m.tarifa <= r.teto ? el('span', 'Dentro do seu limite', 'selo ok')
-        : el('span', `${reais.format(m.tarifa - r.teto)} acima do limite`, 'selo acima'));
+      b.append(selo(r, m.tarifa));
     }
     b.addEventListener('click', () => escolher(r.id, true));
     return b;
@@ -325,11 +338,15 @@ function renderDetalhe() {
     resumo.append('O menor preço encontrado é ', el('span', reais.format(m.tarifa), 'grande'),
       ' por pessoa, saindo de ', el('strong', cidade(m.origem)),
       ` na ${semana(m.ida)}, ${dataBR(m.ida)}, e voltando na ${semana(m.volta)}, ${dataBR(m.volta)} (${noites(m.ida, m.volta)} noites).`);
-    if (m.cia) resumo.append(` Voo ${m.cia}${Number.isInteger(m.paradas) ? ', ' + conexoes(m.paradas) : ''}.`);
+    if (m.cia) resumo.append(` Voo ${m.cia}${Number.isInteger(m.paradas) ? ', ' + conexoes(m.paradas) : ''}${espera(m)}.`);
     if (idade(m.consultado) >= 4) resumo.append(el('br'), el('span', `Atenção: este preço foi visto ${haDias(idade(m.consultado))} e pode ter mudado. Confira no Google Voos.`, 'velho'));
-    if (Number.isFinite(r.teto)) resumo.append(el('br'), m.tarifa <= r.teto
-      ? `Seu limite é ${reais.format(r.teto)}: este preço está dentro dele.`
-      : `Seu limite é ${reais.format(r.teto)}: ainda faltam ${reais.format(m.tarifa - r.teto)} para chegar lá.`);
+    const ref = refDe(r);
+    if (Number.isFinite(ref.normal)) resumo.append(el('br'), `Preço normal deste destino: ${reais.format(ref.normal)} ` +
+      `(nos últimos ${ref.dias} dias de coleta variou de ${reais.format(ref.minimo)} a ${reais.format(ref.maximo)}). ` +
+      `Abaixo de ${reais.format(ref.bom)} é bom preço. `, selo(r, m.tarifa));
+    else resumo.append(el('br'), `Ainda aprendendo qual é o preço normal: ${ref.dias || 0} de 5 dias de coleta.`);
+    if (limiteDe(r)) resumo.append(el('br'), m.tarifa <= limiteDe(r) ? `Dentro do seu limite de ${reais.format(limiteDe(r))}.`
+      : `Faltam ${reais.format(m.tarifa - limiteDe(r))} para o seu limite de ${reais.format(limiteDe(r))}.`);
     $('acoes-detalhe').append(linkVoo(m, 'Ver este voo no Google Voos', 'principal'));
   }
   renderGrafico(r);
@@ -339,7 +356,7 @@ function renderDetalhe() {
     const ida = el('td', `${semanaCurta(o.ida)}, ${dataBR(o.ida)}`); ida.append(el('small', `${noites(o.ida, o.volta)} noites`));
     const volta = el('td', `${semanaCurta(o.volta)}, ${dataBR(o.volta)}`);
     const voo = el('td', o.cia || '—');
-    if (Number.isInteger(o.paradas)) voo.append(el('small', conexoes(o.paradas)));
+    if (Number.isInteger(o.paradas)) voo.append(el('small', conexoes(o.paradas) + espera(o)));
     const preco = el('td', reais.format(o.tarifa), 'preco');
     if (o.consultado) preco.append(el('small', 'visto ' + quando(o.consultado)));
     const acao = el('td'); const a = linkVoo(o, 'Abrir');
@@ -357,7 +374,7 @@ function renderDetalhe() {
   const lista = cs => (cs || []).map(c => `${cidade(c)} (${c})`).join(', ');
   $('config').textContent = `Saídas de ${lista(r.origens)} para ${lista(r.destinos)}. Ida entre ${dataBR(r.inicio)} e ${dataBR(r.fim)}, ` +
     `${r.min === r.max ? r.min : r.min + ' a ' + r.max} noites.` +
-    (Number.isFinite(r.teto) ? ` Avisar abaixo de ${reais.format(r.teto)}.` : '') +
+    ' Só voos com conexões de até 4 horas.' + (limiteDe(r) ? ` Seu limite: ${reais.format(limiteDe(r))}.` : '') +
     (cob && Number.isInteger(cob.pares) ? ` Combinações de datas verificadas recentemente: ${cob.com_preco_recente} de ${cob.pares}.` : '');
 }
 
@@ -369,7 +386,8 @@ function renderGrafico(r) {
     return;
   }
   const W = 900, H = 270, m = {l:84, r:18, t:16, b:36};
-  const vals = s.map(p => p.preco).concat(Number.isFinite(r.teto) ? [r.teto] : []);
+  const normal = refDe(r).normal;
+  const vals = s.map(p => p.preco).concat(Number.isFinite(normal) ? [normal] : []);
   let lo = Math.min(...vals), hi = Math.max(...vals);
   const folga = Math.max((hi - lo) * 0.15, hi * 0.05); lo = Math.max(0, lo - folga); hi += folga;
   const t0 = dt(s[0].dia).getTime(), t1 = dt(s.at(-1).dia).getTime();
@@ -388,7 +406,7 @@ function renderGrafico(r) {
   }
   const passo = Math.max(1, Math.ceil(s.length / 8));
   s.forEach((p, i) => { if (i % passo === 0 || i === s.length - 1) add('text', {x:x(p.dia), y:H - 10, 'text-anchor':'middle'}, dataBR(p.dia)); });
-  if (Number.isFinite(r.teto)) add('line', {x1:m.l, x2:W - m.r, y1:y(r.teto), y2:y(r.teto), stroke:'#ffd27a', 'stroke-width':2, 'stroke-dasharray':'7 6'});
+  if (Number.isFinite(normal)) add('line', {x1:m.l, x2:W - m.r, y1:y(normal), y2:y(normal), stroke:'#ffd27a', 'stroke-width':2, 'stroke-dasharray':'7 6'});
   add('path', {d:s.map((p, i) => `${i ? 'L' : 'M'}${x(p.dia).toFixed(1)},${y(p.preco).toFixed(1)}`).join(' '), fill:'none', stroke:'#7df2c3', 'stroke-width':3, 'stroke-linejoin':'round'});
   for (const p of s) {
     const c = add('circle', {cx:x(p.dia), cy:y(p.preco), r:6, fill:'#0c1d28', stroke:'#7df2c3', 'stroke-width':2.5});
@@ -399,7 +417,7 @@ function renderGrafico(r) {
   const leg = el('div', null, 'legenda');
   const l1 = el('span'); l1.append(el('i'), 'menor preço encontrado em cada dia (passe o mouse nos pontos)');
   leg.append(l1);
-  if (Number.isFinite(r.teto)) { const l2 = el('span'); l2.append(el('i', null, 'teto'), `seu limite (${reais.format(r.teto)})`); leg.append(l2); }
+  if (Number.isFinite(normal)) { const l2 = el('span'); l2.append(el('i', null, 'teto'), `preço normal (${reais.format(normal)})`); leg.append(l2); }
   caixa.replaceChildren(svg, leg);
 }
 
