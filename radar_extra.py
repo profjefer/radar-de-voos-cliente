@@ -80,29 +80,56 @@ def candidatos(rota, hoje):
         d += dt.timedelta(days=passo)
 
 
+JANELA_USO = 14  # dias usados para dividir a cota entre as rotas
+
+
+def uso_recente(estado, rid, agora):
+    """Quantas consultas a rota recebeu nos ultimos JANELA_USO dias."""
+    lim = agora - dt.timedelta(days=JANELA_USO)
+    return sum(1 for t in estado.get('consultas', {}).get(rid, []) if dt.datetime.fromisoformat(t) >= lim)
+
+
+def registrar_consulta(estado, rid, agora):
+    lim = agora - dt.timedelta(days=JANELA_USO)
+    lst = [t for t in estado.setdefault('consultas', {}).get(rid, []) if dt.datetime.fromisoformat(t) >= lim]
+    estado['consultas'][rid] = lst + [agora.isoformat()]
+
+
 def escolher(rotas, estado, quantos, hoje, agora):
-    """Escolhe as combinacoes ha mais tempo sem consulta, ponderadas pela prioridade da rota."""
+    """1) Divide a cota entre as rotas na proporcao do 'peso' (a rota com menos consultas recentes
+    por unidade de peso e a proxima a ser atendida); 2) dentro da rota, pega a combinacao de datas
+    nunca vista ou ha mais tempo sem consulta, preferindo datas proximas e a data 'preferida'."""
     ultimo = estado.setdefault('ultimo', {})
-    opcoes = []
+    if 'consultas' not in estado:  # estado antigo: reconstroi o uso a partir das ultimas consultas
+        estado['consultas'] = {}
+        for k, v in ultimo.items():
+            estado['consultas'].setdefault(k.split('|')[0], []).append(v)
+    por_rota = {}
     for r in rotas:
+        ops = []
         for ida, volta in candidatos(r, hoje):
             chave = f"{r['id']}|{ida}|{volta}"
             visto = ultimo.get(chave)
-            horas = 10000 if not visto else (agora - dt.datetime.fromisoformat(visto)).total_seconds() / 3600
-            if horas < 20:  # nunca repete a mesma combinacao no mesmo dia
+            horas = None if not visto else (agora - dt.datetime.fromisoformat(visto)).total_seconds() / 3600
+            if horas is not None and horas < 20:  # nunca repete a mesma combinacao no mesmo dia
                 continue
             proximidade = 1 + 1 / (1 + (dt.date.fromisoformat(ida) - hoje).days / 30)  # datas proximas mudam mais
             if r.get('preferida'):  # data desejada vem primeiro; vizinhas logo depois
                 proximidade *= 1 + 2 / (1 + abs((dt.date.fromisoformat(ida) - dt.date.fromisoformat(r['preferida'])).days))
-            opcoes.append([horas * r.get('peso', 1) * proximidade, r, ida, volta, chave])
-    escolhidas, usadas = [], {}
-    while opcoes and len(escolhidas) < quantos:
-        for o in opcoes:  # espalha entre as rotas
-            o[0] /= 1 + usadas.get(o[1]['id'], 0)
-        opcoes.sort(key=lambda o: -o[0])
-        o = opcoes.pop(0)
-        escolhidas.append(o)
-        usadas[o[1]['id']] = usadas.get(o[1]['id'], 0) + 1
+            # nunca consultada vem antes de qualquer outra; depois, a mais antiga (ponderada pela proximidade)
+            ops.append([(horas is None, (horas or 0) * proximidade, proximidade), r, ida, volta, chave])
+        if ops:
+            ops.sort(key=lambda o: o[0], reverse=True)
+            por_rota[r['id']] = ops
+    uso = {rid: uso_recente(estado, rid, agora) for rid in por_rota}
+    peso = {r['id']: max(0.1, float(r.get('peso', 1))) for r in rotas}
+    escolhidas = []
+    while por_rota and len(escolhidas) < quantos:
+        rid = min(por_rota, key=lambda i: ((uso[i] + 0.5) / peso[i], -peso[i]))
+        escolhidas.append(por_rota[rid].pop(0))
+        uso[rid] += 1
+        if not por_rota[rid]:
+            del por_rota[rid]
     return escolhidas
 
 
@@ -229,6 +256,7 @@ def main():
                 continue
             estado['gastas_mes'] += 1
             estado['ultimo'][k] = agora.isoformat()
+            registrar_consulta(estado, r['id'], agora)
             faixa = pi.get('typical_price_range') or [None, None]
             for o in ofertas:
                 w.writerow({'consultado': agora.isoformat(), 'rota': r['id'], **{c: o.get(c) for c in CAMPOS[2:10]},
@@ -254,7 +282,7 @@ def ler_historico():
     return linhas
 
 
-def melhor_por_dia(linhas, validade=10):
+def melhor_por_dia(linhas, validade=21):
     """Para cada rota e cada dia: o menor preco conhecido naquele dia, usando a observacao mais
     recente de cada combinacao de datas (vista nos ultimos `validade` dias e com ida ainda futura)."""
     por_rota = {}

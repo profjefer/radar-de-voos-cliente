@@ -43,6 +43,7 @@ abbr[title]{text-decoration:underline dotted #7f9eab;text-underline-offset:4px;c
 .selo{justify-self:start;margin-top:6px;padding:3px 12px;border-radius:999px;font-size:.82rem;font-weight:800}
 .selo.ok{background:#173f33;color:var(--mint)}
 .selo.acima{background:#45351a;color:var(--amber)}
+.velho{font-size:.85rem;font-weight:700;color:var(--amber)}
 .tend{font-size:.88rem;font-weight:700}.tend.desce{color:var(--mint)}.tend.sobe{color:var(--red)}
 .resumo{font-size:1.15rem;line-height:1.75;color:var(--text);margin:10px 0 16px}
 .resumo .grande{font-size:1.6rem;font-weight:800;color:var(--mint)}
@@ -147,6 +148,8 @@ const dataBR = iso => dt(iso).toLocaleDateString('pt-BR', {day:'2-digit', month:
 const semana = iso => dt(iso).toLocaleDateString('pt-BR', {weekday:'long'}).replace('-feira', '');
 const semanaCurta = iso => dt(iso).toLocaleDateString('pt-BR', {weekday:'short'}).replace('.', '');
 const noites = (a, b) => Math.round((dt(b) - dt(a)) / DIA);
+const idade = iso => iso ? Math.floor((Date.now() - Date.parse(iso)) / DIA) : 0;
+const haDias = n => n <= 0 ? 'hoje' : n === 1 ? 'ontem' : `há ${n} dias`;
 const conexoes = p => p === 0 ? 'direto' : `${p} ${p === 1 ? 'conexão' : 'conexões'}`;
 
 function el(tag, texto, classe) {
@@ -284,6 +287,7 @@ function renderCartoes() {
     else {
       b.append(el('span', reais.format(m.tarifa), 'preco'));
       b.append(el('small', `saindo de ${cidade(m.origem)} · ${dataBR(m.ida)} a ${dataBR(m.volta)}`));
+      if (idade(m.consultado) >= 4) b.append(el('span', `preço visto ${haDias(idade(m.consultado))}`, 'velho'));
       const ref = referencia(r);
       if (ref && Math.abs(ref.preco - m.tarifa) >= 1) {
         const caiu = m.tarifa < ref.preco;
@@ -318,10 +322,11 @@ function renderDetalhe() {
   $('acoes-detalhe').replaceChildren();
   if (!m) resumo.append('Este destino ainda não tem preços. A primeira coleta acontece nos próximos dias.');
   else {
-    resumo.append('O menor preço agora é ', el('span', reais.format(m.tarifa), 'grande'),
+    resumo.append('O menor preço encontrado é ', el('span', reais.format(m.tarifa), 'grande'),
       ' por pessoa, saindo de ', el('strong', cidade(m.origem)),
       ` na ${semana(m.ida)}, ${dataBR(m.ida)}, e voltando na ${semana(m.volta)}, ${dataBR(m.volta)} (${noites(m.ida, m.volta)} noites).`);
     if (m.cia) resumo.append(` Voo ${m.cia}${Number.isInteger(m.paradas) ? ', ' + conexoes(m.paradas) : ''}.`);
+    if (idade(m.consultado) >= 4) resumo.append(el('br'), el('span', `Atenção: este preço foi visto ${haDias(idade(m.consultado))} e pode ter mudado. Confira no Google Voos.`, 'velho'));
     if (Number.isFinite(r.teto)) resumo.append(el('br'), m.tarifa <= r.teto
       ? `Seu limite é ${reais.format(r.teto)}: este preço está dentro dele.`
       : `Seu limite é ${reais.format(r.teto)}: ainda faltam ${reais.format(m.tarifa - r.teto)} para chegar lá.`);
