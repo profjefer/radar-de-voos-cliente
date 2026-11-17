@@ -3,940 +3,404 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Radar de Voos | Oeste do Paraná</title>
+<title>Radar de Voos</title>
 <style>
-:root{color-scheme:dark;--bg:#0a161f;--panel:#112431;--field:#0b1b26;--line:#314753;--text:#eff7f9;--muted:#b4c8d1;--mint:#79f1c0;--blue:#9dd4ff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 82% 0%,#174354 0%,transparent 39%) no-repeat,var(--bg);min-height:100vh;color:var(--text);font:16px/1.55 system-ui,sans-serif}main{width:min(1150px,94%);margin:auto;padding:48px 0}header{margin-bottom:30px}.tag{color:var(--mint);font-size:.77rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase}h1{font-size:clamp(2.7rem,7vw,5rem);line-height:1;margin:12px 0;letter-spacing:-.065em}h2{font-size:1.45rem;margin:0 0 8px}h3{margin:0;font-size:1rem}p{margin:0 0 14px;color:var(--muted)}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;margin:18px 0}.grid{display:grid;align-items:end;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:14px}.layout{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}.layout .panel{margin:0}.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px}label{display:grid;gap:5px;font-size:.86rem;font-weight:650}input,select,button,.button{font:inherit;border-radius:9px}input,select{width:100%;min-width:0;background:var(--field);color:var(--text);border:1px solid var(--line);padding:9px 10px}button,.button{touch-action:manipulation;background:#193544;border:1px solid #466473;color:var(--text);padding:8px 13px;cursor:pointer;text-decoration:none;font-size:.9rem;font-weight:700}button.primary{background:var(--mint);border-color:var(--mint);color:#09271d}a{color:var(--blue)}:focus-visible{outline:3px solid var(--blue);outline-offset:3px}.airport{border:1px solid var(--line);border-radius:12px;padding:13px;background:var(--field)}.airport small,.sub{display:block;color:var(--muted)}.airport .button{display:inline-block;margin-top:10px}.chip{display:inline-block;padding:2px 9px;border-radius:999px;background:#1a4439;color:#a0f8d5;font-size:.8rem;font-weight:750}.mode{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--muted);font-size:.83rem}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;text-align:left;min-width:660px}th,td{padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}th{font-size:.78rem;color:var(--muted)}td{font-size:.9rem}.status{margin:12px 0 0;min-height:1.4em;color:var(--mint)}.status.error{color:#ffbcac}details{margin-top:16px}summary{cursor:pointer;color:var(--blue)}code{color:var(--mint)}td.vazio{color:var(--muted);white-space:normal}[hidden]{display:none!important}@media(max-width:740px){main{padding:28px 0}.layout{grid-template-columns:1fr}.panel{padding:16px}}
-.airport.destaque{border-color:var(--mint)}.airport .chip{margin:5px 4px 0 0}.airport .actions{margin-top:4px}.airport .actions button{margin-top:10px} #links-combinacao{width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
-abbr[title]{text-decoration:underline dotted #6f8f9c;text-underline-offset:3px;cursor:help}
-.rotas-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:10px;margin:14px 0 6px}
-.rota-card{text-align:left;display:grid;gap:2px;background:var(--field);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:600}
-.rota-card:hover{border-color:#5b7c8a}.rota-card[aria-pressed="true"]{border-color:var(--mint);box-shadow:0 0 0 1px var(--mint) inset}
-.rota-card .preco{font-size:1.25rem;font-weight:800;color:var(--text)}.rota-card .preco.vazio{font-size:.95rem;font-weight:600;color:var(--muted)}.rota-card .chip,.rota-card .tend{justify-self:start}.rota-card small{color:var(--muted);font-weight:500}
-.rota-card .tend{font-size:.8rem;font-weight:700}.sobe{color:#ffbcac}.desce{color:var(--mint)}
-.chip.baixo{background:#1a4439;color:#a0f8d5}.chip.alto{background:#4a2a24;color:#ffcbbd}.chip.tipico{background:#2a3a44;color:#cfe3ec}
-.legenda{font-size:.82rem;color:var(--muted)}
-details.planejador>summary{font-size:1.15rem;font-weight:700;color:var(--text)}
+:root{color-scheme:dark;--bg:#0a161f;--panel:#112431;--field:#0c1d28;--line:#2f4552;--text:#f2f8fa;--muted:#bcd0d8;--mint:#7df2c3;--blue:#a6d8ff;--amber:#ffd27a;--red:#ffb4a3}
+*{box-sizing:border-box}
+html{font-size:19px}
+body{margin:0;background:radial-gradient(ellipse at 85% 0%,#174354 0%,transparent 40%) no-repeat,var(--bg);min-height:100vh;color:var(--text);font:1rem/1.6 system-ui,"Segoe UI",sans-serif}
+main{width:min(1100px,100% - 32px);margin:auto;padding:40px 0 60px}
+h1{font-size:clamp(2.4rem,6vw,3.6rem);line-height:1.05;margin:0 0 8px;letter-spacing:-.04em}
+h2{font-size:1.5rem;margin:0 0 6px}
+h3{font-size:1.15rem;margin:24px 0 8px}
+p{margin:0 0 12px;color:var(--muted)}
+a{color:var(--blue)}
+strong{color:var(--text)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px;margin:20px 0}
+.estado{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.92rem;color:var(--muted);margin-top:10px}
+.estado span+span::before{content:"• ";color:var(--mint)}
+button,.botao{font:inherit;font-weight:700;font-size:.95rem;border-radius:12px;padding:11px 18px;background:#1b3a49;border:1px solid #4a6b7a;color:var(--text);cursor:pointer;text-decoration:none;display:inline-block}
+.botao.principal{background:var(--mint);border-color:var(--mint);color:#08261b}
+button:hover,.botao:hover{filter:brightness(1.15)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+abbr[title]{text-decoration:underline dotted #7f9eab;text-underline-offset:4px;cursor:help}
+.avisos{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.aviso{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;background:var(--field);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer}
+.aviso:hover{border-color:#4a6b7a}
+.aviso .icone{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:1.25rem;font-weight:800}
+.aviso.orcamento .icone{background:#173f33;color:var(--mint)}
+.aviso.queda .icone{background:#173a4a;color:var(--blue)}
+.aviso.recorde .icone{background:#4a3c17;color:var(--amber)}
+.aviso .quando{display:block;font-size:.85rem;color:var(--muted)}
+.novo{display:inline-block;margin-left:8px;padding:1px 9px;border-radius:999px;background:var(--amber);color:#2a1d00;font-size:.75rem;font-weight:800;vertical-align:2px}
+.cartoes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px;margin-top:16px}
+.cartao{text-align:left;display:grid;gap:4px;align-content:start;background:var(--field);border:2px solid var(--line);border-radius:16px;padding:16px 18px;font-weight:600}
+.cartao[aria-pressed="true"]{border-color:var(--mint)}
+.cartao .nome{font-size:1.1rem}
+.cartao .preco{font-size:1.7rem;font-weight:800;line-height:1.2}
+.cartao .preco.vazio{font-size:1rem;color:var(--muted);font-weight:600}
+.cartao small{color:var(--muted);font-weight:500;font-size:.88rem}
+.selo{justify-self:start;margin-top:6px;padding:3px 12px;border-radius:999px;font-size:.82rem;font-weight:800}
+.selo.ok{background:#173f33;color:var(--mint)}
+.selo.acima{background:#45351a;color:var(--amber)}
+.tend{font-size:.88rem;font-weight:700}.tend.desce{color:var(--mint)}.tend.sobe{color:var(--red)}
+.resumo{font-size:1.15rem;line-height:1.75;color:var(--text);margin:10px 0 16px}
+.resumo .grande{font-size:1.6rem;font-weight:800;color:var(--mint)}
+.acoes{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+.grafico{width:100%;height:auto;display:block;margin-top:8px}
+.grafico text{fill:var(--muted);font-size:14px}
+.legenda{display:flex;flex-wrap:wrap;gap:16px;font-size:.88rem;color:var(--muted);margin-top:6px}
+.legenda i{display:inline-block;width:22px;height:0;border-top:3px solid var(--mint);vertical-align:middle;margin-right:6px}
+.legenda i.teto{border-top:2px dashed var(--amber)}
+.tabela{overflow-x:auto;margin-top:6px}
+table{width:100%;border-collapse:collapse;min-width:640px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.85rem;color:var(--muted);font-weight:700}
+td small{display:block;color:var(--muted);font-size:.85rem}
+td.preco{font-weight:800;font-size:1.08rem;white-space:nowrap}
+.vazio-msg{color:var(--muted);font-style:italic}
+details{margin-top:14px}summary{cursor:pointer;color:var(--blue);font-weight:700}
+.erro{color:var(--red)}
+@media (max-width:640px){html{font-size:18px}.panel{padding:18px}.aviso{grid-template-columns:36px 1fr}.aviso .icone{width:36px;height:36px;font-size:1rem}}
 </style>
 </head>
 <body>
 <main>
 <header>
-<div class="tag">Oeste do Paraná · Brasil, Argentina e destinos internacionais</div>
 <h1>Radar de Voos</h1>
-<p>Compare datas e aeroportos para descobrir de onde compensa sair.</p>
-<span class="mode">Monitoramento diário de preços · histórico · alertas de orçamento</span>
+<p>Acompanha <strong>todo dia</strong> o preço das passagens para os seus destinos, guarda o histórico e avisa quando o preço baixa.</p>
+<div class="estado" id="estado" role="status" aria-live="polite"><span>Carregando preços…</span></div>
 </header>
-<section class="panel" aria-labelledby="titulo-automatico">
-<h2 id="titulo-automatico">Destinos monitorados</h2>
-<p>Coleta automática diária do Google Voos (1 adulto, econômica, ida e volta). Escolha um destino para ver as melhores datas. Passe o mouse sobre as siglas para ver o aeroporto.</p>
-<div id="rotas-cards" class="rotas-cards" role="group" aria-label="Destinos monitorados"></div>
-<p id="busca-exibida"></p>
-<p id="queda-preco"></p>
-<p class="legenda">Ordenado pelo menor preço. Valores coletados automaticamente: confira bagagem e preço final no Google Voos antes de comprar.</p>
-<div class="actions"><label id="precos-rota-campo" hidden>Destino monitorado<select id="precos-rota"></select></label><button type="button" id="carregar-precos">Recarregar preços publicados</button></div>
-<p id="precos-status" class="status" role="status" aria-live="polite"></p>
-<div id="precos-ofertas" class="scroll" hidden>
-<table><thead><tr><th>Trecho</th><th>Ida e volta</th><th>Voo</th><th>Tarifa por adulto</th><th>Ações</th></tr></thead><tbody id="precos-linhas"></tbody></table>
-<div class="actions"><button type="button" id="mais-precos" hidden>Mostrar mais datas</button></div>
-</div>
+
+<section class="panel" aria-labelledby="t-avisos">
+<h2 id="t-avisos">Avisos</h2>
+<p>Aparecem aqui quando um preço fica dentro do seu limite, cai em relação ao dia anterior ou bate o menor valor já visto. Toque num aviso para ver o destino.</p>
+<ul class="avisos" id="avisos"></ul>
+<div class="acoes"><button type="button" id="mais-avisos" hidden>Ver avisos mais antigos</button></div>
 </section>
-<section class="panel" aria-labelledby="titulo-janela">
-<details class="planejador"><summary id="titulo-janela">Planejar uma busca manual (outra viagem)</summary>
-<p>Escolha quando pode viajar e quantas noites deseja ficar. Padrão de sete noites, com duração entre 3 e 15. A janela pode abranger até 60 dias.</p>
-<form id="planejar">
-<div class="grid">
-<label>Destino<input name="destino" required maxlength="80" placeholder="Ex.: Buenos Aires ou BUE" list="destinos"></label>
-<label>A partir de<input name="inicio" type="date" required></label>
-<label>Até<input name="fim" type="date" required></label>
-<label>Mínimo de noites<input name="min" type="number" min="3" max="15" value="7" required></label>
-<label>Máximo de noites<input name="max" type="number" min="3" max="15" value="7" required></label>
-<label>Teto da passagem (R$ por pessoa)<input name="teto" type="number" min="0.01" step="0.01" placeholder="Opcional"></label>
-</div>
-<div class="actions"><button class="primary">Preparar consultas</button></div>
-<p id="plano-status" class="status" role="status" aria-live="polite"></p>
-</form>
-<datalist id="destinos"><option value="BUE">Buenos Aires · todos</option><option value="AEP">Buenos Aires · Aeroparque</option><option value="EZE">Buenos Aires · Ezeiza</option><option value="GRU">São Paulo · Guarulhos</option></datalist>
-<div id="consultas" hidden>
-<div id="aeroportos" class="grid"></div>
-<div class="actions" hidden><button type="button" class="primary" id="buscar-precos">Buscar preços desta janela</button></div>
-<p id="custo-busca" role="status" aria-live="polite" hidden></p>
-<div class="actions"><button type="button" id="exportar-rota">Salvar configuração para monitoramento</button></div>
-<p class="sub">O monitor automático consulta o Google Voos algumas vezes por dia para a rota configurada (um adulto, econômica) e publica os preços na seção “Preços do calendário”. Use o código IATA do destino.</p>
-<p id="consulta-datas" role="status" aria-live="polite"></p>
-<div class="actions"><a id="busca-conjunta" class="button" target="_blank" rel="noopener noreferrer" hidden>Buscar todos em uma aba</a><button type="button" id="abrir-todas">Abrir uma aba por aeroporto</button></div>
-<p id="abas-status" class="status" role="status" aria-live="polite"></p>
-<details open>
-<summary>Datas de referência e deslocamento de até dois dias</summary>
-<div class="actions"><label>Ida<select id="partida"></select></label><label>Noites<select id="duracao"></select></label><label>Flexibilidade<select id="flex"><option value="0">Data escolhida</option><option value="1">Até ±1 dia</option><option value="2">Até ±2 dias</option></select></label><div id="links-combinacao" class="actions"></div></div>
-</details>
-</div>
+
+<section class="panel" aria-labelledby="t-destinos">
+<h2 id="t-destinos">Seus destinos</h2>
+<p>Toque em um destino para ver as melhores datas e como o preço mudou. Preços <strong>por pessoa, ida e volta</strong>, classe econômica.</p>
+<div class="cartoes" id="cartoes" role="group" aria-label="Destinos monitorados"></div>
+</section>
+
+<section class="panel" id="detalhe" aria-labelledby="t-detalhe" hidden>
+<h2 id="t-detalhe"></h2>
+<div class="resumo" id="resumo"></div>
+<div class="acoes" id="acoes-detalhe"></div>
+
+<h3>Como o preço mudou</h3>
+<div id="grafico"></div>
+
+<h3>Melhores datas encontradas</h3>
+<p>Passe o mouse sobre as siglas para ver o nome do aeroporto.</p>
+<div class="tabela"><table>
+<thead><tr><th>Saída</th><th>Ida</th><th>Volta</th><th>Voo</th><th>Preço</th><th></th></tr></thead>
+<tbody id="datas"></tbody>
+</table></div>
+<div class="acoes"><button type="button" id="mais-datas" hidden>Mostrar mais datas</button></div>
+
+<details>
+<summary>O que está sendo monitorado neste destino</summary>
+<p id="config" style="margin-top:10px"></p>
 </details>
 </section>
 
-<div class="layout">
-<section class="panel">
-<h2>Registrar uma tarifa</h2>
-<p>Confira o preço da ida e volta no buscador. Informe valores por pessoa em reais.</p>
-<form id="registrar">
-<div class="grid">
-<label>Aeroporto<select name="origem" id="registro-origem"></select></label>
-<label>Tarifa em reais<input name="tarifa" type="number" min="0.01" step="0.01" required></label>
-<label>Ida<input name="ida" type="date" required></label>
-<label>Volta<input name="volta" type="date" required></label>
-<label>Deslocamento total por pessoa (R$)<input name="deslocamento" type="number" min="0" step="0.01" placeholder="Opcional"></label>
-<label>Link da oferta<input name="link" type="url" maxlength="2500" placeholder="Opcional"></label>
+<footer class="panel">
+<h2>Outras ferramentas</h2>
+<div class="acoes">
+<a class="botao" href="./radar-de-voos-manual.html">Registrar preço manualmente ou planejar outra viagem</a>
+<a class="botao" href="https://github.com/profjefer/radar-de-voos-cliente/blob/main/historico.csv" target="_blank" rel="noopener">Histórico completo (planilha)</a>
 </div>
-<div class="actions"><button class="primary" id="salvar-tarifa">Salvar tarifa</button><button type="button" id="cancelar-edicao" hidden>Cancelar edição</button></div>
-<p id="registro-status" class="status" role="status" aria-live="polite"></p>
-</form>
-<details><summary>Estimar deslocamento de carro</summary>
-<p>Informe a distância total de ida e volta. O valor inclui combustível, extras e divisão entre os viajantes.</p>
-<form id="estimar"><div class="grid">
-<label>Distância total (km)<input name="km" type="number" required min="0" step="0.1"></label>
-<label>Consumo (km/l)<input name="consumo" type="number" required min="0.1" step="0.1" value="12"></label>
-<label>Combustível (R$/l)<input name="combustivel" type="number" required min="0.01" step="0.01"></label>
-<label>Pedágios e estacionamento (R$)<input name="extras" type="number" min="0" step="0.01" value="0"></label>
-<label>Viajantes<input name="pessoas" type="number" min="1" required value="1"></label>
-</div><div class="actions"><button>Usar estimativa por pessoa</button></div></form>
+<details>
+<summary>Como funciona</summary>
+<p style="margin-top:10px">Dois robôs consultam o Google Voos: um no computador da UFPR (Buenos Aires, Nordeste e Guatemala) e outro no GitHub, todo dia às 9h15 (João Pessoa, Porto de Galinhas, Playa Mujeres, Bogotá e San Andrés). A conta gratuita permite 250 consultas por mês para os dois juntos, por isso cada destino é verificado algumas datas por vez. O histórico e os avisos de todos os destinos ficam guardados no GitHub. Os preços mudam a qualquer momento: confira no Google Voos antes de comprar.</p>
 </details>
-</section>
-<section class="panel">
-<h2>Comparação por aeroporto</h2>
-<p>Compare a menor tarifa e o menor total com deslocamento informado na janela atual.</p>
-<div id="resumo" class="grid"></div>
-</section>
-</div>
-<section class="panel">
-<h2>Histórico de tarifas</h2>
-<p>O histórico fica neste navegador. Exporte em JSON para guardar uma cópia ou importar em outro navegador.</p>
-<div class="actions">
-<button type="button" id="exportar">Exportar JSON</button>
-<button type="button" id="importar">Importar JSON</button>
-<input id="arquivo" type="file" accept=".json,application/json" hidden>
-<label>Aeroporto<select id="historico-origem"><option value="">Todos</option></select></label>
-<label>Destino no histórico<input id="historico-destino" placeholder="Ex.: Buenos Aires"></label>
-<label>Ordenar por<select id="ordem"><option value="tarifa">Menor tarifa</option><option value="total">Menor total estimado</option><option value="registro">Registro mais recente</option></select></label>
-<label><span>Exibição</span><select id="filtro"><option value="janela">Janela atual</option><option value="todos">Todas as viagens</option></select></label>
-</div>
-<p id="historico-status" class="status" role="status" aria-live="polite"></p>
-<div class="scroll"><table><thead><tr><th>Rota</th><th>Ida e volta</th><th>Tarifa</th><th>Total estimado</th><th>Registro</th><th>Ações</th></tr></thead><tbody id="historico"></tbody></table></div>
-</section>
+</footer>
 </main>
+
 <script>
 'use strict';
-const aeroportos = {
-  CAC: { nome: 'Cascavel', pais: 'Brasil' },
-  IGU: { nome: 'Foz do Iguaçu', pais: 'Brasil' },
-  IGR: { nome: 'Puerto Iguazú', pais: 'Argentina' },
-  MGF: { nome: 'Maringá', pais: 'Brasil' },
-  LDB: { nome: 'Londrina', pais: 'Brasil' },
-  PSS: { nome: 'Posadas', pais: 'Argentina' }
+const FONTES = ['./precos-automaticos.json', 'https://raw.githubusercontent.com/profjefer/radar-de-voos-cliente/main/precos-extra.json'];
+const IATA = {
+  CAC:'Cascavel (PR)|Aeroporto Adalberto Mendes', IGU:'Foz do Iguaçu (PR)|Aeroporto Internacional das Cataratas',
+  IGR:'Puerto Iguazú (Argentina)|Aeroporto Cataratas del Iguazú', MGF:'Maringá (PR)|Aeroporto Silvio Name Junior',
+  LDB:'Londrina (PR)|Aeroporto Governador José Richa', PSS:'Posadas (Argentina)|Aeroporto Libertador San Martín',
+  AEP:'Buenos Aires|Aeroparque Jorge Newbery, perto do centro', EZE:'Buenos Aires|Aeroporto Internacional de Ezeiza',
+  GRU:'São Paulo|Guarulhos', CGH:'São Paulo|Congonhas', VCP:'Campinas|Viracopos', GIG:'Rio de Janeiro|Galeão',
+  CWB:'Curitiba|Afonso Pena', BSB:'Brasília|Aeroporto JK',
+  SSA:'Salvador (BA)|Aeroporto Luís Eduardo Magalhães', REC:'Recife (PE)|Aeroporto dos Guararapes; Porto de Galinhas fica a ~60 km',
+  FOR:'Fortaleza (CE)|Aeroporto Pinto Martins', NAT:'Natal (RN)|Aeroporto de São Gonçalo do Amarante', MCZ:'Maceió (AL)|Aeroporto Zumbi dos Palmares',
+  JPA:'João Pessoa (PB)|Aeroporto Castro Pinto', AJU:'Aracaju (SE)|Aeroporto Santa Maria',
+  GUA:'Cidade da Guatemala|Aeroporto La Aurora', CUN:'Cancún (México)|Aeroporto Internacional; Playa Mujeres fica a ~20 km',
+  BOG:'Bogotá (Colômbia)|Aeroporto El Dorado', ADZ:'San Andrés (Colômbia)|Aeroporto Gustavo Rojas Pinilla',
+  PTY:'Cidade do Panamá|Aeroporto de Tocumen', LIM:'Lima (Peru)|Aeroporto Jorge Chávez', SCL:'Santiago (Chile)|Aeroporto Arturo Merino Benítez'
 };
-// Nomes exibidos ao passar o mouse sobre as siglas IATA
-const iata = {
-  CAC:'Cascavel (PR) · Aeroporto Adalberto Mendes', IGU:'Foz do Iguaçu (PR) · Aeroporto Internacional das Cataratas',
-  IGR:'Puerto Iguazú (Argentina) · Aeroporto Cataratas del Iguazú', MGF:'Maringá (PR) · Aeroporto Silvio Name Junior',
-  LDB:'Londrina (PR) · Aeroporto Governador José Richa', PSS:'Posadas (Argentina) · Aeroporto Libertador San Martín',
-  AEP:'Buenos Aires · Aeroparque Jorge Newbery (voos domésticos e regionais)', EZE:'Buenos Aires · Aeroporto Internacional de Ezeiza',
-  BUE:'Buenos Aires · todos os aeroportos', GRU:'São Paulo · Guarulhos', CGH:'São Paulo · Congonhas', VCP:'Campinas · Viracopos',
-  GIG:'Rio de Janeiro · Galeão', SDU:'Rio de Janeiro · Santos Dumont', CWB:'Curitiba · Afonso Pena', BSB:'Brasília',
-  SSA:'Salvador (BA)', REC:'Recife (PE) · acesso a Porto de Galinhas (~60 km)', FOR:'Fortaleza (CE)', NAT:'Natal (RN)',
-  MCZ:'Maceió (AL)', JPA:'João Pessoa (PB) · Aeroporto Castro Pinto', AJU:'Aracaju (SE)',
-  GUA:'Cidade da Guatemala · Aeroporto La Aurora', CUN:'Cancún (México) · acesso a Playa Mujeres (~20 km)',
-  BOG:'Bogotá (Colômbia) · Aeroporto El Dorado', ADZ:'San Andrés (Colômbia) · Aeroporto Gustavo Rojas Pinilla',
-  PTY:'Cidade do Panamá · Tocumen', LIM:'Lima · Jorge Chávez', SCL:'Santiago do Chile', MEX:'Cidade do México'
-};
-const cidade = c => (iata[c] || aeroportos[c]?.nome || c).split(' · ')[0];
-function sigla(c) {
-  const a = document.createElement('abbr');
-  a.textContent = c;
-  a.title = iata[c] || (aeroportos[c] ? `${aeroportos[c].nome} (${aeroportos[c].pais})` : 'Aeroporto ' + c);
-  return a;
-}
-function trecho(origem, destino) {
-  const td = document.createElement('td');
-  td.append(sigla(origem), ' → ', sigla(destino));
-  const sub = document.createElement('small'); sub.className = 'sub';
-  sub.textContent = `${cidade(origem)} → ${cidade(destino)}`;
-  td.append(sub);
-  return td;
-}
-const semana = iso => new Date(iso + 'T12:00:00').toLocaleDateString('pt-BR', {weekday:'short'}).replace('.', '');
-// De onde vêm os preços: cliente da universidade + cliente extra (GitHub Actions)
-const fontesPrecos = ['./precos-automaticos.json', 'https://raw.githubusercontent.com/profjefer/radar-de-voos-cliente/main/precos-extra.json'];
-const dia = 86400000;
-const chave = 'radar-voos-v1';
 const $ = id => document.getElementById(id);
-const reais = new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL'});
-const dataCurta = iso => iso.split('-').reverse().join('/');
-let estado = { plano: null, ofertas: [] };
-let edicao = null;
-const selecionados = new Set(['CAC', 'IGU', 'IGR']);
-const normalizar = texto => texto.trim().replace(/\s+/g, ' ').normalize('NFD')
-  .replace(/\p{Diacritic}/gu, '').toLocaleLowerCase('pt-BR');
-function destinoBusca(texto) {
-  const valor = texto.trim().replace(/\s+/g, ' ');
-  if (normalizar(valor) === 'buenos aires') return 'BUE';
-  return /^[a-z]{3}$/i.test(valor) ? valor.toUpperCase() : valor;
-}
-const totalEstimado = o => o.deslocamento === null ? Infinity : o.tarifa + o.deslocamento;
+const reais = new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL', maximumFractionDigits:0});
+const DIA = 86400000;
+const hojeISO = () => new Date().toISOString().slice(0, 10);
+const cidade = c => (IATA[c] || c).split('|')[0];
+const dt = iso => new Date(iso.length === 10 ? iso + 'T12:00:00' : iso);
+const dataBR = iso => dt(iso).toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
+const semana = iso => dt(iso).toLocaleDateString('pt-BR', {weekday:'long'}).replace('-feira', '');
+const semanaCurta = iso => dt(iso).toLocaleDateString('pt-BR', {weekday:'short'}).replace('.', '');
+const noites = (a, b) => Math.round((dt(b) - dt(a)) / DIA);
+const conexoes = p => p === 0 ? 'direto' : `${p} ${p === 1 ? 'conexão' : 'conexões'}`;
 
-for (const [codigo, aeroporto] of Object.entries(aeroportos)) {
-  for (const id of ['registro-origem', 'historico-origem']) {
-    $(id).add(new Option(`${aeroporto.nome} (${codigo})`, codigo));
-  }
+function el(tag, texto, classe) {
+  const n = document.createElement(tag);
+  if (texto != null) n.textContent = texto;
+  if (classe) n.className = classe;
+  return n;
 }
-
-function status(id, mensagem, erro = false) {
-  $(id).textContent = mensagem;
-  $(id).classList.toggle('error', erro);
-}
-
-function dataValida(valor) {
-  if (typeof valor !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(valor)) return false;
-  const data = new Date(valor);
-  return Number.isFinite(+data) && data.toISOString().slice(0, 10) === valor;
-}
-
-function noites(ida, volta) {
-  return (Date.parse(volta) - Date.parse(ida)) / dia;
-}
-
-function planoValido(p) {
-  return p && typeof p.destino === 'string' && p.destino.trim() && p.destino.length <= 80 &&
-    dataValida(p.inicio) && dataValida(p.fim) && Number.isInteger(p.min) &&
-    Number.isInteger(p.max) && p.min >= 3 && p.max >= p.min && p.max <= 15 &&
-    noites(p.inicio, p.fim) >= p.min && noites(p.inicio, p.fim) <= 60 &&
-    (p.teto === null || (Number.isFinite(p.teto) && p.teto > 0));
-}
-
-function linkSeguro(valor) {
-  if (!valor) return '';
-  const url = new URL(valor);
-  if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password) {
-    throw new Error('Informe um link HTTP ou HTTPS.');
-  }
-  return url.href;
-}
-
-function normalizarOferta(o) {
-  if (!o || !Object.hasOwn(aeroportos, o.origem) || typeof o.destino !== 'string' ||
-      !o.destino.trim() || o.destino.length > 80 || !dataValida(o.ida) || !dataValida(o.volta) ||
-      noites(o.ida, o.volta) < 1 || !Number.isFinite(o.tarifa) || o.tarifa <= 0 ||
-      (o.deslocamento != null && (!Number.isFinite(o.deslocamento) || o.deslocamento < 0)) ||
-      typeof o.registro !== 'string' || !Number.isFinite(Date.parse(o.registro)) ||
-      (o.link != null && (typeof o.link !== 'string' || o.link.length > 2500))) {
-    throw new Error('O arquivo contém uma tarifa inválida.');
-  }
-  return {
-    origem:o.origem, destino:o.destino.trim(), ida:o.ida, volta:o.volta,
-    tarifa:o.tarifa, deslocamento:o.deslocamento ?? null, link:linkSeguro(o.link),
-    registro:new Date(o.registro).toISOString()
-  };
-}
-
-function salvar() {
-  try {
-    estado.origens = [...selecionados];
-    localStorage.setItem(chave, JSON.stringify(estado));
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function avisoLocal(salvou) {
-  return salvou ? '' : ' O navegador bloqueou a gravação. Exporte o histórico antes de fechar.';
-}
-
-function criar(tag, texto, classe) {
-  const no = document.createElement(tag);
-  if (texto) no.textContent = texto;
-  if (classe) no.className = classe;
-  return no;
-}
-
-function externo(url, texto) {
-  const a = criar('a', texto, 'button');
-  a.href = url;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
+function sigla(c) {
+  const a = el('abbr', c);
+  const [cid, aero] = (IATA[c] || ('Aeroporto ' + c)).split('|');
+  a.title = aero ? `${cid}: ${aero}` : cid;
   return a;
 }
+// "hoje às 09:15", "ontem às 21:59", "amanhã às 09:15" ou "14/11"
+function quando(iso) {
+  const d = dt(iso);
+  const dias = Math.round((new Date(new Date().toDateString()) - new Date(d.toDateString())) / DIA);
+  const hora = d.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+  if (dias === 0) return `hoje às ${hora}`;
+  if (dias === 1) return `ontem às ${hora}`;
+  if (dias === -1) return `amanhã às ${hora}`;
+  return d.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
+}
 
-// Campos observados nos links compartilháveis do Google Voos.
+// Link do Google Voos com aeroportos e datas preenchidos
 function trechoGoogle(data, origens, destinos) {
   const texto = (campo, valor) => [campo, valor.length, ...Array.from(valor, c => c.charCodeAt(0))];
   const aeroporto = (campo, codigo) => [campo, 7, 8, 1, ...texto(18, codigo)];
-  const trecho = [
-    ...texto(18, data),
-    ...origens.flatMap(codigo => aeroporto(106, codigo)),
-    ...destinos.flatMap(codigo => aeroporto(114, codigo))
-  ];
-  return [26, trecho.length, ...trecho];
+  const t = [...texto(18, data), ...origens.flatMap(c => aeroporto(106, c)), ...destinos.flatMap(c => aeroporto(114, c))];
+  return [26, t.length, ...t];
+}
+function googleVoos(origem, destino, ida, volta) {
+  const dados = [8, 28, 16, 2, ...trechoGoogle(ida, [origem], [destino]), ...trechoGoogle(volta, [destino], [origem]), 64, 1, 72, 1, 112, 1];
+  const p = new URLSearchParams({hl:'pt-BR', curr:'BRL', gl:'BR'});
+  p.set('tfs', btoa(String.fromCharCode(...dados)).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/, ''));
+  return 'https://www.google.com/travel/flights/search?' + p;
+}
+function linkVoo(o, texto, classe) {
+  const a = el('a', texto, 'botao' + (classe ? ' ' + classe : ''));
+  a.href = googleVoos(o.origem, o.destino, o.ida, o.volta);
+  a.target = '_blank'; a.rel = 'noopener noreferrer';
+  return a;
 }
 
-function buscaGoogle(origens, ida, volta, destino = destinoBusca(estado.plano.destino)) {
-  const params = new URLSearchParams({hl:'pt-BR', curr:'BRL', gl:'BR'});
-  if (/^[A-Z]{3}$/.test(destino)) {
-    const aeroportosDestino = destino === 'BUE' ? ['AEP', 'EZE'] : [destino];
-    const dados = [
-      8, 28, 16, 2,
-      ...trechoGoogle(ida, origens, aeroportosDestino),
-      ...trechoGoogle(volta, aeroportosDestino, origens),
-      64, 1, 72, 1, 112, 1
-    ];
-    params.set('tfs', btoa(String.fromCharCode(...dados)).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/, ''));
-  } else {
-    params.set('q', `Round trip flights from ${origens[0]} to ${destino} on ${ida} returning ${volta}`);
-  }
-  return 'https://www.google.com/travel/flights/search?' + params;
-}
+let D = null, escolhida = null, nDatas = 10, nAvisos = 6, ultimaVisita = null;
+try { ultimaVisita = localStorage.getItem('radar-ultima-visita'); } catch {}
 
-function combina(o) {
-  const p = estado.plano;
-  return p && normalizar(destinoBusca(o.destino)) === normalizar(destinoBusca(p.destino)) &&
-    o.ida >= p.inicio && o.volta <= p.fim && noites(o.ida,o.volta) >= p.min && noites(o.ida,o.volta) <= p.max;
-}
-
-function renderConsulta() {
-  const p = estado.plano;
-  if (!p) return;
-  $('consultas').hidden = false;
-  $('aeroportos').replaceChildren(...Object.entries(aeroportos).map(([codigo, aeroporto]) => {
-    const bloco = criar('div', '', 'airport');
-    const rotulo = criar('label', `${codigo} · ${aeroporto.nome}`);
-    const marcar = document.createElement('input');
-    marcar.type = 'checkbox';
-    marcar.style.width = 'auto';
-    marcar.checked = selecionados.has(codigo);
-    marcar.addEventListener('change', () => {
-      if (marcar.checked) selecionados.add(codigo);
-      else selecionados.delete(codigo);
-      limparResultados();
-      atualizarCombinacao();
-      renderHistorico();
-      salvar();
-    });
-    rotulo.prepend(marcar);
-    bloco.append(rotulo, criar('small', aeroporto.pais));
-    return bloco;
-  }));
-
-  const opcoes = [];
-  const primeiro = Date.parse(p.inicio);
-  const ultimo = Date.parse(p.fim);
-  let total = 0;
-  for (let ida = primeiro; ida + p.min * dia <= ultimo; ida += dia) {
-    const partida = new Date(ida).toISOString().slice(0, 10);
-    const opcao = criar('option', dataCurta(partida));
-    opcao.value = partida;
-    opcoes.push(opcao);
-    total += Math.min(p.max, (ultimo - ida) / dia) - p.min + 1;
-  }
-  $('partida').replaceChildren(...opcoes);
-  status('plano-status', `${total.toLocaleString('pt-BR')} combinações de datas por aeroporto.${total > 150 ? ' Janela ampla.' : ''} Use a grade de datas do Google Voos e confira se ida e volta cabem na janela.`);
-  atualizarDuracoes();
-}
-
-function atualizarDuracoes() {
-  const p = estado.plano;
-  const ida = $('partida').value;
-  const limite = p && dataValida(ida) && ida >= p.inicio
-    ? Math.min(p.max, noites(ida, p.fim)) : 0;
-  const opcoes = [];
-  for (let n = p.min; n <= limite; n++) {
-    const opcao = criar('option', String(n));
-    opcao.value = n;
-    opcoes.push(opcao);
-  }
-  $('duracao').replaceChildren(...opcoes);
-  atualizarCombinacao();
-}
-
-function preencherRegistro(origem, ida, volta) {
-  cancelarEdicao();
-  const campos = $('registrar').elements;
-  if (campos.origem.value !== origem || campos.ida.value !== ida || campos.volta.value !== volta) {
-    campos.tarifa.value = '';
-    campos.deslocamento.value = '';
-    campos.link.value = '';
-  }
-  campos.origem.value = origem;
-  campos.ida.value = ida;
-  campos.volta.value = volta;
-}
-
-function atualizarCombinacao() {
-  const p = estado.plano;
-  atualizarCusto();
-  const idaSelecionada = $('partida').value;
-  const partida = Date.parse(idaSelecionada);
-  const duracao = Number($('duracao').value);
-  if (!p || !dataValida(idaSelecionada) || idaSelecionada < p.inicio ||
-      !Number.isInteger(duracao) || duracao < p.min || duracao > p.max ||
-      partida + duracao * dia > Date.parse(p.fim)) {
-    $('consulta-datas').textContent = 'Selecione uma data de ida e uma duração que caibam na janela.';
-    $('busca-conjunta').hidden = true;
-    $('abrir-todas').disabled = true;
-    $('links-combinacao').replaceChildren();
-    return;
-  }
-  const flex = Number($('flex').value);
-  const consultas = [];
-  for (let delta = -flex; delta <= flex; delta++) {
-    const data = partida + delta * dia;
-    const retorno = data + duracao * dia;
-    if (data < Date.parse(p.inicio) || retorno > Date.parse(p.fim)) continue;
-    consultas.push([new Date(data).toISOString().slice(0, 10), new Date(retorno).toISOString().slice(0, 10)]);
-  }
-  const descartadas = 2 * flex + 1 - consultas.length;
-  const avisoJanela = descartadas === 1 ? ' Uma variação ficou fora da janela.' :
-    descartadas > 1 ? ` ${descartadas} variações ficaram fora da janela.` : '';
-  const destinoComCodigo = /^[A-Z]{3}$/.test(destinoBusca(p.destino));
-  $('consulta-datas').textContent = `${selecionados.size} aeroportos selecionados · ${consultas.length} ${consultas.length === 1 ? 'par' : 'pares'} de datas por aeroporto.` + avisoJanela +
-    (destinoComCodigo ? '' : ' Para preencher a rota com precisão, informe o código IATA. Com texto livre, confira os campos ao abrir o Google Voos.');
-  const conjunta = $('busca-conjunta');
-  conjunta.hidden = !destinoComCodigo || selecionados.size < 2;
-  if (!conjunta.hidden) {
-    const ida = $('partida').value;
-    const volta = new Date(partida + duracao * dia).toISOString().slice(0, 10);
-    conjunta.href = buscaGoogle([...selecionados], ida, volta);
-  }
-  $('abrir-todas').disabled = selecionados.size === 0;
-  $('links-combinacao').replaceChildren(...[...selecionados].map(codigo => {
-    const card = criar('div', '', 'airport');
-    card.append(criar('h3', codigo));
-    for (const [ida, volta] of consultas) {
-      const acoes = criar('div', '', 'actions');
-      const link = externo(buscaGoogle([codigo], ida, volta), `${dataCurta(ida)} → ${dataCurta(volta)}`);
-      link.addEventListener('click', () => {
-        if (!edicao) preencherRegistro(codigo, ida, volta);
-      });
-      const botao = criar('button', 'Registrar');
-      botao.type = 'button';
-      botao.addEventListener('click', () => {
-        preencherRegistro(codigo, ida, volta);
-        $('registrar').elements.tarifa.focus();
-      });
-      acoes.append(link, botao);
-      card.append(acoes);
-    }
-    return card;
-  }));
-}
-
-function cancelarEdicao() {
-  if (!edicao) return;
-  edicao = null;
-  $('registrar').reset();
-  $('salvar-tarifa').textContent = 'Salvar tarifa';
-  $('cancelar-edicao').hidden = true;
-  status('registro-status', '');
-}
-
-function editar(oferta) {
-  edicao = oferta;
-  const campos = $('registrar').elements;
-  for (const nome of ['origem', 'ida', 'volta', 'tarifa', 'deslocamento', 'link']) {
-    campos[nome].value = oferta[nome] ?? '';
-  }
-  $('salvar-tarifa').textContent = 'Salvar alterações';
-  $('cancelar-edicao').hidden = false;
-  status('registro-status', `Editando ${oferta.origem} → ${oferta.destino}.`);
-  campos.tarifa.focus();
-}
-
-function renderHistorico() {
-  const p = estado.plano;
-  const daJanela = estado.ofertas.filter(combina).sort((a,b) => a.tarifa - b.tarifa);
-  const menorTarifa = daJanela[0]?.tarifa;
-  const menorTotal = daJanela.reduce((menor, oferta) => Math.min(menor, totalEstimado(oferta)), Infinity);
-  const origensResumo = Object.entries(aeroportos).filter(([codigo]) =>
-    selecionados.has(codigo) || daJanela.some(o => o.origem === codigo));
-  $('resumo').replaceChildren(...origensResumo.map(([codigo, aeroporto]) => {
-    const melhor = daJanela.find(o => o.origem === codigo);
-    const card = criar('div', '', 'airport');
-    card.append(criar('h3', `${codigo} · ${aeroporto.nome}`));
-    if (melhor) {
-      card.append(criar('strong', reais.format(melhor.tarifa)),
-        criar('small', `${dataCurta(melhor.ida)} → ${dataCurta(melhor.volta)}`));
-      if (melhor.tarifa === menorTarifa) {
-        card.classList.add('destaque');
-        card.append(criar('span', 'Menor tarifa', 'chip'));
-      } else {
-        card.append(criar('small', `+${reais.format(melhor.tarifa - menorTarifa)} em relação à menor tarifa`));
-      }
-      const melhorComTotal = daJanela.filter(o => o.origem === codigo && o.deslocamento !== null)
-        .sort((a,b) => totalEstimado(a) - totalEstimado(b))[0];
-      if (melhorComTotal) {
-        card.append(criar('small', `Menor total ${reais.format(totalEstimado(melhorComTotal))} · ${dataCurta(melhorComTotal.ida)} → ${dataCurta(melhorComTotal.volta)}`));
-        if (totalEstimado(melhorComTotal) === menorTotal) card.append(criar('span', 'Menor total informado', 'chip'));
-      }
-    } else {
-      card.append(criar('small', 'Aguardando registro'));
-    }
-    return card;
-  }));
-
-  const origem = $('historico-origem').value;
-  const destino = normalizar($('historico-destino').value);
-  const ordenadores = {
-    tarifa: (a,b) => a.tarifa - b.tarifa,
-    total: (a,b) => (totalEstimado(a) - totalEstimado(b)) || a.tarifa - b.tarifa,
-    registro: (a,b) => b.registro.localeCompare(a.registro)
-  };
-  const base = $('filtro').value === 'todos' ? estado.ofertas : daJanela;
-  const ofertas = base.filter(o => (!origem || origem === o.origem) &&
-    (!destino || normalizar(o.destino).includes(destino) ||
-      normalizar(destinoBusca(o.destino)) === normalizar(destinoBusca(destino))))
-    .sort(ordenadores[$('ordem').value]);
-  const linhas = ofertas.map(o => {
-    const linha = criar('tr');
-    const tarifa = criar('td', reais.format(o.tarifa));
-    if (combina(o) && p.teto !== null && o.tarifa <= p.teto) {
-      tarifa.append(document.createElement('br'), criar('span', 'No orçamento', 'chip'));
-    }
-    const acoes = criar('td');
-    if (o.link) {
-      const link = externo(o.link, 'Ver oferta');
-      acoes.append(link, ' ');
-    }
-    const alterar = criar('button', 'Editar');
-    alterar.type = 'button';
-    alterar.addEventListener('click', () => editar(o));
-    acoes.append(alterar, ' ');
-    const excluir = criar('button', 'Remover');
-    excluir.type = 'button';
-    excluir.setAttribute('aria-label', `Remover tarifa de ${o.origem} para ${o.destino}, ida ${dataCurta(o.ida)}`);
-    excluir.addEventListener('click', () => {
-      if (!confirm('Remover este registro do histórico?')) return;
-      if (edicao === o) {
-        cancelarEdicao();
-        status('registro-status', 'Edição encerrada porque a tarifa foi removida.');
-      }
-      estado.ofertas = estado.ofertas.filter(item => item !== o);
-      status('historico-status', 'Registro removido.' + avisoLocal(salvar()));
-      renderHistorico();
-    });
-    acoes.append(excluir);
-    linha.append(/^[A-Z]{3}$/.test(o.destino) ? trecho(o.origem, o.destino) : criar('td', `${o.origem} → ${o.destino}`),
-      criar('td', `${dataCurta(o.ida)} → ${dataCurta(o.volta)}`), tarifa,
-      criar('td', o.deslocamento === null ? '—' : reais.format(o.tarifa + o.deslocamento)),
-      criar('td', new Date(o.registro).toLocaleString('pt-BR')), acoes);
-    return linha;
-  });
-  if (!linhas.length) {
-    const linha = criar('tr');
-    const celula = criar('td', 'Nenhuma tarifa registrada nesta exibição.', 'vazio');
-    celula.colSpan = 6;
-    linha.append(celula);
-    linhas.push(linha);
-  }
-  const corpo = document.createDocumentFragment();
-  for (const linha of linhas) corpo.append(linha);
-  $('historico').replaceChildren(corpo);
-}
-
-$('planejar').addEventListener('submit', evento => {
-  evento.preventDefault();
-  const f = new FormData(evento.currentTarget);
-  const p = {
-    destino:f.get('destino').trim().replace(/\s+/g, ' '), inicio:f.get('inicio'), fim:f.get('fim'),
-    min:Number(f.get('min')), max:Number(f.get('max')), teto:f.get('teto') ? Number(f.get('teto')) : null
-  };
-  if (!planoValido(p)) {
-    status('plano-status', 'Confira o destino, a ordem das datas e a duração. A janela pode ter até 60 dias e precisa comportar uma viagem de 3 a 15 noites.', true);
-    return;
-  }
-  limparResultados();
-  estado.plano = p;
-  $('filtro').value = 'janela';
-  renderConsulta();
-  renderHistorico();
-
-  status('historico-status', avisoLocal(salvar()));
-});
-
-$('registrar').addEventListener('submit', evento => {
-  evento.preventDefault();
-  if (!estado.plano && !edicao) {
-    status('registro-status', 'Prepare a janela da viagem antes de registrar uma tarifa.', true);
-    return;
-  }
-  const f = new FormData(evento.currentTarget);
-  try {
-    const oferta = normalizarOferta({
-      origem:f.get('origem'), destino:edicao?.destino ?? estado.plano.destino, ida:f.get('ida'), volta:f.get('volta'),
-      tarifa:Number(f.get('tarifa')), deslocamento:f.get('deslocamento') ? Number(f.get('deslocamento')) : null,
-      link:f.get('link').trim(), registro:edicao?.registro ?? new Date().toISOString()
-    });
-    if (!edicao && !combina(oferta)) {
-      throw new Error('A ida e a volta precisam ficar entre as datas da janela e respeitar o número de noites.');
-    }
-    const editando = Boolean(edicao);
-    if (edicao) {
-      estado.ofertas[estado.ofertas.indexOf(edicao)] = oferta;
-      cancelarEdicao();
-    } else {
-      estado.ofertas.push(oferta);
-    }
-    status('registro-status', (editando ? 'Tarifa atualizada.' : 'Tarifa registrada.') + avisoLocal(salvar()));
-    evento.currentTarget.elements.tarifa.value = '';
-    evento.currentTarget.elements.link.value = '';
-    renderHistorico();
-  } catch (erro) {
-    status('registro-status', erro.message, true);
-  }
-});
-
-let resultadoAutomatico = null;
-let geracaoBusca = 0;
-function limparResultados() {
-  geracaoBusca++;
-  resultadoAutomatico = null;
-  $('precos-ofertas').hidden = true;
-  $('busca-exibida').textContent = '';
-  $('queda-preco').textContent = '';
-  status('precos-status', '');
-}
-function atualizarCusto() {
-  const p = estado.plano;
-  if (!p) return;
-  const destino = destinoBusca(p.destino);
-  const destinos = destino === 'BUE' ? ['AEP', 'EZE'] : [destino];
-  const rotas = [...selecionados].reduce((total, origem) =>
-    total + destinos.filter(d => d !== origem).length, 0);
-  const duracoes = Math.max(0, Math.min(p.max, noites(p.inicio, p.fim)) - p.min + 1);
-  const custo = rotas * duracoes;
-  $('custo-busca').textContent = `Até ${custo} consultas por varredura. ` +
-    (custo > 40 ? 'Reduza as origens ou a faixa de noites para ficar no limite de 40 por busca.' :
-    'Buscas idênticas concluídas são reutilizadas por seis horas. Limite local de 250 consultas por mês.');
-  $('buscar-precos').disabled = custo < 1 || custo > 40;
-}
-
-let mostrarPrecos = 30;
-
-// Le todas as fontes publicadas e junta num unico conjunto (mesmo formato do JSON original).
-async function lerFontes() {
-  const lidas = await Promise.allSettled(fontesPrecos.map(async url => {
+async function carregar() {
+  const lidas = await Promise.allSettled(FONTES.map(async url => {
     const r = await fetch(url, {cache:'no-store'});
     if (!r.ok) throw new Error(url);
     const d = await r.json();
-    if (d?.versao !== 1 || d.moeda !== 'BRL' || !Array.isArray(d.ofertas)) throw new Error(url);
+    if (d?.versao !== 1 || !Array.isArray(d.ofertas)) throw new Error(url);
     return d;
   }));
   const ok = lidas.filter(x => x.status === 'fulfilled').map(x => x.value);
-  if (!ok.length) return new Response('null', {status:404});
-  ok.sort((a, b) => Date.parse(a.atualizado) - Date.parse(b.atualizado));
-  const junto = {versao:1, moeda:'BRL', atualizado:ok.at(-1).atualizado, rotas:[], ofertas:[], falhas:0, anteriorMinimo:{}, saldo:ok.at(-1).saldo};
-  const ids = new Set();
-  for (const d of ok) {
-    for (const r of rotasDe(d)) { if (!ids.has(r.id)) { ids.add(r.id); junto.rotas.push(r); } }
-    junto.ofertas.push(...d.ofertas);
-    junto.falhas += d.falhas || 0;
-    if (d.anteriorMinimo && typeof d.anteriorMinimo === 'object') Object.assign(junto.anteriorMinimo, d.anteriorMinimo);
+  if (!ok.length) {
+    $('estado').replaceChildren(el('span', 'Não foi possível carregar os preços agora. Tente de novo mais tarde.', 'erro'));
+    return;
   }
-  return new Response(JSON.stringify(junto), {status:200, headers:{'Content-Type':'application/json'}});
+  const J = {rotas:[], ofertas:[], serie:{}, alertas:[], atualizado:null, saldo:null, proxima:null};
+  const ids = new Set();
+  for (const d of ok.sort((a, b) => Date.parse(a.atualizado) - Date.parse(b.atualizado))) {
+    for (const r of d.rotas || []) if (!ids.has(r.id)) { ids.add(r.id); J.rotas.push(r); }
+    J.ofertas.push(...d.ofertas.filter(o => o && /^[A-Z]{3}$/.test(o.origem) && /^[A-Z]{3}$/.test(o.destino) &&
+      Number.isFinite(o.tarifa) && o.tarifa > 0 && o.ida > hojeISO()));
+    if (d.serie && !Array.isArray(d.serie)) for (const [k, v] of Object.entries(d.serie)) if (Array.isArray(v) && v[0]?.dia) J.serie[k] = v;
+    J.alertas.push(...(Array.isArray(d.alertas) ? d.alertas : []));
+    J.atualizado = d.atualizado;
+    if (Number.isInteger(d.saldo)) J.saldo = d.saldo;
+    if (d.proxima) J.proxima = d.proxima;
+  }
+  const ult = new Map();  // vale a observacao mais recente de cada combinacao de datas
+  for (const o of J.ofertas) {
+    const k = [o.rota, o.origem, o.destino, o.ida, o.volta].join('|');
+    if (!ult.has(k) || (o.consultado || '') > (ult.get(k).consultado || '')) ult.set(k, o);
+  }
+  J.ofertas = [...ult.values()].sort((a, b) => a.tarifa - b.tarifa);
+  J.alertas.sort((a, b) => (b.dia + b.quando).localeCompare(a.dia + a.quando));
+  D = J;
+  let salvo = null;
+  try { salvo = localStorage.getItem('radar-destino'); } catch {}
+  escolhida = D.rotas.find(r => r.id === (location.hash.slice(1) || salvo)) || null;
+  render();
+  try { localStorage.setItem('radar-ultima-visita', new Date().toISOString()); } catch {}
 }
 
-function rotasDe(dados) {
-  if (Array.isArray(dados.rotas) && dados.rotas.length) return dados.rotas;
-  const p = dados.plano;  // formato antigo, uma rota só
-  return p ? [{id:'', nome:p.destino, origens:p.origens || [], destinos:p.destino === 'BUE' ? ['AEP', 'EZE'] : [p.destino],
-    inicio:p.inicio, fim:p.fim, min:p.min, max:p.max, teto:dados.teto, cobertura:dados.cobertura}] : [];
+function render() {
+  const est = [`Atualizado ${quando(D.atualizado)}`];
+  if (D.proxima && Date.parse(D.proxima) > Date.now()) est.push(`próxima coleta ${quando(D.proxima)}`);
+  if (Number.isInteger(D.saldo)) est.push(`${D.saldo} consultas restantes no mês`);
+  $('estado').replaceChildren(...est.map(t => el('span', t)));
+  renderAvisos(); renderCartoes(); renderDetalhe();
 }
 
-function tempoConsulta(iso) {
-  const quando = Date.parse(iso);
-  if (!Number.isFinite(quando)) return '';
-  const horas = Math.max(0, Math.round((Date.now() - quando) / 3600000));
-  return horas < 1 ? 'consultado agora' : horas < 48 ? `consultado há ${horas} h` : `consultado há ${Math.round(horas / 24)} dias`;
-}
-
-function renderPrecos(dados) {
-  const validas = dados.ofertas.filter(o => o && Object.hasOwn(aeroportos, o.origem) &&
-    /^[A-Z]{3}$/.test(o.destino) && dataValida(o.ida) && dataValida(o.volta) &&
-    noites(o.ida, o.volta) > 0 && Number.isFinite(o.tarifa) && o.tarifa > 0)
-    .sort((a,b) => a.tarifa - b.tarifa);
-  const rotas = rotasDe(dados);
-  const seletor = $('precos-rota');
-  const escolhida = seletor.value;
-  seletor.replaceChildren(...rotas.map(r => {
-    const menor = validas.find(o => (o.rota ?? '') === r.id);
-    return new Option(`${r.nome}${menor ? ' · desde ' + reais.format(menor.tarifa) : ''}`, r.id);
+function renderAvisos() {
+  const icones = {orcamento:'✓', queda:'▼', recorde:'★'};
+  const lista = D.alertas.slice(0, nAvisos);
+  if (!lista.length) {
+    $('avisos').replaceChildren(el('li', 'Nenhum aviso ainda. Eles aparecem quando os preços mudarem.', 'vazio-msg'));
+    return;
+  }
+  $('avisos').replaceChildren(...lista.map(a => {
+    const li = el('li', null, 'aviso ' + a.tipo);
+    li.tabIndex = 0;
+    li.append(el('span', icones[a.tipo] || '•', 'icone'));
+    const corpo = el('div');
+    corpo.append(el('span', a.mensagem.replace(/saindo de ([A-Z]{3})/, (m, c) => 'saindo de ' + cidade(c))));
+    if (ultimaVisita && a.quando > ultimaVisita) corpo.append(el('span', 'novo', 'novo'));
+    corpo.append(el('span', a.dia === hojeISO() ? quando(a.quando) : dataBR(a.dia), 'quando'));
+    li.append(corpo);
+    li.addEventListener('click', () => escolher(a.rota, true));
+    li.addEventListener('keydown', e => { if (e.key === 'Enter') escolher(a.rota, true); });
+    return li;
   }));
-  if (rotas.some(r => r.id === escolhida)) seletor.value = escolhida;
-  $('precos-rota-campo').hidden = true;  // substituido pelos cartoes
-  const r = rotas.find(x => x.id === seletor.value) || rotas[0];
-  $('rotas-cards').replaceChildren(...rotas.map(rt => {
-    const doDestino = validas.filter(o => (o.rota ?? '') === rt.id);
-    const menor = doDestino[0];
-    const b = criar('button', '', 'rota-card');
+  $('mais-avisos').hidden = D.alertas.length <= nAvisos;
+}
+
+const melhorDe = r => D.ofertas.find(o => o.rota === r.id);
+function referencia(r) {  // preco de uns 7 dias atras, para mostrar a tendencia
+  const s = D.serie[r.id] || [];
+  const alvo = new Date(Date.now() - 7 * DIA).toISOString().slice(0, 10);
+  return [...s].reverse().find(p => p.dia <= alvo) || s.find(p => p.dia < hojeISO());
+}
+
+function renderCartoes() {
+  $('cartoes').replaceChildren(...D.rotas.map(r => {
+    const b = el('button', null, 'cartao');
     b.type = 'button';
-    b.setAttribute('aria-pressed', String(rt === r));
-    b.append(criar('span', rt.nome));
-    b.append(criar('span', menor ? reais.format(menor.tarifa) : 'aguardando 1ª coleta', menor ? 'preco' : 'preco vazio'));
-    if (menor) b.append(criar('small', `${cidade(menor.origem)} · ${dataCurta(menor.ida)} → ${dataCurta(menor.volta)}`));
-    const ant = typeof dados.anteriorMinimo === 'object' && dados.anteriorMinimo ? dados.anteriorMinimo[rt.id] : null;
-    if (menor && Number.isFinite(ant) && ant !== menor.tarifa) {
-      const caiu = menor.tarifa < ant;
-      b.append(criar('span', `${caiu ? '▼' : '▲'} ${reais.format(Math.abs(ant - menor.tarifa))} desde a coleta anterior`, 'tend ' + (caiu ? 'desce' : 'sobe')));
+    b.setAttribute('aria-pressed', String(escolhida?.id === r.id));
+    const m = melhorDe(r);
+    b.append(el('span', r.nome, 'nome'));
+    if (!m) b.append(el('span', 'aguardando a 1ª coleta', 'preco vazio'));
+    else {
+      b.append(el('span', reais.format(m.tarifa), 'preco'));
+      b.append(el('small', `saindo de ${cidade(m.origem)} · ${dataBR(m.ida)} a ${dataBR(m.volta)}`));
+      const ref = referencia(r);
+      if (ref && Math.abs(ref.preco - m.tarifa) >= 1) {
+        const caiu = m.tarifa < ref.preco;
+        b.append(el('span', `${caiu ? '▼' : '▲'} ${reais.format(Math.abs(ref.preco - m.tarifa))} desde ${dataBR(ref.dia)}`, 'tend ' + (caiu ? 'desce' : 'sobe')));
+      }
+      if (Number.isFinite(r.teto)) b.append(m.tarifa <= r.teto ? el('span', 'Dentro do seu limite', 'selo ok')
+        : el('span', `${reais.format(m.tarifa - r.teto)} acima do limite`, 'selo acima'));
     }
-    if (menor && Number.isFinite(rt.teto) && menor.tarifa <= rt.teto) b.append(criar('span', 'No orçamento', 'chip'));
-    b.addEventListener('click', () => { seletor.value = rt.id; mostrarPrecos = 30; renderPrecos(dados); });
+    b.addEventListener('click', () => escolher(r.id, true));
     return b;
   }));
-
-  const busca = $('busca-exibida');
-  busca.replaceChildren();
-  if (r) {
-    (r.origens || []).forEach((c, i) => busca.append(i ? ', ' : '', sigla(c)));
-    busca.append(` → ${r.nome} (`);
-    (r.destinos || []).forEach((c, i) => busca.append(i ? ', ' : '', sigla(c)));
-    const noitesTxt = r.min === r.max ? `${r.min} noites` : `${r.min} a ${r.max} noites`;
-    busca.append(`) · ida entre ${dataCurta(r.inicio)} e ${dataCurta(r.fim)} · ${noitesTxt}` +
-      (Number.isFinite(r.teto) ? ` · alerta abaixo de ${reais.format(r.teto)}.` : '.'));
-  } else busca.textContent = 'Varredura publicada sem identificação da rota.';
-  const ofertas = r ? validas.filter(o => (o.rota ?? '') === r.id) : validas;
-  const minimo = ofertas[0]?.tarifa ?? Infinity;
-  const anterior = typeof dados.anteriorMinimo === 'object' && dados.anteriorMinimo
-    ? dados.anteriorMinimo[r?.id] : dados.anteriorMinimo;
-  $('queda-preco').textContent = !dados.falhas && Number.isFinite(anterior) && minimo < anterior
-    ? `Menor preço caiu ${reais.format(anterior - minimo)} desde a varredura anterior.` : '';
-
-  const teto = Number.isFinite(r?.teto) ? r.teto : dados.teto;
-  const corpo = document.createDocumentFragment();
-  for (const o of ofertas.slice(0, mostrarPrecos)) {
-    const linha = criar('tr');
-    const tarifa = criar('td', reais.format(o.tarifa));
-    if (Number.isFinite(teto) && o.tarifa <= teto) {
-      tarifa.append(document.createElement('br'), criar('span', 'No orçamento', 'chip'));
-    }
-    const acoes = criar('td');
-    acoes.append(externo(buscaGoogle([o.origem], o.ida, o.volta, o.destino), 'Conferir no Google Voos'));
-    const p = estado.plano;
-    const destinoAtivo = p && destinoBusca(p.destino);
-    if ((destinoAtivo === o.destino || (destinoAtivo === 'BUE' && ['AEP', 'EZE'].includes(o.destino))) &&
-        combina({ ...o, destino: p.destino })) {
-      const registrar = criar('button', 'Registrar');
-      registrar.type = 'button';
-      registrar.addEventListener('click', () => {
-        preencherRegistro(o.origem, o.ida, o.volta);
-        const campos = $('registrar').elements;
-        campos.tarifa.value = o.tarifa;
-        campos.link.value = buscaGoogle([o.origem], o.ida, o.volta, o.destino);
-        campos.tarifa.focus();
-      });
-      acoes.append(' ', registrar);
-    }
-    const datas = criar('td', `${semana(o.ida)} ${dataCurta(o.ida)} → ${semana(o.volta)} ${dataCurta(o.volta)} · ${noites(o.ida, o.volta)} noites`);
-    const idade = tempoConsulta(o.consultado);
-    if (idade) datas.append(criar('small', idade, 'sub'));
-    const rota = trecho(o.origem, o.destino);
-    const voo = criar('td', o.cia || '—');
-    if (Number.isInteger(o.paradas)) voo.append(criar('small', o.paradas === 0 ? 'direto' : `${o.paradas} ${o.paradas === 1 ? 'conexão' : 'conexões'}`, 'sub'));
-    const nivel = {low:['preço baixo','baixo'], typical:['preço típico','tipico'], high:['preço alto','alto']}[o.nivel];
-    if (nivel) tarifa.append(document.createElement('br'), criar('span', nivel[0], 'chip ' + nivel[1]));
-    linha.append(rota, datas, voo, tarifa, acoes);
-    corpo.append(linha);
-  }
-  $('precos-linhas').replaceChildren(corpo);
-  $('precos-ofertas').hidden = !ofertas.length;
-  $('mais-precos').hidden = ofertas.length <= mostrarPrecos;
-  const momento = new Date(dados.atualizado).toLocaleString('pt-BR', {timeZone:'America/Sao_Paulo'});
-  const cob = r?.cobertura;
-  const cobertura = cob && Number.isInteger(cob.pares)
-    ? ` · ${cob.com_preco_recente} de ${cob.pares} combinações de datas já amostradas` : '';
-  const total = (ofertas.length ? `${ofertas.length} preços` : 'Nenhum preço ainda para esta rota') + cobertura;
-  const falhas = dados.falhas ? ` Resultado parcial: ${dados.falhas} consultas indisponíveis.` : '';
-  const saldo = Number.isInteger(dados.saldo) ? ` Saldo do mês: ${dados.saldo} consultas.` : '';
-  status('precos-status', `${total} · atualizado em ${momento} (horário de Brasília).${falhas}${saldo}`);
 }
 
-async function carregarPrecos(automatico) {
-  const botao = $('buscar-precos');
-  const carregar = $('carregar-precos');
-  const plano = estado.plano;
-  const geracao = geracaoBusca;
-  if (automatico && (!plano || !selecionados.size || !/^[A-Z]{3}$/.test(destinoBusca(plano.destino)))) {
-    status('precos-status', 'Prepare a janela, selecione as origens e informe o código IATA do destino.', true);
+function escolher(id, rolar) {
+  escolhida = D.rotas.find(r => r.id === id) || null;
+  nDatas = 10;
+  try { localStorage.setItem('radar-destino', id); } catch {}
+  history.replaceState(null, '', '#' + id);
+  renderCartoes(); renderDetalhe();
+  if (escolhida && rolar) $('detalhe').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function renderDetalhe() {
+  const r = escolhida;
+  $('detalhe').hidden = !r;
+  if (!r) return;
+  $('t-detalhe').textContent = r.nome;
+  const ofertas = D.ofertas.filter(o => o.rota === r.id);
+  const m = ofertas[0];
+  const resumo = $('resumo');
+  resumo.replaceChildren();
+  $('acoes-detalhe').replaceChildren();
+  if (!m) resumo.append('Este destino ainda não tem preços. A primeira coleta acontece nos próximos dias.');
+  else {
+    resumo.append('O menor preço agora é ', el('span', reais.format(m.tarifa), 'grande'),
+      ' por pessoa, saindo de ', el('strong', cidade(m.origem)),
+      ` na ${semana(m.ida)}, ${dataBR(m.ida)}, e voltando na ${semana(m.volta)}, ${dataBR(m.volta)} (${noites(m.ida, m.volta)} noites).`);
+    if (m.cia) resumo.append(` Voo ${m.cia}${Number.isInteger(m.paradas) ? ', ' + conexoes(m.paradas) : ''}.`);
+    if (Number.isFinite(r.teto)) resumo.append(el('br'), m.tarifa <= r.teto
+      ? `Seu limite é ${reais.format(r.teto)}: este preço está dentro dele.`
+      : `Seu limite é ${reais.format(r.teto)}: ainda faltam ${reais.format(m.tarifa - r.teto)} para chegar lá.`);
+    $('acoes-detalhe').append(linkVoo(m, 'Ver este voo no Google Voos', 'principal'));
+  }
+  renderGrafico(r);
+  const linhas = ofertas.slice(0, nDatas).map(o => {
+    const tr = el('tr');
+    const saida = el('td'); saida.append(sigla(o.origem), ' → ', sigla(o.destino), el('small', `${cidade(o.origem)} → ${cidade(o.destino)}`));
+    const ida = el('td', `${semanaCurta(o.ida)}, ${dataBR(o.ida)}`); ida.append(el('small', `${noites(o.ida, o.volta)} noites`));
+    const volta = el('td', `${semanaCurta(o.volta)}, ${dataBR(o.volta)}`);
+    const voo = el('td', o.cia || '—');
+    if (Number.isInteger(o.paradas)) voo.append(el('small', conexoes(o.paradas)));
+    const preco = el('td', reais.format(o.tarifa), 'preco');
+    if (o.consultado) preco.append(el('small', 'visto ' + quando(o.consultado)));
+    const acao = el('td'); const a = linkVoo(o, 'Abrir');
+    a.setAttribute('aria-label', `Abrir no Google Voos: ${cidade(o.origem)} para ${cidade(o.destino)}, ida ${dataBR(o.ida)}`);
+    acao.append(a);
+    tr.append(saida, ida, volta, voo, preco, acao);
+    return tr;
+  });
+  if (!linhas.length) {
+    const tr = el('tr'); const td = el('td', 'Ainda sem datas coletadas.', 'vazio-msg'); td.colSpan = 6; tr.append(td); linhas.push(tr);
+  }
+  $('datas').replaceChildren(...linhas);
+  $('mais-datas').hidden = ofertas.length <= nDatas;
+  const cob = r.cobertura;
+  const lista = cs => (cs || []).map(c => `${cidade(c)} (${c})`).join(', ');
+  $('config').textContent = `Saídas de ${lista(r.origens)} para ${lista(r.destinos)}. Ida entre ${dataBR(r.inicio)} e ${dataBR(r.fim)}, ` +
+    `${r.min === r.max ? r.min : r.min + ' a ' + r.max} noites.` +
+    (Number.isFinite(r.teto) ? ` Avisar abaixo de ${reais.format(r.teto)}.` : '') +
+    (cob && Number.isInteger(cob.pares) ? ` Combinações de datas verificadas recentemente: ${cob.com_preco_recente} de ${cob.pares}.` : '');
+}
+
+function renderGrafico(r) {
+  const s = (D.serie[r.id] || []).filter(p => Number.isFinite(p.preco));
+  const caixa = $('grafico');
+  if (s.length < 2) {
+    caixa.replaceChildren(el('p', 'O gráfico aparece a partir do segundo dia de coleta deste destino.', 'vazio-msg'));
     return;
   }
-  if (location.protocol === 'file:') {
-    status('precos-status', 'Abra o Radar pelo serviço Node.js ou pelo endereço publicado.', true);
-    return;
+  const W = 900, H = 270, m = {l:84, r:18, t:16, b:36};
+  const vals = s.map(p => p.preco).concat(Number.isFinite(r.teto) ? [r.teto] : []);
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  const folga = Math.max((hi - lo) * 0.15, hi * 0.05); lo = Math.max(0, lo - folga); hi += folga;
+  const t0 = dt(s[0].dia).getTime(), t1 = dt(s.at(-1).dia).getTime();
+  const x = d => m.l + (dt(d).getTime() - t0) / Math.max(1, t1 - t0) * (W - m.l - m.r);
+  const y = v => m.t + (hi - v) / (hi - lo) * (H - m.t - m.b);
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('class', 'grafico'); svg.setAttribute('role', 'img');
+  const menor = s.reduce((a, b) => b.preco < a.preco ? b : a);
+  svg.setAttribute('aria-label', `Menor preço por dia para ${r.nome}: ${reais.format(s[0].preco)} em ${dataBR(s[0].dia)} e ${reais.format(s.at(-1).preco)} em ${dataBR(s.at(-1).dia)}; mínimo de ${reais.format(menor.preco)} em ${dataBR(menor.dia)}.`);
+  const add = (tag, at, txt) => { const n = document.createElementNS(NS, tag); for (const k in at) n.setAttribute(k, at[k]); if (txt != null) n.textContent = txt; svg.append(n); return n; };
+  for (let i = 0; i <= 3; i++) {
+    const v = lo + (hi - lo) * i / 3;
+    add('line', {x1:m.l, x2:W - m.r, y1:y(v), y2:y(v), stroke:'#2f4552', 'stroke-width':1});
+    add('text', {x:m.l - 10, y:y(v) + 5, 'text-anchor':'end'}, reais.format(v));
   }
-  botao.disabled = carregar.disabled = true;
-  status('precos-status', automatico ? 'Consultando o calendário. A busca pode levar alguns minutos.' : 'Lendo a varredura publicada…');
-  $('precos-ofertas').hidden = true;
-  try {
-    const resposta = automatico
-      ? await fetch('./api/precos', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({...plano, destino:destinoBusca(plano.destino), origens:[...selecionados]})
-      })
-      : await lerFontes();
-    const dados = await resposta.json().catch(() => null);
-    if (resposta.status === 404 && !dados) {
-      throw new Error(automatico
-        ? 'A busca automática precisa do serviço Node.js do Radar, que não está rodando neste endereço. Use os links do Google Voos acima e registre as tarifas manualmente.'
-        : 'Nenhuma fonte de preços respondeu (precos-automaticos.json e GitHub).');
-    }
-    if (!resposta.ok || dados?.versao !== 1 || dados.moeda !== 'BRL' ||
-        !Array.isArray(dados.ofertas) || !Number.isFinite(Date.parse(dados.atualizado))) {
-      throw new Error(dados?.erro || (automatico
-        ? 'Serviço de busca indisponível neste endereço. Abra o painel pelo Node.js.'
-        : 'Nenhuma varredura publicada neste endereço.'));
-    }
-    if (geracao !== geracaoBusca) return;
-    resultadoAutomatico = dados;
-    mostrarPrecos = 30;
-    renderPrecos(dados);
-  } catch (erro) {
-    if (geracao === geracaoBusca) status('precos-status', erro.message, true);
-  } finally {
-    botao.disabled = carregar.disabled = false;
-    atualizarCusto();
+  const passo = Math.max(1, Math.ceil(s.length / 8));
+  s.forEach((p, i) => { if (i % passo === 0 || i === s.length - 1) add('text', {x:x(p.dia), y:H - 10, 'text-anchor':'middle'}, dataBR(p.dia)); });
+  if (Number.isFinite(r.teto)) add('line', {x1:m.l, x2:W - m.r, y1:y(r.teto), y2:y(r.teto), stroke:'#ffd27a', 'stroke-width':2, 'stroke-dasharray':'7 6'});
+  add('path', {d:s.map((p, i) => `${i ? 'L' : 'M'}${x(p.dia).toFixed(1)},${y(p.preco).toFixed(1)}`).join(' '), fill:'none', stroke:'#7df2c3', 'stroke-width':3, 'stroke-linejoin':'round'});
+  for (const p of s) {
+    const c = add('circle', {cx:x(p.dia), cy:y(p.preco), r:6, fill:'#0c1d28', stroke:'#7df2c3', 'stroke-width':2.5});
+    const tt = document.createElementNS(NS, 'title');
+    tt.textContent = `${dataBR(p.dia)}: ${reais.format(p.preco)}, saindo de ${cidade(p.origem)} (${dataBR(p.ida)} a ${dataBR(p.volta)})`;
+    c.append(tt);
   }
+  const leg = el('div', null, 'legenda');
+  const l1 = el('span'); l1.append(el('i'), 'menor preço encontrado em cada dia (passe o mouse nos pontos)');
+  leg.append(l1);
+  if (Number.isFinite(r.teto)) { const l2 = el('span'); l2.append(el('i', null, 'teto'), `seu limite (${reais.format(r.teto)})`); leg.append(l2); }
+  caixa.replaceChildren(svg, leg);
 }
 
-$('buscar-precos').addEventListener('click', () => carregarPrecos(true));
-$('carregar-precos').addEventListener('click', () => carregarPrecos(false));
-$('precos-rota').addEventListener('change', () => {
-  mostrarPrecos = 30;
-  if (resultadoAutomatico) renderPrecos(resultadoAutomatico);
-});
-$('mais-precos').addEventListener('click', () => {
-  mostrarPrecos += 30;
-  renderPrecos(resultadoAutomatico);
-});
-
-$('cancelar-edicao').addEventListener('click', cancelarEdicao);
-$('estimar').addEventListener('submit', evento => {
-  evento.preventDefault();
-  const f = new FormData(evento.currentTarget);
-  const total = (Number(f.get('km')) / Number(f.get('consumo')) * Number(f.get('combustivel')) +
-    Number(f.get('extras'))) / Number(f.get('pessoas'));
-  if (!Number.isFinite(total)) return;
-  $('registrar').elements.deslocamento.value = total.toFixed(2);
-  status('registro-status', `Deslocamento estimado em ${reais.format(total)} por pessoa.`);
-});
-$('abrir-todas').addEventListener('click', () => {
-  const ida = $('partida').value;
-  const volta = new Date(Date.parse(ida) + Number($('duracao').value) * dia).toISOString().slice(0, 10);
-  let bloqueadas = 0;
-  for (const codigo of selecionados) {
-    const aba = window.open('about:blank', '_blank');
-    if (!aba) {
-      bloqueadas++;
-      continue;
-    }
-    aba.opener = null;
-    aba.location.replace(buscaGoogle([codigo], ida, volta));
-  }
-  status('abas-status', bloqueadas ?
-    `${bloqueadas} abas bloqueadas. Abra os links individuais ou permita pop-ups.` :
-    'Buscas abertas para as datas de referência.');
-});
-$('flex').addEventListener('change', atualizarCombinacao);
-$('historico-origem').addEventListener('change', renderHistorico);
-$('historico-destino').addEventListener('input', renderHistorico);
-$('ordem').addEventListener('change', renderHistorico);
-$('filtro').addEventListener('change', renderHistorico);
-$('partida').addEventListener('change', atualizarDuracoes);
-$('duracao').addEventListener('change', atualizarCombinacao);
-$('exportar-rota').addEventListener('click', () => {
-  if (!estado.plano) return;
-  const dados = {...estado.plano, destino:destinoBusca(estado.plano.destino), origens:[...selecionados]};
-  const url = URL.createObjectURL(new Blob([JSON.stringify(dados, null, 2)], {type:'application/json'}));
-  const a = criar('a');
-  a.href = url;
-  a.download = 'rota.json';
-  document.body.append(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-});
-$('exportar').addEventListener('click', () => {
-  const url = URL.createObjectURL(new Blob([JSON.stringify({versao:1, ofertas:estado.ofertas}, null, 2)], {type:'application/json'}));
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'precos.json';
-  document.body.append(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-});
-$('importar').addEventListener('click', () => $('arquivo').click());
-$('arquivo').addEventListener('change', async evento => {
-  const arquivo = evento.currentTarget.files[0];
-  evento.currentTarget.value = '';
-  if (!arquivo) return;
-  try {
-    if (arquivo.size > 5 * 1024 * 1024) throw new Error('O arquivo pode ter até 5 MB.');
-    const dados = JSON.parse(await arquivo.text());
-    if (dados?.versao !== 1 || !Array.isArray(dados.ofertas)) throw new Error('Escolha um precos.json compatível com o Radar.');
-    const unicas = new Map(estado.ofertas.map(o => [JSON.stringify(o), o]));
-    const antes = unicas.size;
-    let invalidos = 0;
-    for (const entrada of dados.ofertas) {
-      try {
-        const oferta = normalizarOferta(entrada);
-        unicas.set(JSON.stringify(oferta), oferta);
-      } catch {
-        invalidos++;
-      }
-    }
-    const novos = unicas.size - antes;
-    const aviso = invalidos === 1 ? ' Uma tarifa inválida foi ignorada.' :
-      invalidos > 1 ? ` ${invalidos} tarifas inválidas foram ignoradas.` : '';
-    const mensagem = novos === 1 ? 'Uma nova tarifa importada.' : `${novos} novas tarifas importadas.`;
-    if (!novos) {
-      status('historico-status', mensagem + aviso, invalidos > 0);
-      return;
-    }
-    cancelarEdicao();
-    estado.ofertas = [...unicas.values()];
-    $('filtro').value = 'todos';
-    status('historico-status', mensagem + aviso + avisoLocal(salvar()));
-    renderHistorico();
-  } catch (erro) {
-    status('historico-status', erro instanceof SyntaxError ? 'O arquivo não contém JSON válido.' : erro.message, true);
-  }
-});
-
-try {
-  const salvo = JSON.parse(localStorage.getItem(chave) || 'null');
-  if (salvo) {
-    let descartadas = 0;
-    estado.ofertas = (Array.isArray(salvo.ofertas) ? salvo.ofertas : []).flatMap(o => {
-      try { return [normalizarOferta(o)]; } catch { descartadas++; return []; }
-    });
-    if (descartadas) status('historico-status', `${descartadas} registro(s) corrompido(s) ignorado(s) no histórico deste navegador.`, true);
-    if (Array.isArray(salvo.origens)) {
-      selecionados.clear();
-      for (const origem of salvo.origens) if (Object.hasOwn(aeroportos, origem)) selecionados.add(origem);
-    }
-    if (planoValido(salvo.plano)) {
-      estado.plano = salvo.plano;
-      const campos = $('planejar').elements;
-      for (const [nome, valor] of Object.entries(estado.plano)) campos[nome].value = valor ?? '';
-    }
-  }
-} catch {
-  status('historico-status', 'Não foi possível ler o histórico deste navegador.', true);
-}
-if (!estado.plano) $('filtro').value = 'todos';
-{
-  const hoje = new Date();
-  const iso = new Date(hoje.getTime() - hoje.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-  for (const nome of ['inicio', 'fim']) $('planejar').elements[nome].min = iso;
-}
-renderConsulta();
-renderHistorico();
-if (location.protocol !== 'file:') carregarPrecos(false);
+$('mais-datas').addEventListener('click', () => { nDatas += 10; renderDetalhe(); });
+$('mais-avisos').addEventListener('click', () => { nAvisos += 10; renderAvisos(); });
+carregar();
 </script>
 </body>
 </html>
