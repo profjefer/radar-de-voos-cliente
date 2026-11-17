@@ -3,6 +3,7 @@ name: Radar de Voos (coleta diaria)
 on:
   schedule:
     - cron: "15 12 * * *"   # todo dia as 09:15 (Brasilia)
+    - cron: "40 21 * * *"   # reserva 18:40 (Brasilia): so coleta se a das 09:15 nao rodou
   workflow_dispatch:         # botao "Run workflow" para rodar na hora
 
 permissions:
@@ -23,7 +24,7 @@ jobs:
           SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
           LIMITE_MENSAL: ${{ vars.LIMITE_MENSAL || '120' }}
           POR_RODADA: ${{ vars.POR_RODADA || '3' }}
-        run: python radar_extra.py
+        run: python radar_extra.py ${{ github.event_name == 'schedule' && '--se-preciso' || '' }}
       - name: Guardar historico no repositorio
         run: |
           git config user.name "radar-bot"

@@ -225,6 +225,12 @@ def main():
     mes = agora.strftime('%Y-%m')
     if estado.get('mes') != mes:
         estado['mes'], estado['gastas_mes'] = mes, 0
+    if '--se-preciso' in sys.argv and estado.get('ultimo'):
+        # horario reserva do GitHub Actions: so coleta se a coleta principal do dia nao rodou
+        ult = max(dt.datetime.fromisoformat(v) for v in estado['ultimo'].values())
+        if (agora - ult).total_seconds() < 18 * 3600:
+            print('Coleta de hoje ja feita em', ult.isoformat(), '- nada a fazer.')
+            return
     if estado.get('filtro_conexao') != MAX_CONEXAO:  # filtro novo/alterado: todas as datas voltam a ser 'nunca vistas'
         estado['ultimo'], estado['consultas'], estado['filtro_conexao'] = {}, {}, MAX_CONEXAO
 
