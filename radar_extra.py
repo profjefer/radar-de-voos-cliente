@@ -172,7 +172,9 @@ def consultar(chave, rota, ida, volta):
 
 CAMPOS = ['consultado', 'rota', 'origem', 'destino', 'ida', 'volta', 'tarifa', 'cia', 'paradas',
           'duracao_min', 'nivel_preco', 'tipico_min', 'tipico_max', 'fonte', 'conexao_max_min', 'filtro_conexao']
-UNI_URL = 'https://docs.ufpr.br/~jefer/precos-automaticos.json'
+UNI_URLS = ['https://docs.ufpr.br/~jefer/radarvoos/precos-automaticos.json',   # pasta nova (nov/2026)
+            'https://docs.ufpr.br/~jefer/precos-automaticos.json']
+UNI_URL = UNI_URLS[0]
 
 
 def migrar_csv():
@@ -193,11 +195,17 @@ def migrar_csv():
 
 def importar_universidade(w, vistos):
     """Copia para o historico os precos publicados pelo cliente da universidade (sem gastar cota)."""
-    try:
-        req = urllib.request.Request(UNI_URL, headers={'User-Agent': 'radar-de-voos/1.0'})
-        with urllib.request.urlopen(req, timeout=60) as r:
-            uni = json.load(r)
-    except Exception as e:
+    uni, erro = None, None
+    for url in UNI_URLS:
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': 'radar-de-voos/1.0'})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                uni = json.load(r)
+            break
+        except Exception as e:
+            erro = e
+    if uni is None:
+        e = erro
         print('Aviso: nao consegui ler o JSON da universidade:', e, '- usando a ultima copia salva.')
         return ler_json('universidade-cache.json', None)
     gravar_json('universidade-cache.json', {'rotas': uni.get('rotas', []), 'atualizado': uni.get('atualizado')})

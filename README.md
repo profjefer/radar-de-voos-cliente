@@ -2,7 +2,7 @@
 
 Coleta preços de passagens (Google Voos via SerpApi) para as rotas de `rotas.json`,
 guarda tudo em `historico.csv` e publica `precos-extra.json`, que a página
-https://docs.ufpr.br/~jefer/radar-de-voos.html lê junto com o JSON do cliente da universidade.
+https://docs.ufpr.br/~jefer/radarvoos/radar-de-voos.html lê junto com o JSON do cliente da universidade.
 
 - **Rotas:** edite `rotas.json` (janela da ida, noites, prioridade, teto de preço).
 - **Cota:** a conta SerpApi gratuita tem 250 consultas/mês, compartilhadas com o cliente da
