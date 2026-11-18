@@ -2,7 +2,7 @@
  "versao": 1,
  "moeda": "BRL",
  "fonte": "extra",
- "atualizado": "2026-11-17T20:10:42+00:00",
+ "atualizado": "2026-11-18T01:24:53+00:00",
  "rotas": [
   {
    "id": "jpa",
@@ -20,7 +20,45 @@
    "max": 6,
    "cobertura": {
     "pares": 9,
-    "com_preco_recente": 3
+    "com_preco_recente": 4
+   }
+  },
+  {
+   "id": "cwb",
+   "nome": "Curitiba (28 a 29/11)",
+   "origens": [
+    "CAC",
+    "IGU"
+   ],
+   "destinos": [
+    "CWB"
+   ],
+   "inicio": "2026-11-28",
+   "fim": "2026-11-28",
+   "min": 1,
+   "max": 1,
+   "cobertura": {
+    "pares": 1,
+    "com_preco_recente": 1
+   }
+  },
+  {
+   "id": "gru",
+   "nome": "São Paulo (GRU)",
+   "origens": [
+    "CAC",
+    "IGU"
+   ],
+   "destinos": [
+    "GRU"
+   ],
+   "inicio": "2026-12-01",
+   "fim": "2027-02-26",
+   "min": 2,
+   "max": 3,
+   "cobertura": {
+    "pares": 26,
+    "com_preco_recente": 1
    }
   },
   {
@@ -103,6 +141,30 @@
  "ofertas": [
   {
    "origem": "CAC",
+   "destino": "GRU",
+   "tarifa": 947.0,
+   "ida": "2026-12-01",
+   "volta": "2026-12-03",
+   "consultado": "2026-11-18T01:24:53+00:00",
+   "rota": "gru",
+   "cia": "Gol",
+   "paradas": 0,
+   "conexao_max_min": 0
+  },
+  {
+   "origem": "IGU",
+   "destino": "GRU",
+   "tarifa": 1412.0,
+   "ida": "2026-12-01",
+   "volta": "2026-12-03",
+   "consultado": "2026-11-18T01:24:53+00:00",
+   "rota": "gru",
+   "cia": "Azul",
+   "paradas": 1,
+   "conexao_max_min": 105
+  },
+  {
+   "origem": "CAC",
    "destino": "REC",
    "tarifa": 1624.0,
    "ida": "2027-02-01",
@@ -124,6 +186,18 @@
    "cia": "LATAM",
    "paradas": 1,
    "conexao_max_min": 60
+  },
+  {
+   "origem": "CAC",
+   "destino": "CWB",
+   "tarifa": 1871.0,
+   "ida": "2026-11-28",
+   "volta": "2026-11-29",
+   "consultado": "2026-11-18T01:24:53+00:00",
+   "rota": "cwb",
+   "cia": "Azul",
+   "paradas": 0,
+   "conexao_max_min": 0
   },
   {
    "origem": "CAC",
@@ -176,6 +250,18 @@
   {
    "origem": "CAC",
    "destino": "JPA",
+   "tarifa": 2295.0,
+   "ida": "2027-01-19",
+   "volta": "2027-01-25",
+   "consultado": "2026-11-18T01:24:53+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 150
+  },
+  {
+   "origem": "CAC",
+   "destino": "JPA",
    "tarifa": 2327.0,
    "ida": "2027-01-20",
    "volta": "2027-01-26",
@@ -188,6 +274,18 @@
   {
    "origem": "IGU",
    "destino": "JPA",
+   "tarifa": 2582.0,
+   "ida": "2027-01-19",
+   "volta": "2027-01-25",
+   "consultado": "2026-11-18T01:24:53+00:00",
+   "rota": "jpa",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 120
+  },
+  {
+   "origem": "IGU",
+   "destino": "JPA",
    "tarifa": 2596.0,
    "ida": "2027-01-22",
    "volta": "2027-01-28",
@@ -196,6 +294,18 @@
    "cia": "Gol",
    "paradas": 2,
    "conexao_max_min": 140
+  },
+  {
+   "origem": "IGU",
+   "destino": "CWB",
+   "tarifa": 3161.0,
+   "ida": "2026-11-28",
+   "volta": "2026-11-29",
+   "consultado": "2026-11-18T01:24:53+00:00",
+   "rota": "cwb",
+   "cia": "Azul",
+   "paradas": 0,
+   "conexao_max_min": 0
   },
   {
    "origem": "CAC",
@@ -249,77 +359,80 @@
  "falhas": 0,
  "anteriorMinimo": {
   "jpa": 2016.0,
-  "pdg": 1624.0
+  "pdg": 1624.0,
+  "cun": 6321.0,
+  "bog": 4501.0,
+  "adz": 5936.0
  },
- "saldo": 173,
+ "saldo": 165,
  "serie": {
   "bue": [
    {
     "dia": "2026-11-10",
-    "preco": 505.0,
-    "origem": "IGR",
-    "destino": "EZE",
-    "ida": "2026-12-15",
-    "volta": "2026-12-24"
+    "preco": 2566.0,
+    "origem": "IGU",
+    "destino": "AEP",
+    "ida": "2027-02-24",
+    "volta": "2027-03-04"
    },
    {
     "dia": "2026-11-11",
-    "preco": 505.0,
-    "origem": "IGR",
-    "destino": "EZE",
-    "ida": "2026-12-15",
-    "volta": "2026-12-24"
+    "preco": 2566.0,
+    "origem": "IGU",
+    "destino": "AEP",
+    "ida": "2027-02-24",
+    "volta": "2027-03-04"
    },
    {
     "dia": "2026-11-12",
-    "preco": 505.0,
-    "origem": "IGR",
-    "destino": "EZE",
-    "ida": "2026-12-15",
-    "volta": "2026-12-24"
+    "preco": 2566.0,
+    "origem": "IGU",
+    "destino": "AEP",
+    "ida": "2027-02-24",
+    "volta": "2027-03-04"
    },
    {
     "dia": "2026-11-13",
-    "preco": 505.0,
-    "origem": "IGR",
-    "destino": "EZE",
-    "ida": "2026-12-15",
-    "volta": "2026-12-24"
+    "preco": 2448.0,
+    "origem": "IGU",
+    "destino": "AEP",
+    "ida": "2027-01-18",
+    "volta": "2027-01-23"
    },
    {
     "dia": "2026-11-14",
-    "preco": 439.0,
-    "origem": "IGR",
+    "preco": 2448.0,
+    "origem": "IGU",
     "destino": "AEP",
-    "ida": "2027-01-19",
-    "volta": "2027-01-27"
+    "ida": "2027-01-18",
+    "volta": "2027-01-23"
    },
    {
     "dia": "2026-11-15",
-    "preco": 439.0,
-    "origem": "IGR",
+    "preco": 2448.0,
+    "origem": "IGU",
     "destino": "AEP",
-    "ida": "2027-01-19",
-    "volta": "2027-01-27"
+    "ida": "2027-01-18",
+    "volta": "2027-01-23"
    },
    {
     "dia": "2026-11-16",
-    "preco": 439.0,
-    "origem": "IGR",
+    "preco": 2448.0,
+    "origem": "IGU",
     "destino": "AEP",
-    "ida": "2027-01-19",
-    "volta": "2027-01-27"
+    "ida": "2027-01-18",
+    "volta": "2027-01-23"
    },
    {
     "dia": "2026-11-17",
-    "preco": 439.0,
-    "origem": "IGR",
+    "preco": 2297.0,
+    "origem": "IGU",
     "destino": "AEP",
-    "ida": "2027-01-19",
-    "volta": "2027-01-27"
+    "ida": "2027-04-01",
+    "volta": "2027-04-08"
    }
   ],
-  "nordeste": [
+  "nordeste:FOR": [
    {
     "dia": "2026-11-10",
     "preco": 1219.0,
@@ -383,6 +496,90 @@
     "destino": "FOR",
     "ida": "2027-03-04",
     "volta": "2027-03-12"
+   }
+  ],
+  "nordeste:REC": [
+   {
+    "dia": "2026-11-10",
+    "preco": 1544.0,
+    "origem": "CAC",
+    "destino": "REC",
+    "ida": "2027-03-04",
+    "volta": "2027-03-12"
+   },
+   {
+    "dia": "2026-11-11",
+    "preco": 1544.0,
+    "origem": "CAC",
+    "destino": "REC",
+    "ida": "2027-03-04",
+    "volta": "2027-03-12"
+   },
+   {
+    "dia": "2026-11-13",
+    "preco": 1544.0,
+    "origem": "CAC",
+    "destino": "REC",
+    "ida": "2027-03-04",
+    "volta": "2027-03-12"
+   },
+   {
+    "dia": "2026-11-14",
+    "preco": 1544.0,
+    "origem": "CAC",
+    "destino": "REC",
+    "ida": "2027-03-04",
+    "volta": "2027-03-12"
+   },
+   {
+    "dia": "2026-11-16",
+    "preco": 1544.0,
+    "origem": "CAC",
+    "destino": "REC",
+    "ida": "2027-03-04",
+    "volta": "2027-03-12"
+   }
+  ],
+  "nordeste:NAT": [
+   {
+    "dia": "2026-11-10",
+    "preco": 4064.0,
+    "origem": "IGR",
+    "destino": "NAT",
+    "ida": "2027-03-27",
+    "volta": "2027-04-06"
+   },
+   {
+    "dia": "2026-11-11",
+    "preco": 3890.0,
+    "origem": "IGR",
+    "destino": "NAT",
+    "ida": "2027-03-10",
+    "volta": "2027-03-17"
+   },
+   {
+    "dia": "2026-11-13",
+    "preco": 3890.0,
+    "origem": "IGR",
+    "destino": "NAT",
+    "ida": "2027-03-10",
+    "volta": "2027-03-17"
+   },
+   {
+    "dia": "2026-11-15",
+    "preco": 3890.0,
+    "origem": "IGR",
+    "destino": "NAT",
+    "ida": "2027-03-10",
+    "volta": "2027-03-17"
+   },
+   {
+    "dia": "2026-11-17",
+    "preco": 3671.0,
+    "origem": "IGR",
+    "destino": "NAT",
+    "ida": "2027-04-09",
+    "volta": "2027-04-16"
    }
   ],
   "gua": [
@@ -451,9 +648,145 @@
     "volta": "2027-03-25"
    }
   ],
+  "nordeste:MCZ": [
+   {
+    "dia": "2026-11-10",
+    "preco": 1386.0,
+    "origem": "IGU",
+    "destino": "MCZ",
+    "ida": "2027-01-23",
+    "volta": "2027-02-02"
+   },
+   {
+    "dia": "2026-11-13",
+    "preco": 1386.0,
+    "origem": "IGU",
+    "destino": "MCZ",
+    "ida": "2027-01-23",
+    "volta": "2027-02-02"
+   },
+   {
+    "dia": "2026-11-15",
+    "preco": 1386.0,
+    "origem": "IGU",
+    "destino": "MCZ",
+    "ida": "2027-01-23",
+    "volta": "2027-02-02"
+   },
+   {
+    "dia": "2026-11-16",
+    "preco": 1386.0,
+    "origem": "IGU",
+    "destino": "MCZ",
+    "ida": "2027-01-23",
+    "volta": "2027-02-02"
+   }
+  ],
+  "nordeste:SSA": [
+   {
+    "dia": "2026-11-10",
+    "preco": 1453.0,
+    "origem": "IGU",
+    "destino": "SSA",
+    "ida": "2027-03-18",
+    "volta": "2027-03-28"
+   },
+   {
+    "dia": "2026-11-12",
+    "preco": 1453.0,
+    "origem": "IGU",
+    "destino": "SSA",
+    "ida": "2027-03-18",
+    "volta": "2027-03-28"
+   },
+   {
+    "dia": "2026-11-13",
+    "preco": 1293.0,
+    "origem": "CAC",
+    "destino": "SSA",
+    "ida": "2027-03-04",
+    "volta": "2027-03-13"
+   },
+   {
+    "dia": "2026-11-15",
+    "preco": 1293.0,
+    "origem": "CAC",
+    "destino": "SSA",
+    "ida": "2027-03-04",
+    "volta": "2027-03-13"
+   },
+   {
+    "dia": "2026-11-16",
+    "preco": 1293.0,
+    "origem": "CAC",
+    "destino": "SSA",
+    "ida": "2027-03-04",
+    "volta": "2027-03-13"
+   },
+   {
+    "dia": "2026-11-17",
+    "preco": 1173.0,
+    "origem": "CAC",
+    "destino": "SSA",
+    "ida": "2027-03-12",
+    "volta": "2027-03-19"
+   }
+  ],
+  "nordeste:AJU": [
+   {
+    "dia": "2026-11-10",
+    "preco": 6001.0,
+    "origem": "IGR",
+    "destino": "AJU",
+    "ida": "2027-01-23",
+    "volta": "2027-02-02"
+   },
+   {
+    "dia": "2026-11-12",
+    "preco": 5313.0,
+    "origem": "IGR",
+    "destino": "AJU",
+    "ida": "2027-02-07",
+    "volta": "2027-02-17"
+   },
+   {
+    "dia": "2026-11-13",
+    "preco": 1496.0,
+    "origem": "IGU",
+    "destino": "AJU",
+    "ida": "2027-01-26",
+    "volta": "2027-02-03"
+   },
+   {
+    "dia": "2026-11-14",
+    "preco": 1496.0,
+    "origem": "IGU",
+    "destino": "AJU",
+    "ida": "2027-01-26",
+    "volta": "2027-02-03"
+   }
+  ],
+  "nordeste:JPA": [
+   {
+    "dia": "2026-11-12",
+    "preco": 6072.0,
+    "origem": "IGR",
+    "destino": "JPA",
+    "ida": "2026-12-09",
+    "volta": "2026-12-17"
+   }
+  ],
   "jpa": [
    {
     "dia": "2026-11-17",
+    "preco": 2016.0,
+    "origem": "CAC",
+    "destino": "JPA",
+    "ida": "2027-01-21",
+    "volta": "2027-01-27"
+   },
+   {
+    "dia": "2026-11-18",
     "preco": 2016.0,
     "origem": "CAC",
     "destino": "JPA",
@@ -500,9 +833,37 @@
     "ida": "2027-02-01",
     "volta": "2027-02-08"
    }
+  ],
+  "cwb": [
+   {
+    "dia": "2026-11-18",
+    "preco": 1871.0,
+    "origem": "CAC",
+    "destino": "CWB",
+    "ida": "2026-11-28",
+    "volta": "2026-11-29"
+   }
+  ],
+  "gru": [
+   {
+    "dia": "2026-11-18",
+    "preco": 947.0,
+    "origem": "CAC",
+    "destino": "GRU",
+    "ida": "2026-12-01",
+    "volta": "2026-12-03"
+   }
   ]
  },
  "alertas": [
+  {
+   "quando": "2026-11-11T12:00:00+00:00",
+   "dia": "2026-11-11",
+   "rota": "nordeste:NAT",
+   "tipo": "queda",
+   "mensagem": "Natal (Nordeste): caiu R$ 174 (4%), agora R$ 3.890 (saindo de IGR, 10/03 a 17/03).",
+   "preco": 3890.0
+  },
   {
    "quando": "2026-11-11T12:00:00+00:00",
    "dia": "2026-11-11",
@@ -512,37 +873,139 @@
    "preco": 5194.0
   },
   {
-   "quando": "2026-11-14T12:00:00+00:00",
-   "dia": "2026-11-14",
-   "rota": "bue",
+   "quando": "2026-11-12T12:00:00+00:00",
+   "dia": "2026-11-12",
+   "rota": "nordeste:AJU",
    "tipo": "queda",
-   "mensagem": "Buenos Aires: caiu R$ 66 (13%), agora R$ 439 (saindo de IGR, 19/01 a 27/01).",
-   "preco": 439.0
+   "mensagem": "Aracaju (Nordeste): caiu R$ 688 (11%), agora R$ 5.313 (saindo de IGR, 07/02 a 17/02).",
+   "preco": 5313.0
   },
   {
-   "quando": "2026-11-14T12:00:00+00:00",
-   "dia": "2026-11-14",
+   "quando": "2026-11-13T12:00:00+00:00",
+   "dia": "2026-11-13",
+   "rota": "bue",
+   "tipo": "queda",
+   "mensagem": "Buenos Aires: caiu R$ 118 (5%), agora R$ 2.448 (saindo de IGU, 18/01 a 23/01).",
+   "preco": 2448.0
+  },
+  {
+   "quando": "2026-11-13T12:00:00+00:00",
+   "dia": "2026-11-13",
    "rota": "bue",
    "tipo": "recorde",
-   "mensagem": "Buenos Aires: R$ 439 é o menor preço já registrado (saindo de IGR, 19/01 a 27/01).",
-   "preco": 439.0
+   "mensagem": "Buenos Aires: R$ 2.448 é o menor preço já registrado (saindo de IGU, 18/01 a 23/01).",
+   "preco": 2448.0
+  },
+  {
+   "quando": "2026-11-13T12:00:00+00:00",
+   "dia": "2026-11-13",
+   "rota": "nordeste:SSA",
+   "tipo": "queda",
+   "mensagem": "Salvador (Nordeste): caiu R$ 160 (11%), agora R$ 1.293 (saindo de CAC, 04/03 a 13/03).",
+   "preco": 1293.0
+  },
+  {
+   "quando": "2026-11-13T12:00:00+00:00",
+   "dia": "2026-11-13",
+   "rota": "nordeste:AJU",
+   "tipo": "queda",
+   "mensagem": "Aracaju (Nordeste): caiu R$ 3.817 (72%), agora R$ 1.496 (saindo de IGU, 26/01 a 03/02).",
+   "preco": 1496.0
+  },
+  {
+   "quando": "2026-11-17T12:00:00+00:00",
+   "dia": "2026-11-17",
+   "rota": "bue",
+   "tipo": "bom",
+   "mensagem": "Buenos Aires: R$ 2.297 é um bom preço, 6% abaixo do normal de R$ 2.448 (saindo de IGU, 01/04 a 08/04).",
+   "preco": 2297.0
+  },
+  {
+   "quando": "2026-11-17T12:00:00+00:00",
+   "dia": "2026-11-17",
+   "rota": "bue",
+   "tipo": "queda",
+   "mensagem": "Buenos Aires: caiu R$ 151 (6%), agora R$ 2.297 (saindo de IGU, 01/04 a 08/04).",
+   "preco": 2297.0
+  },
+  {
+   "quando": "2026-11-17T12:00:00+00:00",
+   "dia": "2026-11-17",
+   "rota": "bue",
+   "tipo": "recorde",
+   "mensagem": "Buenos Aires: R$ 2.297 é o menor preço já registrado (saindo de IGU, 01/04 a 08/04).",
+   "preco": 2297.0
+  },
+  {
+   "quando": "2026-11-17T12:00:00+00:00",
+   "dia": "2026-11-17",
+   "rota": "nordeste:NAT",
+   "tipo": "queda",
+   "mensagem": "Natal (Nordeste): caiu R$ 219 (6%), agora R$ 3.671 (saindo de IGR, 09/04 a 16/04).",
+   "preco": 3671.0
+  },
+  {
+   "quando": "2026-11-17T12:00:00+00:00",
+   "dia": "2026-11-17",
+   "rota": "nordeste:NAT",
+   "tipo": "recorde",
+   "mensagem": "Natal (Nordeste): R$ 3.671 é o menor preço já registrado (saindo de IGR, 09/04 a 16/04).",
+   "preco": 3671.0
+  },
+  {
+   "quando": "2026-11-17T12:00:00+00:00",
+   "dia": "2026-11-17",
+   "rota": "nordeste:SSA",
+   "tipo": "bom",
+   "mensagem": "Salvador (Nordeste): R$ 1.173 é um bom preço, 9% abaixo do normal de R$ 1.293 (saindo de CAC, 12/03 a 19/03).",
+   "preco": 1173.0
+  },
+  {
+   "quando": "2026-11-17T12:00:00+00:00",
+   "dia": "2026-11-17",
+   "rota": "nordeste:SSA",
+   "tipo": "queda",
+   "mensagem": "Salvador (Nordeste): caiu R$ 120 (9%), agora R$ 1.173 (saindo de CAC, 12/03 a 19/03).",
+   "preco": 1173.0
+  },
+  {
+   "quando": "2026-11-17T12:00:00+00:00",
+   "dia": "2026-11-17",
+   "rota": "nordeste:SSA",
+   "tipo": "recorde",
+   "mensagem": "Salvador (Nordeste): R$ 1.173 é o menor preço já registrado (saindo de CAC, 12/03 a 19/03).",
+   "preco": 1173.0
   }
  ],
  "proxima": "2026-11-18T12:15:00+00:00",
  "referencias": {
   "bue": {
    "dias": 8,
-   "normal": 472,
-   "bom": 439,
-   "minimo": 439,
-   "maximo": 505
+   "normal": 2448,
+   "bom": 2326,
+   "minimo": 2297,
+   "maximo": 2566
   },
-  "nordeste": {
+  "nordeste:FOR": {
    "dias": 8,
    "normal": 1219,
    "bom": 1158,
    "minimo": 1219,
    "maximo": 1219
+  },
+  "nordeste:REC": {
+   "dias": 5,
+   "normal": 1544,
+   "bom": 1467,
+   "minimo": 1544,
+   "maximo": 1544
+  },
+  "nordeste:NAT": {
+   "dias": 5,
+   "normal": 3890,
+   "bom": 3696,
+   "minimo": 3671,
+   "maximo": 4064
   },
   "gua": {
    "dias": 8,
@@ -551,8 +1014,24 @@
    "minimo": 5194,
    "maximo": 6356
   },
-  "jpa": {
+  "nordeste:MCZ": {
+   "dias": 4
+  },
+  "nordeste:SSA": {
+   "dias": 6,
+   "normal": 1293,
+   "bom": 1228,
+   "minimo": 1173,
+   "maximo": 1453
+  },
+  "nordeste:AJU": {
+   "dias": 4
+  },
+  "nordeste:JPA": {
    "dias": 1
+  },
+  "jpa": {
+   "dias": 2
   },
   "pdg": {
    "dias": 1
@@ -565,7 +1044,24 @@
   },
   "adz": {
    "dias": 1
+  },
+  "cwb": {
+   "dias": 1
+  },
+  "gru": {
+   "dias": 1
   }
  },
- "conexao_max_min": 240
+ "conexao_max_min": 240,
+ "ajustes": {
+  "bue": {
+   "excluir_origens": [
+    "IGR"
+   ],
+   "motivo": "Puerto Iguazú: estacionamento caro e tarifa sem bagagem"
+  },
+  "nordeste": {
+   "separar_destinos": true
+  }
+ }
 }

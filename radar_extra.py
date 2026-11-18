@@ -142,6 +142,7 @@ def consultar(chave, rota, ida, volta):
         'outbound_date': ida, 'return_date': volta,
         'currency': 'BRL', 'hl': 'pt', 'gl': 'br', 'adults': 1, 'travel_class': 1,
         'layover_duration': f'30,{MAX_CONEXAO}',  # o Google ja filtra conexoes longas (ida e volta)
+        'deep_search': 'true',                    # mesmos resultados do site do Google Voos (mais lento, mesmo custo)
     })
     if 'error' in d:
         if 'no results' in d['error'].lower():
@@ -297,12 +298,42 @@ def valida(l):
         return False
 
 
+# Ajustes aplicados as rotas do cliente da universidade (config em rotas.json > ajustes_universidade):
+#  excluir_origens: aeroportos ignorados (ex.: IGR em Buenos Aires: estacionamento caro e tarifa sem bagagem)
+#  separar_destinos: cada cidade vira um destino proprio (ex.: Nordeste -> Salvador, Recife, Fortaleza...)
+CIDADE_AERO = {'AEP': 'BUE', 'EZE': 'BUE', 'GRU': 'SAO', 'CGH': 'SAO', 'VCP': 'SAO'}
+NOME_IATA = {'SSA': 'Salvador', 'REC': 'Recife', 'FOR': 'Fortaleza', 'NAT': 'Natal', 'MCZ': 'Maceió',
+             'JPA': 'João Pessoa', 'AJU': 'Aracaju', 'BUE': 'Buenos Aires'}
+
+
+def ajustes():
+    return ler_json('rotas.json', {}).get('ajustes_universidade', {})
+
+
+def rota_ajustada(l, aj):
+    """Devolve a rota (ja separada por cidade, se for o caso) ou None se a linha deve ser ignorada."""
+    a = aj.get(l.get('rota'), {})
+    if l.get('origem') in a.get('excluir_origens', []):
+        return None
+    if a.get('separar_destinos') and l.get('destino'):
+        return l['rota'] + ':' + CIDADE_AERO.get(l['destino'], l['destino'])
+    return l.get('rota')
+
+
 def ler_historico():
     try:
         with open(P('historico.csv'), encoding='utf-8') as f:
             linhas = [l for l in csv.DictReader(f) if l.get('tarifa') and valida(l)]
     except FileNotFoundError:
         return []
+    aj = ajustes()
+    saida = []
+    for l in linhas:
+        r = rota_ajustada(l, aj)
+        if r:
+            l['rota'] = r
+            saida.append(l)
+    linhas = saida
     linhas.sort(key=lambda l: l['consultado'])
     return linhas
 
@@ -430,6 +461,10 @@ def publicar(rotas, estado, agora, falhas, saldo_final, uni=None):
     nomes = {r['id']: r['nome'] for r in rotas}
     for r in (uni or {}).get('rotas', []):
         nomes.setdefault(r['id'], r.get('nome', r['id']))
+    for k in serie:
+        if ':' in k:
+            base, cid = k.split(':', 1)
+            nomes[k] = NOME_IATA.get(cid, cid) + ' (' + nomes.get(base, base) + ')'
     amanha = (agora.date() + dt.timedelta(days=1)).isoformat()
     referencias = {rid: referencia(s, amanha) for rid, s in serie.items()}
     alertas = gerar_alertas(serie, tetos, nomes, agora)
@@ -440,7 +475,7 @@ def publicar(rotas, estado, agora, falhas, saldo_final, uni=None):
         'versao': 1, 'moeda': 'BRL', 'fonte': 'extra', 'atualizado': agora.isoformat(),
         'rotas': rotas_pub, 'ofertas': ofertas, 'falhas': falhas, 'anteriorMinimo': min_ant, 'saldo': saldo_final,
         'serie': serie, 'alertas': alertas[-60:], 'proxima': proxima.isoformat(),
-        'referencias': referencias, 'conexao_max_min': MAX_CONEXAO,
+        'referencias': referencias, 'conexao_max_min': MAX_CONEXAO, 'ajustes': ajustes(),
     })
     print(f'precos-extra.json: {len(ofertas)} ofertas, historico de {len(serie)} destinos, {len(alertas)} alertas.')
 

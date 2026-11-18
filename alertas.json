@@ -2,25 +2,121 @@
  {
   "quando": "2026-11-11T12:00:00+00:00",
   "dia": "2026-11-11",
+  "rota": "nordeste:NAT",
+  "tipo": "queda",
+  "mensagem": "Natal (Nordeste): caiu R$ 174 (4%), agora R$ 3.890 (saindo de IGR, 10/03 a 17/03).",
+  "preco": 3890.0
+ },
+ {
+  "quando": "2026-11-11T12:00:00+00:00",
+  "dia": "2026-11-11",
   "rota": "gua",
   "tipo": "queda",
   "mensagem": "Guatemala: caiu R$ 1.162 (18%), agora R$ 5.194 (saindo de IGU, 11/03 a 25/03).",
   "preco": 5194.0
  },
  {
-  "quando": "2026-11-14T12:00:00+00:00",
-  "dia": "2026-11-14",
-  "rota": "bue",
+  "quando": "2026-11-12T12:00:00+00:00",
+  "dia": "2026-11-12",
+  "rota": "nordeste:AJU",
   "tipo": "queda",
-  "mensagem": "Buenos Aires: caiu R$ 66 (13%), agora R$ 439 (saindo de IGR, 19/01 a 27/01).",
-  "preco": 439.0
+  "mensagem": "Aracaju (Nordeste): caiu R$ 688 (11%), agora R$ 5.313 (saindo de IGR, 07/02 a 17/02).",
+  "preco": 5313.0
  },
  {
-  "quando": "2026-11-14T12:00:00+00:00",
-  "dia": "2026-11-14",
+  "quando": "2026-11-13T12:00:00+00:00",
+  "dia": "2026-11-13",
+  "rota": "bue",
+  "tipo": "queda",
+  "mensagem": "Buenos Aires: caiu R$ 118 (5%), agora R$ 2.448 (saindo de IGU, 18/01 a 23/01).",
+  "preco": 2448.0
+ },
+ {
+  "quando": "2026-11-13T12:00:00+00:00",
+  "dia": "2026-11-13",
   "rota": "bue",
   "tipo": "recorde",
-  "mensagem": "Buenos Aires: R$ 439 é o menor preço já registrado (saindo de IGR, 19/01 a 27/01).",
-  "preco": 439.0
+  "mensagem": "Buenos Aires: R$ 2.448 é o menor preço já registrado (saindo de IGU, 18/01 a 23/01).",
+  "preco": 2448.0
+ },
+ {
+  "quando": "2026-11-13T12:00:00+00:00",
+  "dia": "2026-11-13",
+  "rota": "nordeste:SSA",
+  "tipo": "queda",
+  "mensagem": "Salvador (Nordeste): caiu R$ 160 (11%), agora R$ 1.293 (saindo de CAC, 04/03 a 13/03).",
+  "preco": 1293.0
+ },
+ {
+  "quando": "2026-11-13T12:00:00+00:00",
+  "dia": "2026-11-13",
+  "rota": "nordeste:AJU",
+  "tipo": "queda",
+  "mensagem": "Aracaju (Nordeste): caiu R$ 3.817 (72%), agora R$ 1.496 (saindo de IGU, 26/01 a 03/02).",
+  "preco": 1496.0
+ },
+ {
+  "quando": "2026-11-17T12:00:00+00:00",
+  "dia": "2026-11-17",
+  "rota": "bue",
+  "tipo": "bom",
+  "mensagem": "Buenos Aires: R$ 2.297 é um bom preço, 6% abaixo do normal de R$ 2.448 (saindo de IGU, 01/04 a 08/04).",
+  "preco": 2297.0
+ },
+ {
+  "quando": "2026-11-17T12:00:00+00:00",
+  "dia": "2026-11-17",
+  "rota": "bue",
+  "tipo": "queda",
+  "mensagem": "Buenos Aires: caiu R$ 151 (6%), agora R$ 2.297 (saindo de IGU, 01/04 a 08/04).",
+  "preco": 2297.0
+ },
+ {
+  "quando": "2026-11-17T12:00:00+00:00",
+  "dia": "2026-11-17",
+  "rota": "bue",
+  "tipo": "recorde",
+  "mensagem": "Buenos Aires: R$ 2.297 é o menor preço já registrado (saindo de IGU, 01/04 a 08/04).",
+  "preco": 2297.0
+ },
+ {
+  "quando": "2026-11-17T12:00:00+00:00",
+  "dia": "2026-11-17",
+  "rota": "nordeste:NAT",
+  "tipo": "queda",
+  "mensagem": "Natal (Nordeste): caiu R$ 219 (6%), agora R$ 3.671 (saindo de IGR, 09/04 a 16/04).",
+  "preco": 3671.0
+ },
+ {
+  "quando": "2026-11-17T12:00:00+00:00",
+  "dia": "2026-11-17",
+  "rota": "nordeste:NAT",
+  "tipo": "recorde",
+  "mensagem": "Natal (Nordeste): R$ 3.671 é o menor preço já registrado (saindo de IGR, 09/04 a 16/04).",
+  "preco": 3671.0
+ },
+ {
+  "quando": "2026-11-17T12:00:00+00:00",
+  "dia": "2026-11-17",
+  "rota": "nordeste:SSA",
+  "tipo": "bom",
+  "mensagem": "Salvador (Nordeste): R$ 1.173 é um bom preço, 9% abaixo do normal de R$ 1.293 (saindo de CAC, 12/03 a 19/03).",
+  "preco": 1173.0
+ },
+ {
+  "quando": "2026-11-17T12:00:00+00:00",
+  "dia": "2026-11-17",
+  "rota": "nordeste:SSA",
+  "tipo": "queda",
+  "mensagem": "Salvador (Nordeste): caiu R$ 120 (9%), agora R$ 1.173 (saindo de CAC, 12/03 a 19/03).",
+  "preco": 1173.0
+ },
+ {
+  "quando": "2026-11-17T12:00:00+00:00",
+  "dia": "2026-11-17",
+  "rota": "nordeste:SSA",
+  "tipo": "recorde",
+  "mensagem": "Salvador (Nordeste): R$ 1.173 é o menor preço já registrado (saindo de CAC, 12/03 a 19/03).",
+  "preco": 1173.0
  }
 ]
