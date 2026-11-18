@@ -1,0 +1,75 @@
+{
+ "rotas": [
+  {
+   "id": "bue",
+   "nome": "Buenos Aires",
+   "origens": [
+    "CAC",
+    "IGU",
+    "IGR"
+   ],
+   "destinos": [
+    "AEP",
+    "EZE"
+   ],
+   "inicio": "2026-12-07",
+   "fim": "2027-04-16",
+   "min": 5,
+   "max": 9,
+   "teto": 1200.0,
+   "cobertura": {
+    "pares": 620,
+    "com_preco_recente": 21
+   }
+  },
+  {
+   "id": "nordeste",
+   "nome": "Nordeste",
+   "origens": [
+    "CAC",
+    "IGU",
+    "IGR"
+   ],
+   "destinos": [
+    "SSA",
+    "REC",
+    "FOR",
+    "NAT",
+    "MCZ",
+    "JPA",
+    "AJU"
+   ],
+   "inicio": "2026-12-07",
+   "fim": "2027-04-16",
+   "min": 7,
+   "max": 10,
+   "teto": 1500.0,
+   "cobertura": {
+    "pares": 490,
+    "com_preco_recente": 21
+   }
+  },
+  {
+   "id": "gua",
+   "nome": "Guatemala",
+   "origens": [
+    "CAC",
+    "IGU",
+    "IGR"
+   ],
+   "destinos": [
+    "GUA"
+   ],
+   "inicio": "2026-12-07",
+   "fim": "2027-04-16",
+   "min": 10,
+   "max": 15,
+   "teto": 4500.0,
+   "cobertura": {
+    "pares": 711,
+    "com_preco_recente": 21
+   }
+  }
+ ],
+ "atualizado": "2026-11-17T23:20:26+00:00"
+}
