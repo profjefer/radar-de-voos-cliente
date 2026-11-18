@@ -198,8 +198,9 @@ def importar_universidade(w, vistos):
         with urllib.request.urlopen(req, timeout=60) as r:
             uni = json.load(r)
     except Exception as e:
-        print('Aviso: nao consegui ler o JSON da universidade:', e)
-        return None
+        print('Aviso: nao consegui ler o JSON da universidade:', e, '- usando a ultima copia salva.')
+        return ler_json('universidade-cache.json', None)
+    gravar_json('universidade-cache.json', {'rotas': uni.get('rotas', []), 'atualizado': uni.get('atualizado')})
     novos = 0
     for o in uni.get('ofertas', []):
         k = (o.get('consultado', ''), o.get('rota', ''), o.get('origem'), o.get('destino'), o.get('ida'), o.get('volta'))
@@ -299,7 +300,8 @@ def valida(l):
 
 
 # Ajustes aplicados as rotas do cliente da universidade (config em rotas.json > ajustes_universidade):
-#  excluir_origens: aeroportos ignorados (ex.: IGR em Buenos Aires: estacionamento caro e tarifa sem bagagem)
+#  excluir_origens: aeroportos de saida ignorados (ex.: IGR nas viagens nacionais do Nordeste)
+#  ocultar_destinos: destinos ignorados (ex.: JPA, que ja tem rota propria)
 #  separar_destinos: cada cidade vira um destino proprio (ex.: Nordeste -> Salvador, Recife, Fortaleza...)
 CIDADE_AERO = {'AEP': 'BUE', 'EZE': 'BUE', 'GRU': 'SAO', 'CGH': 'SAO', 'VCP': 'SAO'}
 NOME_IATA = {'SSA': 'Salvador', 'REC': 'Recife', 'FOR': 'Fortaleza', 'NAT': 'Natal', 'MCZ': 'Maceió',
@@ -313,7 +315,7 @@ def ajustes():
 def rota_ajustada(l, aj):
     """Devolve a rota (ja separada por cidade, se for o caso) ou None se a linha deve ser ignorada."""
     a = aj.get(l.get('rota'), {})
-    if l.get('origem') in a.get('excluir_origens', []):
+    if l.get('origem') in a.get('excluir_origens', []) or l.get('destino') in a.get('ocultar_destinos', []):
         return None
     if a.get('separar_destinos') and l.get('destino'):
         return l['rota'] + ':' + CIDADE_AERO.get(l['destino'], l['destino'])
@@ -459,7 +461,8 @@ def publicar(rotas, estado, agora, falhas, saldo_final, uni=None):
     serie = melhor_por_dia(linhas)
     tetos = {r['id']: r.get('limite') for r in rotas}  # so existe se voce definir um 'limite' em rotas.json
     nomes = {r['id']: r['nome'] for r in rotas}
-    for r in (uni or {}).get('rotas', []):
+    nomes.update({'bue': 'Buenos Aires', 'nordeste': 'Nordeste', 'gua': 'Guatemala'})   # se a universidade estiver fora do ar
+    for r in (uni or ler_json('universidade-cache.json', {}) or {}).get('rotas', []):
         nomes.setdefault(r['id'], r.get('nome', r['id']))
     for k in serie:
         if ':' in k:

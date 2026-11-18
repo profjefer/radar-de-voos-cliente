@@ -118,7 +118,7 @@ details{margin-top:14px}summary{cursor:pointer;color:var(--blue);font-weight:700
 </div>
 <details>
 <summary>Como funciona</summary>
-<p style="margin-top:10px">Dois robôs consultam o Google Voos: um no computador da UFPR (Buenos Aires, Nordeste e Guatemala) e outro no GitHub, todo dia às 9h15, com horário reserva às 18h40 (Curitiba, João Pessoa, São Paulo, Porto de Galinhas, Playa Mujeres, Bogotá e San Andrés). O pacote Nordeste aparece separado por cidade, e em Buenos Aires as saídas de Puerto Iguazú são ignoradas (estacionamento caro e tarifa sem bagagem). A conta gratuita permite 250 consultas por mês para os dois juntos, por isso cada destino é verificado algumas datas por vez. O histórico e os avisos de todos os destinos ficam guardados no GitHub. Voos com alguma conexão de mais de 4 horas são descartados. O “preço normal” é a mediana dos menores preços diários dos últimos 45 dias (precisa de pelo menos 5 dias de coleta); “bom preço” é ficar entre os 25% mais baratos desse período e pelo menos 5% abaixo do normal. Os preços mudam a qualquer momento: confira no Google Voos antes de comprar.</p>
+<p style="margin-top:10px">Dois robôs consultam o Google Voos: um no computador da UFPR (Buenos Aires, Nordeste e Guatemala) e outro no GitHub, todo dia às 9h15, com horário reserva às 18h40 (Curitiba, João Pessoa, São Paulo, Porto de Galinhas, Playa Mujeres, Bogotá e San Andrés). O pacote Nordeste aparece separado por cidade, só com saídas de Cascavel e Foz (João Pessoa tem cartão próprio); Buenos Aires inclui Puerto Iguazú. A conta gratuita permite 250 consultas por mês para os dois juntos, por isso cada destino é verificado algumas datas por vez. O histórico e os avisos de todos os destinos ficam guardados no GitHub. Voos com alguma conexão de mais de 4 horas são descartados. O “preço normal” é a mediana dos menores preços diários dos últimos 45 dias (precisa de pelo menos 5 dias de coleta); “bom preço” é ficar entre os 25% mais baratos desse período e pelo menos 5% abaixo do normal. Os preços mudam a qualquer momento: confira no Google Voos antes de comprar.</p>
 </details>
 </footer>
 </main>
@@ -234,13 +234,14 @@ async function carregar() {
   const CID = {AEP:'BUE', EZE:'BUE', GRU:'SAO', CGH:'SAO', VCP:'SAO'};
   const cid = c => CID[c] || c;
   const excl = id => (AJ[id] || {}).excluir_origens || [];
-  J.ofertas = J.ofertas.filter(o => !excl(o.rota).includes(o.origem))
+  const ocult = id => (AJ[id] || {}).ocultar_destinos || [];
+  J.ofertas = J.ofertas.filter(o => !excl(o.rota).includes(o.origem) && !ocult(o.rota).includes(o.destino))
     .map(o => (AJ[o.rota] || {}).separar_destinos ? {...o, rota: o.rota + ':' + cid(o.destino)} : o);
   J.rotas = J.rotas.flatMap(r => {
     const origens = (r.origens || []).filter(x => !excl(r.id).includes(x));
     if (!(AJ[r.id] || {}).separar_destinos) return [{...r, origens}];
     const grupos = new Map();
-    for (const d of r.destinos || []) { const k = cid(d); if (!grupos.has(k)) grupos.set(k, []); grupos.get(k).push(d); }
+    for (const d of (r.destinos || []).filter(x => !ocult(r.id).includes(x))) { const k = cid(d); if (!grupos.has(k)) grupos.set(k, []); grupos.get(k).push(d); }
     return [...grupos].map(([k, ds]) => ({...r, id: r.id + ':' + k, origens, destinos: ds, cobertura: undefined,
       nome: cidade(ds[0]).replace(/ \(.*\)$/, '') + ' (' + r.nome + ')'}));
   });

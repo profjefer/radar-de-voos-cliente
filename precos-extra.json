@@ -2,7 +2,7 @@
  "versao": 1,
  "moeda": "BRL",
  "fonte": "extra",
- "atualizado": "2026-11-18T01:24:53+00:00",
+ "atualizado": "2026-11-18T01:32:39+00:00",
  "rotas": [
   {
    "id": "jpa",
@@ -359,6 +359,8 @@
  "falhas": 0,
  "anteriorMinimo": {
   "jpa": 2016.0,
+  "cwb": 1871.0,
+  "gru": 947.0,
   "pdg": 1624.0,
   "cun": 6321.0,
   "bog": 4501.0,
@@ -369,67 +371,67 @@
   "bue": [
    {
     "dia": "2026-11-10",
-    "preco": 2566.0,
-    "origem": "IGU",
-    "destino": "AEP",
-    "ida": "2027-02-24",
-    "volta": "2027-03-04"
+    "preco": 505.0,
+    "origem": "IGR",
+    "destino": "EZE",
+    "ida": "2026-12-15",
+    "volta": "2026-12-24"
    },
    {
     "dia": "2026-11-11",
-    "preco": 2566.0,
-    "origem": "IGU",
-    "destino": "AEP",
-    "ida": "2027-02-24",
-    "volta": "2027-03-04"
+    "preco": 505.0,
+    "origem": "IGR",
+    "destino": "EZE",
+    "ida": "2026-12-15",
+    "volta": "2026-12-24"
    },
    {
     "dia": "2026-11-12",
-    "preco": 2566.0,
-    "origem": "IGU",
-    "destino": "AEP",
-    "ida": "2027-02-24",
-    "volta": "2027-03-04"
+    "preco": 505.0,
+    "origem": "IGR",
+    "destino": "EZE",
+    "ida": "2026-12-15",
+    "volta": "2026-12-24"
    },
    {
     "dia": "2026-11-13",
-    "preco": 2448.0,
-    "origem": "IGU",
-    "destino": "AEP",
-    "ida": "2027-01-18",
-    "volta": "2027-01-23"
+    "preco": 505.0,
+    "origem": "IGR",
+    "destino": "EZE",
+    "ida": "2026-12-15",
+    "volta": "2026-12-24"
    },
    {
     "dia": "2026-11-14",
-    "preco": 2448.0,
-    "origem": "IGU",
+    "preco": 439.0,
+    "origem": "IGR",
     "destino": "AEP",
-    "ida": "2027-01-18",
-    "volta": "2027-01-23"
+    "ida": "2027-01-19",
+    "volta": "2027-01-27"
    },
    {
     "dia": "2026-11-15",
-    "preco": 2448.0,
-    "origem": "IGU",
+    "preco": 439.0,
+    "origem": "IGR",
     "destino": "AEP",
-    "ida": "2027-01-18",
-    "volta": "2027-01-23"
+    "ida": "2027-01-19",
+    "volta": "2027-01-27"
    },
    {
     "dia": "2026-11-16",
-    "preco": 2448.0,
-    "origem": "IGU",
+    "preco": 439.0,
+    "origem": "IGR",
     "destino": "AEP",
-    "ida": "2027-01-18",
-    "volta": "2027-01-23"
+    "ida": "2027-01-19",
+    "volta": "2027-01-27"
    },
    {
     "dia": "2026-11-17",
-    "preco": 2297.0,
-    "origem": "IGU",
+    "preco": 439.0,
+    "origem": "IGR",
     "destino": "AEP",
-    "ida": "2027-04-01",
-    "volta": "2027-04-08"
+    "ida": "2027-01-19",
+    "volta": "2027-01-27"
    }
   ],
   "nordeste:FOR": [
@@ -540,48 +542,6 @@
     "volta": "2027-03-12"
    }
   ],
-  "nordeste:NAT": [
-   {
-    "dia": "2026-11-10",
-    "preco": 4064.0,
-    "origem": "IGR",
-    "destino": "NAT",
-    "ida": "2027-03-27",
-    "volta": "2027-04-06"
-   },
-   {
-    "dia": "2026-11-11",
-    "preco": 3890.0,
-    "origem": "IGR",
-    "destino": "NAT",
-    "ida": "2027-03-10",
-    "volta": "2027-03-17"
-   },
-   {
-    "dia": "2026-11-13",
-    "preco": 3890.0,
-    "origem": "IGR",
-    "destino": "NAT",
-    "ida": "2027-03-10",
-    "volta": "2027-03-17"
-   },
-   {
-    "dia": "2026-11-15",
-    "preco": 3890.0,
-    "origem": "IGR",
-    "destino": "NAT",
-    "ida": "2027-03-10",
-    "volta": "2027-03-17"
-   },
-   {
-    "dia": "2026-11-17",
-    "preco": 3671.0,
-    "origem": "IGR",
-    "destino": "NAT",
-    "ida": "2027-04-09",
-    "volta": "2027-04-16"
-   }
-  ],
   "gua": [
    {
     "dia": "2026-11-10",
@@ -666,14 +626,6 @@
     "volta": "2027-02-02"
    },
    {
-    "dia": "2026-11-15",
-    "preco": 1386.0,
-    "origem": "IGU",
-    "destino": "MCZ",
-    "ida": "2027-01-23",
-    "volta": "2027-02-02"
-   },
-   {
     "dia": "2026-11-16",
     "preco": 1386.0,
     "origem": "IGU",
@@ -685,14 +637,6 @@
   "nordeste:SSA": [
    {
     "dia": "2026-11-10",
-    "preco": 1453.0,
-    "origem": "IGU",
-    "destino": "SSA",
-    "ida": "2027-03-18",
-    "volta": "2027-03-28"
-   },
-   {
-    "dia": "2026-11-12",
     "preco": 1453.0,
     "origem": "IGU",
     "destino": "SSA",
@@ -734,22 +678,6 @@
   ],
   "nordeste:AJU": [
    {
-    "dia": "2026-11-10",
-    "preco": 6001.0,
-    "origem": "IGR",
-    "destino": "AJU",
-    "ida": "2027-01-23",
-    "volta": "2027-02-02"
-   },
-   {
-    "dia": "2026-11-12",
-    "preco": 5313.0,
-    "origem": "IGR",
-    "destino": "AJU",
-    "ida": "2027-02-07",
-    "volta": "2027-02-17"
-   },
-   {
     "dia": "2026-11-13",
     "preco": 1496.0,
     "origem": "IGU",
@@ -764,16 +692,6 @@
     "destino": "AJU",
     "ida": "2027-01-26",
     "volta": "2027-02-03"
-   }
-  ],
-  "nordeste:JPA": [
-   {
-    "dia": "2026-11-12",
-    "preco": 6072.0,
-    "origem": "IGR",
-    "destino": "JPA",
-    "ida": "2026-12-09",
-    "volta": "2026-12-17"
    }
   ],
   "jpa": [
@@ -859,42 +777,10 @@
   {
    "quando": "2026-11-11T12:00:00+00:00",
    "dia": "2026-11-11",
-   "rota": "nordeste:NAT",
-   "tipo": "queda",
-   "mensagem": "Natal (Nordeste): caiu R$ 174 (4%), agora R$ 3.890 (saindo de IGR, 10/03 a 17/03).",
-   "preco": 3890.0
-  },
-  {
-   "quando": "2026-11-11T12:00:00+00:00",
-   "dia": "2026-11-11",
    "rota": "gua",
    "tipo": "queda",
    "mensagem": "Guatemala: caiu R$ 1.162 (18%), agora R$ 5.194 (saindo de IGU, 11/03 a 25/03).",
    "preco": 5194.0
-  },
-  {
-   "quando": "2026-11-12T12:00:00+00:00",
-   "dia": "2026-11-12",
-   "rota": "nordeste:AJU",
-   "tipo": "queda",
-   "mensagem": "Aracaju (Nordeste): caiu R$ 688 (11%), agora R$ 5.313 (saindo de IGR, 07/02 a 17/02).",
-   "preco": 5313.0
-  },
-  {
-   "quando": "2026-11-13T12:00:00+00:00",
-   "dia": "2026-11-13",
-   "rota": "bue",
-   "tipo": "queda",
-   "mensagem": "Buenos Aires: caiu R$ 118 (5%), agora R$ 2.448 (saindo de IGU, 18/01 a 23/01).",
-   "preco": 2448.0
-  },
-  {
-   "quando": "2026-11-13T12:00:00+00:00",
-   "dia": "2026-11-13",
-   "rota": "bue",
-   "tipo": "recorde",
-   "mensagem": "Buenos Aires: R$ 2.448 é o menor preço já registrado (saindo de IGU, 18/01 a 23/01).",
-   "preco": 2448.0
   },
   {
    "quando": "2026-11-13T12:00:00+00:00",
@@ -905,60 +791,20 @@
    "preco": 1293.0
   },
   {
-   "quando": "2026-11-13T12:00:00+00:00",
-   "dia": "2026-11-13",
-   "rota": "nordeste:AJU",
-   "tipo": "queda",
-   "mensagem": "Aracaju (Nordeste): caiu R$ 3.817 (72%), agora R$ 1.496 (saindo de IGU, 26/01 a 03/02).",
-   "preco": 1496.0
-  },
-  {
-   "quando": "2026-11-17T12:00:00+00:00",
-   "dia": "2026-11-17",
-   "rota": "bue",
-   "tipo": "bom",
-   "mensagem": "Buenos Aires: R$ 2.297 é um bom preço, 6% abaixo do normal de R$ 2.448 (saindo de IGU, 01/04 a 08/04).",
-   "preco": 2297.0
-  },
-  {
-   "quando": "2026-11-17T12:00:00+00:00",
-   "dia": "2026-11-17",
+   "quando": "2026-11-14T12:00:00+00:00",
+   "dia": "2026-11-14",
    "rota": "bue",
    "tipo": "queda",
-   "mensagem": "Buenos Aires: caiu R$ 151 (6%), agora R$ 2.297 (saindo de IGU, 01/04 a 08/04).",
-   "preco": 2297.0
+   "mensagem": "Buenos Aires: caiu R$ 66 (13%), agora R$ 439 (saindo de IGR, 19/01 a 27/01).",
+   "preco": 439.0
   },
   {
-   "quando": "2026-11-17T12:00:00+00:00",
-   "dia": "2026-11-17",
+   "quando": "2026-11-14T12:00:00+00:00",
+   "dia": "2026-11-14",
    "rota": "bue",
    "tipo": "recorde",
-   "mensagem": "Buenos Aires: R$ 2.297 é o menor preço já registrado (saindo de IGU, 01/04 a 08/04).",
-   "preco": 2297.0
-  },
-  {
-   "quando": "2026-11-17T12:00:00+00:00",
-   "dia": "2026-11-17",
-   "rota": "nordeste:NAT",
-   "tipo": "queda",
-   "mensagem": "Natal (Nordeste): caiu R$ 219 (6%), agora R$ 3.671 (saindo de IGR, 09/04 a 16/04).",
-   "preco": 3671.0
-  },
-  {
-   "quando": "2026-11-17T12:00:00+00:00",
-   "dia": "2026-11-17",
-   "rota": "nordeste:NAT",
-   "tipo": "recorde",
-   "mensagem": "Natal (Nordeste): R$ 3.671 é o menor preço já registrado (saindo de IGR, 09/04 a 16/04).",
-   "preco": 3671.0
-  },
-  {
-   "quando": "2026-11-17T12:00:00+00:00",
-   "dia": "2026-11-17",
-   "rota": "nordeste:SSA",
-   "tipo": "bom",
-   "mensagem": "Salvador (Nordeste): R$ 1.173 é um bom preço, 9% abaixo do normal de R$ 1.293 (saindo de CAC, 12/03 a 19/03).",
-   "preco": 1173.0
+   "mensagem": "Buenos Aires: R$ 439 é o menor preço já registrado (saindo de IGR, 19/01 a 27/01).",
+   "preco": 439.0
   },
   {
    "quando": "2026-11-17T12:00:00+00:00",
@@ -981,10 +827,10 @@
  "referencias": {
   "bue": {
    "dias": 8,
-   "normal": 2448,
-   "bom": 2326,
-   "minimo": 2297,
-   "maximo": 2566
+   "normal": 472,
+   "bom": 439,
+   "minimo": 439,
+   "maximo": 505
   },
   "nordeste:FOR": {
    "dias": 8,
@@ -1000,13 +846,6 @@
    "minimo": 1544,
    "maximo": 1544
   },
-  "nordeste:NAT": {
-   "dias": 5,
-   "normal": 3890,
-   "bom": 3696,
-   "minimo": 3671,
-   "maximo": 4064
-  },
   "gua": {
    "dias": 8,
    "normal": 5194,
@@ -1015,20 +854,17 @@
    "maximo": 6356
   },
   "nordeste:MCZ": {
-   "dias": 4
+   "dias": 3
   },
   "nordeste:SSA": {
-   "dias": 6,
+   "dias": 5,
    "normal": 1293,
    "bom": 1228,
    "minimo": 1173,
    "maximo": 1453
   },
   "nordeste:AJU": {
-   "dias": 4
-  },
-  "nordeste:JPA": {
-   "dias": 1
+   "dias": 2
   },
   "jpa": {
    "dias": 2
@@ -1054,14 +890,15 @@
  },
  "conexao_max_min": 240,
  "ajustes": {
-  "bue": {
+  "nordeste": {
+   "separar_destinos": true,
    "excluir_origens": [
     "IGR"
    ],
-   "motivo": "Puerto Iguazú: estacionamento caro e tarifa sem bagagem"
-  },
-  "nordeste": {
-   "separar_destinos": true
+   "ocultar_destinos": [
+    "JPA"
+   ],
+   "motivo": "voo nacional: sair do Paraguai/Argentina nao faz sentido; João Pessoa já tem rota própria"
   }
  }
 }

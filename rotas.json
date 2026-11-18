@@ -89,12 +89,11 @@
     }
   ],
   "ajustes_universidade": {
-    "bue": {
-      "excluir_origens": ["IGR"],
-      "motivo": "Puerto Iguazú: estacionamento caro e tarifa sem bagagem"
-    },
     "nordeste": {
-      "separar_destinos": true
+      "separar_destinos": true,
+      "excluir_origens": ["IGR"],
+      "ocultar_destinos": ["JPA"],
+      "motivo": "voo nacional: sair do Paraguai/Argentina nao faz sentido; João Pessoa já tem rota própria"
     }
   }
 }
