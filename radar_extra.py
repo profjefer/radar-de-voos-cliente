@@ -439,6 +439,7 @@ def publicar(rotas, estado, agora, falhas, saldo_final, uni=None):
     validas_rotas = {r['id'] for r in rotas}
     ofertas = []
     for (rid, org, dst, ida, volta), l in ultimas.items():
+        rid = rid.split(':')[0]   # nordeste:SSA -> nordeste (a pagina separa por cidade com os 'ajustes')
         if rid not in validas_rotas or ida <= hoje:
             continue
         o = {'origem': org, 'destino': dst, 'tarifa': float(l['tarifa']), 'ida': ida, 'volta': volta,
