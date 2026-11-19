@@ -2,10 +2,74 @@
   "_ajuda": "inicio/fim = janela da IDA; min/max = noites; passo = de quantos em quantos dias testar a ida; peso = prioridade (maior = consulta mais vezes); preferida = ida desejada (consultada primeiro). O 'preco normal' e o 'bom preco' sao aprendidos do historico. Opcional: limite = R$ maximo que voce aceita pagar (gera o aviso 'dentro do limite'). Conexoes acima de 4 h sao descartadas.",
   "rotas": [
     {
+      "id": "bue",
+      "nome": "Buenos Aires",
+      "origens": [
+        "CAC",
+        "IGU",
+        "IGR"
+      ],
+      "destinos": [
+        "AEP",
+        "EZE"
+      ],
+      "inicio": "2026-12-07",
+      "fim": "2027-04-16",
+      "min": 5,
+      "max": 9,
+      "passo": 7,
+      "peso": 2
+    },
+    {
+      "id": "nordeste",
+      "nome": "Nordeste",
+      "origens": [
+        "CAC",
+        "IGU"
+      ],
+      "destinos": [
+        "SSA",
+        "REC",
+        "FOR",
+        "NAT",
+        "MCZ",
+        "AJU"
+      ],
+      "inicio": "2026-12-07",
+      "fim": "2027-04-16",
+      "min": 7,
+      "max": 10,
+      "passo": 7,
+      "peso": 2
+    },
+    {
+      "id": "gua",
+      "nome": "Guatemala",
+      "origens": [
+        "CAC",
+        "IGU",
+        "IGR"
+      ],
+      "destinos": [
+        "GUA"
+      ],
+      "inicio": "2026-12-07",
+      "fim": "2027-04-16",
+      "min": 10,
+      "max": 15,
+      "passo": 7,
+      "peso": 2
+    },
+    {
       "id": "jpa",
       "nome": "João Pessoa",
-      "origens": ["CAC", "IGU"],
-      "destinos": ["JPA"],
+      "origens": [
+        "CAC",
+        "IGU"
+      ],
+      "destinos": [
+        "JPA"
+      ],
       "inicio": "2027-01-17",
       "fim": "2027-01-25",
       "min": 6,
@@ -17,8 +81,13 @@
     {
       "id": "cwb",
       "nome": "Curitiba (28 a 29/11)",
-      "origens": ["CAC", "IGU"],
-      "destinos": ["CWB"],
+      "origens": [
+        "CAC",
+        "IGU"
+      ],
+      "destinos": [
+        "CWB"
+      ],
       "inicio": "2026-11-28",
       "fim": "2026-11-28",
       "min": 1,
@@ -30,8 +99,13 @@
     {
       "id": "gru",
       "nome": "São Paulo (GRU)",
-      "origens": ["CAC", "IGU"],
-      "destinos": ["GRU"],
+      "origens": [
+        "CAC",
+        "IGU"
+      ],
+      "destinos": [
+        "GRU"
+      ],
       "inicio": "2026-12-01",
       "fim": "2027-02-26",
       "min": 2,
@@ -42,8 +116,13 @@
     {
       "id": "pdg",
       "nome": "Porto de Galinhas (Recife)",
-      "origens": ["CAC", "IGU"],
-      "destinos": ["REC"],
+      "origens": [
+        "CAC",
+        "IGU"
+      ],
+      "destinos": [
+        "REC"
+      ],
       "inicio": "2027-02-01",
       "fim": "2027-07-31",
       "min": 7,
@@ -54,8 +133,13 @@
     {
       "id": "cun",
       "nome": "Playa Mujeres (Cancún)",
-      "origens": ["IGU", "CAC"],
-      "destinos": ["CUN"],
+      "origens": [
+        "IGU",
+        "CAC"
+      ],
+      "destinos": [
+        "CUN"
+      ],
       "inicio": "2027-02-01",
       "fim": "2027-07-31",
       "min": 7,
@@ -66,8 +150,13 @@
     {
       "id": "bog",
       "nome": "Bogotá",
-      "origens": ["IGU", "CAC"],
-      "destinos": ["BOG"],
+      "origens": [
+        "IGU",
+        "CAC"
+      ],
+      "destinos": [
+        "BOG"
+      ],
       "inicio": "2027-02-01",
       "fim": "2027-07-31",
       "min": 7,
@@ -78,8 +167,13 @@
     {
       "id": "adz",
       "nome": "San Andrés (Colômbia)",
-      "origens": ["IGU", "CAC"],
-      "destinos": ["ADZ"],
+      "origens": [
+        "IGU",
+        "CAC"
+      ],
+      "destinos": [
+        "ADZ"
+      ],
       "inicio": "2027-02-01",
       "fim": "2027-07-31",
       "min": 7,
@@ -91,9 +185,14 @@
   "ajustes_universidade": {
     "nordeste": {
       "separar_destinos": true,
-      "excluir_origens": ["IGR"],
-      "ocultar_destinos": ["JPA"],
+      "excluir_origens": [
+        "IGR"
+      ],
+      "ocultar_destinos": [
+        "JPA"
+      ],
       "motivo": "voo nacional: sair do Paraguai/Argentina nao faz sentido; João Pessoa já tem rota própria"
     }
-  }
+  },
+  "_ajuda_universidade": "bue, nordeste e gua eram consultadas pelo computador da UFPR (parado desde 17/11/2026); agora tambem por este cliente, com os mesmos ids para manter o historico."
 }
