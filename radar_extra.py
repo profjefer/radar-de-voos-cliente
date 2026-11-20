@@ -30,7 +30,7 @@ def ler_env():
                     env[k.strip()] = v.strip().strip('"').strip("'")
     except FileNotFoundError:
         pass
-    env.update({k: v for k, v in os.environ.items() if k in ('SERPAPI_KEY', 'LIMITE_MENSAL', 'POR_RODADA', 'RESERVA')})
+    env.update({k: v for k, v in os.environ.items() if k in ('SERPAPI_KEY', 'LIMITE_MENSAL', 'POR_RODADA', 'RESERVA', 'SO_ROTAS')})
     return env
 
 
@@ -228,6 +228,9 @@ def main():
     if not chave or 'cole_sua_chave' in chave:
         raise SystemExit('Coloque a chave da SerpApi no arquivo .env (SERPAPI_KEY=...).')
     rotas = ler_json('rotas.json', {})['rotas']
+    so = [x.strip() for x in os.environ.get('SO_ROTAS', '').split(',') if x.strip()]
+    if so:  # rodada manual so com algumas rotas (ex.: SO_ROTAS=jpa)
+        rotas = [r for r in rotas if r['id'] in so]
     estado = ler_json('estado.json', {})
     estado.setdefault('ultimo', {})
     agora = dt.datetime.now(UTC).replace(microsecond=0)
