@@ -54,5 +54,29 @@
   "tipo": "queda",
   "mensagem": "João Pessoa: caiu R$ 311 (15%), agora R$ 1.705 (saindo de CAC, 18/01 a 24/01).",
   "preco": 1705.0
+ },
+ {
+  "quando": "2026-11-21T19:14:50+00:00",
+  "dia": "2026-11-21",
+  "rota": "pdg",
+  "tipo": "queda",
+  "mensagem": "Porto de Galinhas (Recife): caiu R$ 343 (21%), agora R$ 1.281 (saindo de IGU, 15/02 a 22/02).",
+  "preco": 1281.0
+ },
+ {
+  "quando": "2026-11-21T19:14:50+00:00",
+  "dia": "2026-11-21",
+  "rota": "cun",
+  "tipo": "queda",
+  "mensagem": "Playa Mujeres (Cancún): caiu R$ 856 (14%), agora R$ 5.465 (saindo de IGU, 15/02 a 22/02).",
+  "preco": 5465.0
+ },
+ {
+  "quando": "2026-11-21T19:14:50+00:00",
+  "dia": "2026-11-21",
+  "rota": "adz",
+  "tipo": "queda",
+  "mensagem": "San Andrés (Colômbia): caiu R$ 539 (9%), agora R$ 5.397 (saindo de IGU, 15/02 a 22/02).",
+  "preco": 5397.0
  }
 ]

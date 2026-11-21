@@ -2,7 +2,7 @@
  "versao": 1,
  "moeda": "BRL",
  "fonte": "extra",
- "atualizado": "2026-11-20T16:08:16+00:00",
+ "atualizado": "2026-11-21T19:14:50+00:00",
  "rotas": [
   {
    "id": "bue",
@@ -46,7 +46,7 @@
    "max": 10,
    "cobertura": {
     "pares": 76,
-    "com_preco_recente": 4
+    "com_preco_recente": 5
    }
   },
   {
@@ -66,7 +66,7 @@
    "max": 15,
    "cobertura": {
     "pares": 114,
-    "com_preco_recente": 4
+    "com_preco_recente": 5
    }
   },
   {
@@ -105,6 +105,101 @@
    "cobertura": {
     "pares": 1,
     "com_preco_recente": 1
+   }
+  },
+  {
+   "id": "gru",
+   "nome": "São Paulo (GRU)",
+   "origens": [
+    "CAC",
+    "IGU"
+   ],
+   "destinos": [
+    "GRU"
+   ],
+   "inicio": "2026-12-01",
+   "fim": "2027-02-26",
+   "min": 2,
+   "max": 3,
+   "cobertura": {
+    "pares": 26,
+    "com_preco_recente": 3
+   }
+  },
+  {
+   "id": "pdg",
+   "nome": "Porto de Galinhas (Recife)",
+   "origens": [
+    "CAC",
+    "IGU"
+   ],
+   "destinos": [
+    "REC"
+   ],
+   "inicio": "2027-02-01",
+   "fim": "2027-07-31",
+   "min": 7,
+   "max": 7,
+   "cobertura": {
+    "pares": 26,
+    "com_preco_recente": 3
+   }
+  },
+  {
+   "id": "cun",
+   "nome": "Playa Mujeres (Cancún)",
+   "origens": [
+    "IGU",
+    "CAC"
+   ],
+   "destinos": [
+    "CUN"
+   ],
+   "inicio": "2027-02-01",
+   "fim": "2027-07-31",
+   "min": 7,
+   "max": 7,
+   "cobertura": {
+    "pares": 26,
+    "com_preco_recente": 3
+   }
+  },
+  {
+   "id": "bog",
+   "nome": "Bogotá",
+   "origens": [
+    "IGU",
+    "CAC"
+   ],
+   "destinos": [
+    "BOG"
+   ],
+   "inicio": "2027-02-01",
+   "fim": "2027-07-31",
+   "min": 7,
+   "max": 7,
+   "cobertura": {
+    "pares": 26,
+    "com_preco_recente": 3
+   }
+  },
+  {
+   "id": "adz",
+   "nome": "San Andrés (Colômbia)",
+   "origens": [
+    "IGU",
+    "CAC"
+   ],
+   "destinos": [
+    "ADZ"
+   ],
+   "inicio": "2027-02-01",
+   "fim": "2027-07-31",
+   "min": 7,
+   "max": 7,
+   "cobertura": {
+    "pares": 26,
+    "com_preco_recente": 3
    }
   }
  ],
@@ -242,6 +337,18 @@
    "conexao_max_min": 0
   },
   {
+   "origem": "IGU",
+   "destino": "REC",
+   "tarifa": 1281.0,
+   "ida": "2027-02-15",
+   "volta": "2027-02-22",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "pdg",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 50
+  },
+  {
    "origem": "IGR",
    "destino": "EZE",
    "tarifa": 1396.0,
@@ -291,6 +398,18 @@
   },
   {
    "origem": "IGU",
+   "destino": "MCZ",
+   "tarifa": 1570.0,
+   "ida": "2026-12-14",
+   "volta": "2026-12-21",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "nordeste",
+   "cia": "Gol",
+   "paradas": 2,
+   "conexao_max_min": 230
+  },
+  {
+   "origem": "IGU",
    "destino": "REC",
    "tarifa": 1621.0,
    "ida": "2026-12-07",
@@ -336,6 +455,18 @@
    "cia": "Azul",
    "paradas": 1,
    "conexao_max_min": 105
+  },
+  {
+   "origem": "CAC",
+   "destino": "REC",
+   "tarifa": 1642.0,
+   "ida": "2027-02-15",
+   "volta": "2027-02-22",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "pdg",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 235
   },
   {
    "origem": "IGU",
@@ -411,6 +542,18 @@
   },
   {
    "origem": "IGU",
+   "destino": "FOR",
+   "tarifa": 1765.0,
+   "ida": "2026-12-14",
+   "volta": "2026-12-21",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "nordeste",
+   "cia": "Gol",
+   "paradas": 3,
+   "conexao_max_min": 85
+  },
+  {
+   "origem": "IGU",
    "destino": "REC",
    "tarifa": 1784.0,
    "ida": "2027-02-01",
@@ -420,6 +563,18 @@
    "cia": "LATAM",
    "paradas": 1,
    "conexao_max_min": 60
+  },
+  {
+   "origem": "IGU",
+   "destino": "REC",
+   "tarifa": 1812.0,
+   "ida": "2026-12-14",
+   "volta": "2026-12-21",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "nordeste",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 160
   },
   {
    "origem": "IGU",
@@ -470,6 +625,18 @@
    "conexao_max_min": 55
   },
   {
+   "origem": "IGU",
+   "destino": "SSA",
+   "tarifa": 1859.0,
+   "ida": "2026-12-14",
+   "volta": "2026-12-21",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "nordeste",
+   "cia": "Gol",
+   "paradas": 1,
+   "conexao_max_min": 195
+  },
+  {
    "origem": "CAC",
    "destino": "REC",
    "tarifa": 1868.0,
@@ -494,6 +661,66 @@
    "conexao_max_min": 225
   },
   {
+   "origem": "IGU",
+   "destino": "REC",
+   "tarifa": 1968.0,
+   "ida": "2026-12-07",
+   "volta": "2026-12-14",
+   "consultado": "2026-11-19T17:11:46+00:00",
+   "rota": "nordeste",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 130
+  },
+  {
+   "origem": "IGU",
+   "destino": "REC",
+   "tarifa": 1968.0,
+   "ida": "2026-12-07",
+   "volta": "2026-12-15",
+   "consultado": "2026-11-19T17:11:46+00:00",
+   "rota": "nordeste",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 130
+  },
+  {
+   "origem": "IGU",
+   "destino": "MCZ",
+   "tarifa": 1977.0,
+   "ida": "2026-12-07",
+   "volta": "2026-12-15",
+   "consultado": "2026-11-19T17:11:46+00:00",
+   "rota": "nordeste",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 90
+  },
+  {
+   "origem": "IGU",
+   "destino": "SSA",
+   "tarifa": 1996.0,
+   "ida": "2026-12-07",
+   "volta": "2026-12-14",
+   "consultado": "2026-11-19T17:11:46+00:00",
+   "rota": "nordeste",
+   "cia": "Gol",
+   "paradas": 1,
+   "conexao_max_min": 195
+  },
+  {
+   "origem": "IGU",
+   "destino": "SSA",
+   "tarifa": 1996.0,
+   "ida": "2026-12-07",
+   "volta": "2026-12-15",
+   "consultado": "2026-11-19T17:11:46+00:00",
+   "rota": "nordeste",
+   "cia": "Gol",
+   "paradas": 1,
+   "conexao_max_min": 195
+  },
+  {
    "origem": "CAC",
    "destino": "JPA",
    "tarifa": 2016.0,
@@ -511,7 +738,7 @@
    "tarifa": 2016.0,
    "ida": "2027-01-22",
    "volta": "2027-01-28",
-   "consultado": "2026-11-20T16:07:54+00:00",
+   "consultado": "2026-11-17T20:10:42+00:00",
    "rota": "jpa",
    "cia": "LATAM",
    "paradas": 1,
@@ -528,6 +755,18 @@
    "cia": "LATAM",
    "paradas": 1,
    "conexao_max_min": 100
+  },
+  {
+   "origem": "IGU",
+   "destino": "MCZ",
+   "tarifa": 2023.0,
+   "ida": "2026-12-07",
+   "volta": "2026-12-14",
+   "consultado": "2026-11-19T17:11:46+00:00",
+   "rota": "nordeste",
+   "cia": "Gol",
+   "paradas": 1,
+   "conexao_max_min": 50
   },
   {
    "origem": "IGU",
@@ -603,6 +842,18 @@
   },
   {
    "origem": "CAC",
+   "destino": "SSA",
+   "tarifa": 2288.0,
+   "ida": "2026-12-14",
+   "volta": "2026-12-21",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "nordeste",
+   "cia": "Gol",
+   "paradas": 2,
+   "conexao_max_min": 210
+  },
+  {
+   "origem": "CAC",
    "destino": "JPA",
    "tarifa": 2295.0,
    "ida": "2027-01-19",
@@ -638,6 +889,18 @@
    "conexao_max_min": 145
   },
   {
+   "origem": "IGU",
+   "destino": "AJU",
+   "tarifa": 2379.0,
+   "ida": "2026-12-07",
+   "volta": "2026-12-14",
+   "consultado": "2026-11-19T17:11:46+00:00",
+   "rota": "nordeste",
+   "cia": "Gol",
+   "paradas": 1,
+   "conexao_max_min": 50
+  },
+  {
    "origem": "CAC",
    "destino": "JPA",
    "tarifa": 2399.0,
@@ -667,7 +930,7 @@
    "tarifa": 2457.0,
    "ida": "2026-11-28",
    "volta": "2026-11-29",
-   "consultado": "2026-11-20T16:08:16+00:00",
+   "consultado": "2026-11-21T19:14:50+00:00",
    "rota": "cwb",
    "cia": "Gol",
    "paradas": 1,
@@ -696,6 +959,18 @@
    "cia": "Gol",
    "paradas": 2,
    "conexao_max_min": 140
+  },
+  {
+   "origem": "IGU",
+   "destino": "AJU",
+   "tarifa": 2619.0,
+   "ida": "2026-12-14",
+   "volta": "2026-12-21",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "nordeste",
+   "cia": "Gol",
+   "paradas": 3,
+   "conexao_max_min": 180
   },
   {
    "origem": "IGU",
@@ -806,18 +1081,6 @@
    "conexao_max_min": 120
   },
   {
-   "origem": "IGU",
-   "destino": "CWB",
-   "tarifa": 3446.0,
-   "ida": "2026-11-28",
-   "volta": "2026-11-29",
-   "consultado": "2026-11-20T16:08:16+00:00",
-   "rota": "cwb",
-   "cia": "Gol",
-   "paradas": 2,
-   "conexao_max_min": 125
-  },
-  {
    "origem": "CAC",
    "destino": "NAT",
    "tarifa": 3467.0,
@@ -828,6 +1091,18 @@
    "cia": "LATAM",
    "paradas": 1,
    "conexao_max_min": 110
+  },
+  {
+   "origem": "IGU",
+   "destino": "CWB",
+   "tarifa": 3534.0,
+   "ida": "2026-11-28",
+   "volta": "2026-11-29",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "cwb",
+   "cia": "LATAM",
+   "paradas": 0,
+   "conexao_max_min": 0
   },
   {
    "origem": "CAC",
@@ -876,6 +1151,42 @@
    "cia": "LATAM",
    "paradas": 1,
    "conexao_max_min": 120
+  },
+  {
+   "origem": "IGU",
+   "destino": "BOG",
+   "tarifa": 4983.0,
+   "ida": "2027-02-15",
+   "volta": "2027-02-22",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "bog",
+   "cia": "LATAM",
+   "paradas": 1,
+   "conexao_max_min": 120
+  },
+  {
+   "origem": "IGU",
+   "destino": "ADZ",
+   "tarifa": 5397.0,
+   "ida": "2027-02-15",
+   "volta": "2027-02-22",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "adz",
+   "cia": "Avianca + Gol",
+   "paradas": 2,
+   "conexao_max_min": 145
+  },
+  {
+   "origem": "IGU",
+   "destino": "CUN",
+   "tarifa": 5465.0,
+   "ida": "2027-02-15",
+   "volta": "2027-02-22",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "cun",
+   "cia": "LATAM",
+   "paradas": 2,
+   "conexao_max_min": 90
   },
   {
    "origem": "IGU",
@@ -963,6 +1274,18 @@
   },
   {
    "origem": "CAC",
+   "destino": "BOG",
+   "tarifa": 6598.0,
+   "ida": "2027-02-15",
+   "volta": "2027-02-22",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "bog",
+   "cia": "LATAM",
+   "paradas": 2,
+   "conexao_max_min": 130
+  },
+  {
+   "origem": "CAC",
    "destino": "AEP",
    "tarifa": 6915.0,
    "ida": "2026-12-07",
@@ -1008,6 +1331,18 @@
    "cia": "American + Gol",
    "paradas": 2,
    "conexao_max_min": 212
+  },
+  {
+   "origem": "IGU",
+   "destino": "GUA",
+   "tarifa": 9789.0,
+   "ida": "2026-12-07",
+   "volta": "2026-12-21",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "gua",
+   "cia": "COPA + Gol",
+   "paradas": 3,
+   "conexao_max_min": 185
   },
   {
    "origem": "CAC",
@@ -1056,22 +1391,34 @@
    "cia": "Aerolineas Argentinas + United",
    "paradas": 2,
    "conexao_max_min": 215
+  },
+  {
+   "origem": "IGR",
+   "destino": "GUA",
+   "tarifa": 86119.0,
+   "ida": "2026-12-07",
+   "volta": "2026-12-21",
+   "consultado": "2026-11-21T19:14:50+00:00",
+   "rota": "gua",
+   "cia": "Aerolineas Argentinas + United",
+   "paradas": 2,
+   "conexao_max_min": 215
   }
  ],
  "falhas": 0,
  "anteriorMinimo": {
-  "bue": 1085.0,
-  "nordeste": 1743.0,
-  "gua": 8963.0,
+  "bue": 733.0,
+  "nordeste": 1621.0,
+  "gua": 5469.0,
   "jpa": 1705.0,
-  "cwb": 2224.0,
+  "cwb": 2457.0,
   "gru": 947.0,
   "pdg": 1624.0,
   "cun": 6321.0,
   "bog": 4501.0,
   "adz": 5936.0
  },
- "saldo": 124,
+ "saldo": 117,
  "serie": {
   "bue": [
    {
@@ -1235,6 +1582,14 @@
     "destino": "FOR",
     "ida": "2027-03-04",
     "volta": "2027-03-12"
+   },
+   {
+    "dia": "2026-11-21",
+    "preco": 1219.0,
+    "origem": "IGU",
+    "destino": "FOR",
+    "ida": "2027-03-04",
+    "volta": "2027-03-12"
    }
   ],
   "nordeste:REC": [
@@ -1288,6 +1643,14 @@
    },
    {
     "dia": "2026-11-20",
+    "preco": 1544.0,
+    "origem": "CAC",
+    "destino": "REC",
+    "ida": "2027-03-04",
+    "volta": "2027-03-12"
+   },
+   {
+    "dia": "2026-11-21",
     "preco": 1544.0,
     "origem": "CAC",
     "destino": "REC",
@@ -1375,6 +1738,14 @@
     "destino": "GUA",
     "ida": "2027-03-11",
     "volta": "2027-03-25"
+   },
+   {
+    "dia": "2026-11-21",
+    "preco": 5194.0,
+    "origem": "IGU",
+    "destino": "GUA",
+    "ida": "2027-03-11",
+    "volta": "2027-03-25"
    }
   ],
   "nordeste:MCZ": [
@@ -1412,6 +1783,14 @@
    },
    {
     "dia": "2026-11-20",
+    "preco": 1386.0,
+    "origem": "IGU",
+    "destino": "MCZ",
+    "ida": "2027-01-23",
+    "volta": "2027-02-02"
+   },
+   {
+    "dia": "2026-11-21",
     "preco": 1386.0,
     "origem": "IGU",
     "destino": "MCZ",
@@ -1475,6 +1854,14 @@
     "destino": "SSA",
     "ida": "2027-03-12",
     "volta": "2027-03-19"
+   },
+   {
+    "dia": "2026-11-21",
+    "preco": 1173.0,
+    "origem": "CAC",
+    "destino": "SSA",
+    "ida": "2027-03-12",
+    "volta": "2027-03-19"
    }
   ],
   "nordeste:AJU": [
@@ -1509,6 +1896,14 @@
     "destino": "AJU",
     "ida": "2027-01-26",
     "volta": "2027-02-03"
+   },
+   {
+    "dia": "2026-11-21",
+    "preco": 1496.0,
+    "origem": "IGU",
+    "destino": "AJU",
+    "ida": "2027-01-26",
+    "volta": "2027-02-03"
    }
   ],
   "jpa": [
@@ -1535,14 +1930,6 @@
     "destino": "JPA",
     "ida": "2027-01-18",
     "volta": "2027-01-24"
-   },
-   {
-    "dia": "2026-11-20",
-    "preco": 1705.0,
-    "origem": "CAC",
-    "destino": "JPA",
-    "ida": "2027-01-18",
-    "volta": "2027-01-24"
    }
   ],
   "pdg": [
@@ -1561,6 +1948,14 @@
     "destino": "REC",
     "ida": "2027-02-01",
     "volta": "2027-02-08"
+   },
+   {
+    "dia": "2026-11-21",
+    "preco": 1281.0,
+    "origem": "IGU",
+    "destino": "REC",
+    "ida": "2027-02-15",
+    "volta": "2027-02-22"
    }
   ],
   "cun": [
@@ -1579,6 +1974,14 @@
     "destino": "CUN",
     "ida": "2027-02-01",
     "volta": "2027-02-08"
+   },
+   {
+    "dia": "2026-11-21",
+    "preco": 5465.0,
+    "origem": "IGU",
+    "destino": "CUN",
+    "ida": "2027-02-15",
+    "volta": "2027-02-22"
    }
   ],
   "bog": [
@@ -1592,6 +1995,14 @@
    },
    {
     "dia": "2026-11-19",
+    "preco": 4501.0,
+    "origem": "CAC",
+    "destino": "BOG",
+    "ida": "2027-02-01",
+    "volta": "2027-02-08"
+   },
+   {
+    "dia": "2026-11-21",
     "preco": 4501.0,
     "origem": "CAC",
     "destino": "BOG",
@@ -1615,6 +2026,14 @@
     "destino": "ADZ",
     "ida": "2027-02-01",
     "volta": "2027-02-08"
+   },
+   {
+    "dia": "2026-11-21",
+    "preco": 5397.0,
+    "origem": "IGU",
+    "destino": "ADZ",
+    "ida": "2027-02-15",
+    "volta": "2027-02-22"
    }
   ],
   "cwb": [
@@ -1636,6 +2055,14 @@
    },
    {
     "dia": "2026-11-20",
+    "preco": 2457.0,
+    "origem": "CAC",
+    "destino": "CWB",
+    "ida": "2026-11-28",
+    "volta": "2026-11-29"
+   },
+   {
+    "dia": "2026-11-21",
     "preco": 2457.0,
     "origem": "CAC",
     "destino": "CWB",
@@ -1728,9 +2155,33 @@
    "tipo": "queda",
    "mensagem": "João Pessoa: caiu R$ 311 (15%), agora R$ 1.705 (saindo de CAC, 18/01 a 24/01).",
    "preco": 1705.0
+  },
+  {
+   "quando": "2026-11-21T19:14:50+00:00",
+   "dia": "2026-11-21",
+   "rota": "pdg",
+   "tipo": "queda",
+   "mensagem": "Porto de Galinhas (Recife): caiu R$ 343 (21%), agora R$ 1.281 (saindo de IGU, 15/02 a 22/02).",
+   "preco": 1281.0
+  },
+  {
+   "quando": "2026-11-21T19:14:50+00:00",
+   "dia": "2026-11-21",
+   "rota": "cun",
+   "tipo": "queda",
+   "mensagem": "Playa Mujeres (Cancún): caiu R$ 856 (14%), agora R$ 5.465 (saindo de IGU, 15/02 a 22/02).",
+   "preco": 5465.0
+  },
+  {
+   "quando": "2026-11-21T19:14:50+00:00",
+   "dia": "2026-11-21",
+   "rota": "adz",
+   "tipo": "queda",
+   "mensagem": "San Andrés (Colômbia): caiu R$ 539 (9%), agora R$ 5.397 (saindo de IGU, 15/02 a 22/02).",
+   "preco": 5397.0
   }
  ],
- "proxima": "2026-11-21T12:15:00+00:00",
+ "proxima": "2026-11-22T12:15:00+00:00",
  "referencias": {
   "bue": {
    "dias": 10,
@@ -1740,60 +2191,64 @@
    "maximo": 505
   },
   "nordeste:FOR": {
-   "dias": 10,
+   "dias": 11,
    "normal": 1219,
    "bom": 1158,
    "minimo": 1219,
    "maximo": 1219
   },
   "nordeste:REC": {
-   "dias": 7,
+   "dias": 8,
    "normal": 1544,
    "bom": 1467,
    "minimo": 1544,
    "maximo": 1544
   },
   "gua": {
-   "dias": 10,
+   "dias": 11,
    "normal": 5194,
    "bom": 4934,
    "minimo": 5194,
    "maximo": 6356
   },
   "nordeste:MCZ": {
-   "dias": 5,
+   "dias": 6,
    "normal": 1386,
    "bom": 1317,
    "minimo": 1386,
    "maximo": 1386
   },
   "nordeste:SSA": {
-   "dias": 7,
-   "normal": 1293,
-   "bom": 1173,
+   "dias": 8,
+   "normal": 1233,
+   "bom": 1171,
    "minimo": 1173,
    "maximo": 1453
   },
   "nordeste:AJU": {
-   "dias": 4
+   "dias": 5,
+   "normal": 1496,
+   "bom": 1421,
+   "minimo": 1496,
+   "maximo": 1496
   },
   "jpa": {
-   "dias": 4
+   "dias": 3
   },
   "pdg": {
-   "dias": 2
+   "dias": 3
   },
   "cun": {
-   "dias": 2
+   "dias": 3
   },
   "bog": {
-   "dias": 2
+   "dias": 3
   },
   "adz": {
-   "dias": 2
+   "dias": 3
   },
   "cwb": {
-   "dias": 3
+   "dias": 4
   },
   "gru": {
    "dias": 2
