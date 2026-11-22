@@ -78,5 +78,13 @@
   "tipo": "queda",
   "mensagem": "San Andrés (Colômbia): caiu R$ 539 (9%), agora R$ 5.397 (saindo de IGU, 15/02 a 22/02).",
   "preco": 5397.0
+ },
+ {
+  "quando": "2026-11-22T19:38:22+00:00",
+  "dia": "2026-11-22",
+  "rota": "nordeste:NAT",
+  "tipo": "queda",
+  "mensagem": "Natal (Nordeste): caiu R$ 843 (24%), agora R$ 2.624 (saindo de IGU, 14/12 a 22/12).",
+  "preco": 2624.0
  }
 ]
