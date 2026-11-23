@@ -86,5 +86,21 @@
   "tipo": "queda",
   "mensagem": "Natal (Nordeste): caiu R$ 843 (24%), agora R$ 2.624 (saindo de IGU, 14/12 a 22/12).",
   "preco": 2624.0
+ },
+ {
+  "quando": "2026-11-23T23:52:36+00:00",
+  "dia": "2026-11-23",
+  "rota": "bog",
+  "tipo": "queda",
+  "mensagem": "Bogotá: caiu R$ 168 (4%), agora R$ 4.333 (saindo de IGU, 22/02 a 01/03).",
+  "preco": 4333.0
+ },
+ {
+  "quando": "2026-11-23T23:52:36+00:00",
+  "dia": "2026-11-23",
+  "rota": "bog",
+  "tipo": "recorde",
+  "mensagem": "Bogotá: R$ 4.333 é o menor preço já registrado (saindo de IGU, 22/02 a 01/03).",
+  "preco": 4333.0
  }
 ]
