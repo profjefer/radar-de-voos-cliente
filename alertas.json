@@ -102,5 +102,13 @@
   "tipo": "recorde",
   "mensagem": "Bogotá: R$ 4.333 é o menor preço já registrado (saindo de IGU, 22/02 a 01/03).",
   "preco": 4333.0
+ },
+ {
+  "quando": "2026-11-25T21:40:39+00:00",
+  "dia": "2026-11-25",
+  "rota": "gru",
+  "tipo": "recorde",
+  "mensagem": "São Paulo (GRU): R$ 921 é o menor preço já registrado (saindo de CAC, 15/12 a 17/12).",
+  "preco": 921.0
  }
 ]
