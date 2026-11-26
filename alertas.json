@@ -110,5 +110,13 @@
   "tipo": "recorde",
   "mensagem": "São Paulo (GRU): R$ 921 é o menor preço já registrado (saindo de CAC, 15/12 a 17/12).",
   "preco": 921.0
+ },
+ {
+  "quando": "2026-11-26T21:30:41+00:00",
+  "dia": "2026-11-26",
+  "rota": "cwb",
+  "tipo": "queda",
+  "mensagem": "Curitiba (28 a 29/11): caiu R$ 298 (10%), agora R$ 2.789 (saindo de IGU, 28/11 a 29/11).",
+  "preco": 2789.0
  }
 ]
