@@ -118,5 +118,85 @@
   "tipo": "queda",
   "mensagem": "Curitiba (28 a 29/11): caiu R$ 298 (10%), agora R$ 2.789 (saindo de IGU, 28/11 a 29/11).",
   "preco": 2789.0
+ },
+ {
+  "quando": "2026-11-27T21:16:13+00:00",
+  "dia": "2026-11-27",
+  "rota": "jpa",
+  "tipo": "queda",
+  "mensagem": "João Pessoa: caiu R$ 58 (3%), agora R$ 1.647 (saindo de CAC, 22/01 a 28/01).",
+  "preco": 1647.0
+ },
+ {
+  "quando": "2026-11-27T21:16:13+00:00",
+  "dia": "2026-11-27",
+  "rota": "jpa",
+  "tipo": "recorde",
+  "mensagem": "João Pessoa: R$ 1.647 é o menor preço já registrado (saindo de CAC, 22/01 a 28/01).",
+  "preco": 1647.0
+ },
+ {
+  "quando": "2026-11-27T21:16:13+00:00",
+  "dia": "2026-11-27",
+  "rota": "pdg",
+  "tipo": "bom",
+  "mensagem": "Porto de Galinhas (Recife): R$ 1.021 é um bom preço, 20% abaixo do normal de R$ 1.281 (saindo de IGU, 08/03 a 15/03).",
+  "preco": 1021.0
+ },
+ {
+  "quando": "2026-11-27T21:16:13+00:00",
+  "dia": "2026-11-27",
+  "rota": "pdg",
+  "tipo": "queda",
+  "mensagem": "Porto de Galinhas (Recife): caiu R$ 260 (20%), agora R$ 1.021 (saindo de IGU, 08/03 a 15/03).",
+  "preco": 1021.0
+ },
+ {
+  "quando": "2026-11-27T21:16:13+00:00",
+  "dia": "2026-11-27",
+  "rota": "pdg",
+  "tipo": "recorde",
+  "mensagem": "Porto de Galinhas (Recife): R$ 1.021 é o menor preço já registrado (saindo de IGU, 08/03 a 15/03).",
+  "preco": 1021.0
+ },
+ {
+  "quando": "2026-11-27T21:16:13+00:00",
+  "dia": "2026-11-27",
+  "rota": "gru",
+  "tipo": "queda",
+  "mensagem": "São Paulo (GRU): caiu R$ 450 (49%), agora R$ 471 (saindo de CAC, 15/12 a 18/12).",
+  "preco": 471.0
+ },
+ {
+  "quando": "2026-11-27T21:16:13+00:00",
+  "dia": "2026-11-27",
+  "rota": "gru",
+  "tipo": "recorde",
+  "mensagem": "São Paulo (GRU): R$ 471 é o menor preço já registrado (saindo de CAC, 15/12 a 18/12).",
+  "preco": 471.0
+ },
+ {
+  "quando": "2026-11-27T21:16:13+00:00",
+  "dia": "2026-11-27",
+  "rota": "nordeste:NAT",
+  "tipo": "bom",
+  "mensagem": "Natal (Nordeste): R$ 1.841 é um bom preço, 30% abaixo do normal de R$ 2.624 (saindo de IGU, 21/12 a 30/12).",
+  "preco": 1841.0
+ },
+ {
+  "quando": "2026-11-27T21:16:13+00:00",
+  "dia": "2026-11-27",
+  "rota": "nordeste:NAT",
+  "tipo": "queda",
+  "mensagem": "Natal (Nordeste): caiu R$ 783 (30%), agora R$ 1.841 (saindo de IGU, 21/12 a 30/12).",
+  "preco": 1841.0
+ },
+ {
+  "quando": "2026-11-27T21:16:13+00:00",
+  "dia": "2026-11-27",
+  "rota": "nordeste:NAT",
+  "tipo": "recorde",
+  "mensagem": "Natal (Nordeste): R$ 1.841 é o menor preço já registrado (saindo de IGU, 21/12 a 30/12).",
+  "preco": 1841.0
  }
 ]
