@@ -198,5 +198,29 @@
   "tipo": "recorde",
   "mensagem": "Natal (Nordeste): R$ 1.841 é o menor preço já registrado (saindo de IGU, 21/12 a 30/12).",
   "preco": 1841.0
+ },
+ {
+  "quando": "2026-11-28T20:00:31+00:00",
+  "dia": "2026-11-28",
+  "rota": "adz",
+  "tipo": "bom",
+  "mensagem": "San Andrés (Colômbia): R$ 4.023 é um bom preço, 25% abaixo do normal de R$ 5.397 (saindo de IGU, 08/03 a 15/03).",
+  "preco": 4023.0
+ },
+ {
+  "quando": "2026-11-28T20:00:31+00:00",
+  "dia": "2026-11-28",
+  "rota": "adz",
+  "tipo": "queda",
+  "mensagem": "San Andrés (Colômbia): caiu R$ 1.374 (25%), agora R$ 4.023 (saindo de IGU, 08/03 a 15/03).",
+  "preco": 4023.0
+ },
+ {
+  "quando": "2026-11-28T20:00:31+00:00",
+  "dia": "2026-11-28",
+  "rota": "adz",
+  "tipo": "recorde",
+  "mensagem": "San Andrés (Colômbia): R$ 4.023 é o menor preço já registrado (saindo de IGU, 08/03 a 15/03).",
+  "preco": 4023.0
  }
 ]
